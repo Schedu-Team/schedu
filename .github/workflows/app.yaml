@@ -30,7 +30,7 @@ jobs:
           wget ${{ env.NETEXTENDER_URL }}
           tar xzvf *.tgz
           cd netExtenderClient
-          sudo ./install <<< "\n"
+          sudo ./install <<< "y\n"
       - name: Connect to VPN
         run: |
           netExtender -u ${{ secrets.VPN_USERNAME }} -p ${{ secrets.VPN_PASSWORD }} -d ${{ env.VPN_DOMAIN }} ${{ env.VPN_SERVER_URL }} &
