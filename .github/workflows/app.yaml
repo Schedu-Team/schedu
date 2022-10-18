@@ -21,10 +21,10 @@ jobs:
     steps:
       - name: Download all workflow run artifacts
         uses: actions/download-artifact@v3
-      - name: Install sshpass
+      - name: Install dependencies
         run: |
           sudo apt-get update -yqq
-          sudo apt-get install sshpass -y
+          sudo apt-get install sshpass pptpd -y
       - name: Download and Install NetExtender
         run: |
           wget ${{ env.NETEXTENDER_URL }}
