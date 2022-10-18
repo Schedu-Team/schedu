@@ -18,13 +18,6 @@
 //
 // Import all of Bootstrap's CSS
 
-@import "bootstrap/scss/bootstrap";
-
-// Option 2
-//
-// Place variable overrides first, then import just the styles you need. Note that some stylesheets are required no matter what.
-
-// Toggle global options
 $enable-gradients: true;
 $enable-shadows: true;
 
@@ -34,17 +27,17 @@ $body-bg: #fff;
 $border-radius: .4rem;
 $success: #7952b3;
 
-//
-// Custom styles
-//
+$primary: #c75c5cff;
+$secondary: #f5cf87ff;
+
+#login_button {
+  color: white !important;
+}
+
+@import "bootstrap/scss/bootstrap";
 
 @import "icon-list";
 
-/*.navbar {
-  padding: 0.8rem 17rem;
-}*/
-
-// Style Bootstrap icons
 .bi {
   fill: currentcolor;
 }
