@@ -35,8 +35,8 @@ jobs:
         run: |
           netExtender -u ${{ secrets.VPN_USERNAME }} -p ${{ secrets.VPN_PASSWORD }} -d ${{ env.VPN_DOMAIN }} ${{ env.VPN_SERVER_URL }} &
           sleep 30
-          sshpass -p ${{ secrets.SSH_PASSWORD }} ssh ${{ secrets.SSH_USERNAME }}@${{ env.SSH_SERVER_URL }} 'rm ~/public_html/*'
-          sshpass -p ${{ secrets.SSH_PASSWORD }} scp -r dist/* ${{ secrets.SSH_USERNAME }}@${{ env.SSH_SERVER_URL }}:~/public_html
+          sshpass -p ${{ secrets.SSH_PASSWORD }} ssh ${{ secrets.SSH_USERNAME }}@${{ env.SSH_SERVER_URL }} 'rm ~/public_html/*' && echo "Deleted ~/public_html contents..."
+          sshpass -p ${{ secrets.SSH_PASSWORD }} scp -r dist/* ${{ secrets.SSH_USERNAME }}@${{ env.SSH_SERVER_URL }}:~/public_html && echo "Upload to ~/public_html successful..."
 
 env:
   NETEXTENDER_URL: https://software.sonicwall.com/NetExtender/NetExtender.Linux-10.2.845.x86_64.tgz
