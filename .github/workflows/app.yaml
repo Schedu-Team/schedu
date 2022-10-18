@@ -36,8 +36,7 @@ jobs:
           netExtender -u ${{ secrets.VPN_USERNAME }} -p ${{ secrets.VPN_PASSWORD }} -d ${{ env.VPN_DOMAIN }} ${{ env.VPN_SERVER_URL }} &
           sleep 30
           echo "Attempting to connect..."
-          ssh-keyscan -H ${{ env.SSH_SERVER_URL }} >> ~/.ssh/known_hosts
-          sshpass -p ${{ secrets.SSH_PASSWORD }} rsync -r --delete dist/ ${{ secrets.SSH_USERNAME }}@${{ env.SSH_SERVER_URL }}:~/public_html && echo "Upload successful..."
+          sshpass -p ${{ secrets.SSH_PASSWORD }} rsync -e "ssh -o StrictHostKeyChecking=no" -r --delete dist/ ${{ secrets.SSH_USERNAME }}@${{ env.SSH_SERVER_URL }}:~/public_html && echo "Upload successful..."
 
 env:
   NETEXTENDER_URL: https://software.sonicwall.com/NetExtender/NetExtender.Linux-10.2.845.x86_64.tgz
