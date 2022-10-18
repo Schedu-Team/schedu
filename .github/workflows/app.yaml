@@ -1,4 +1,4 @@
-name: Cavoke
+name: Schedu Web Deploy
 on:
   push:
     branches:
@@ -9,11 +9,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build
-        run: ./build.sh
+        run: ./web/build.sh
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: dist
+          name: web/dist
           path: ${{ github.workspace }}/dist
   ssh-deploy:
     runs-on: ubuntu-latest
@@ -31,7 +31,7 @@ jobs:
           tar xzvf *.tgz
           cd netExtenderClient
           sudo ./install <<< "y\n"
-      - name: Connect to VPN
+      - name: Connect to VPN & Upload
         run: |
           netExtender -u ${{ secrets.VPN_USERNAME }} -p ${{ secrets.VPN_PASSWORD }} -d ${{ env.VPN_DOMAIN }} ${{ env.VPN_SERVER_URL }} &
           sleep 30
