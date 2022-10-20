@@ -7,7 +7,7 @@ npm i
 npm run build
 )
 
-cp web/dist/* dist
+cp -r web/dist/ dist
 
 # Check file exists
 test -f ./dist/index.html || exit 1
