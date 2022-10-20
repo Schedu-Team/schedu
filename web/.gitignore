@@ -1,1 +1,3 @@
 node_modules
+dist/main.css
+dist/main.js*
