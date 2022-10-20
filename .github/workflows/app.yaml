@@ -1,3 +1,6 @@
+# Authors: Schedu Team
+# Contact: {a dot kovrigin, k dot ivanov, m dot ipatov, pe dot tsvetkov} at jacobs-university dot de
+
 name: Schedu Web Deploy
 on:
   push:
@@ -34,7 +37,7 @@ jobs:
       - name: Connect to VPN & Upload
         run: |
           netExtender -u ${{ secrets.VPN_USERNAME }} -p ${{ secrets.VPN_PASSWORD }} -d ${{ env.VPN_DOMAIN }} ${{ env.VPN_SERVER_URL }} &
-          sleep 30
+          sleep 30 # great code
           echo "Attempting to connect..."
           sshpass -p ${{ secrets.SSH_PASSWORD }} rsync -e "ssh -o StrictHostKeyChecking=no" -r --delete dist/ ${{ secrets.SSH_USERNAME }}@${{ env.SSH_SERVER_URL }}:~/public_html && echo "Upload successful..."
 
