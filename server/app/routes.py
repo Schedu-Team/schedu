@@ -16,3 +16,8 @@ def index():
 @app.route("/api/v1/service/status", methods=["GET"])
 def status():
     return functions.status()
+
+
+@app.route("/api/v1/service/test", methods=["GET"])
+def test():
+    return functions.test()

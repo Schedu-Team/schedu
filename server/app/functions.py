@@ -59,3 +59,17 @@ def status() -> Tuple[int, Dict]:  # TODO: rewrite to add meaningful information
         "API version": "v1",
     }
     return code, data
+
+
+@function_response
+def test() -> Tuple[int, Dict]:
+    """
+    Runs whatever I need for testing
+    :return: 200, dict of something
+    """
+    code = 200
+    logs = dbm.create_connection()
+    data = {
+        "Logs": logs
+    }
+    return code, data
