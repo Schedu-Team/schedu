@@ -1,6 +1,6 @@
 from flask import Flask
-from app.extensions import db, migrate, dbm
-from app import models
+from app.extensions import storage, dbm
+# from app import models
 from config import Config
 
 
@@ -12,10 +12,10 @@ def create_app(config_object=Config):
 
 
 def register_extensions(_app):
-    db.init_app(_app)
-    migrate.init_app(_app, db)
-    dbm.init_db(db, models)
+    # db.init_app(_app)
+    # dbm.init_db(db, models)
     # gm.init_dbm(dbm)
+    pass
 
 
 app = create_app()
