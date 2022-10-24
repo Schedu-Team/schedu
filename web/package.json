@@ -27,6 +27,10 @@
     "@popperjs/core": "^2.11.6",
     "bootstrap": "^5.2.2",
     "bootstrap-dark-5": "github:vinorodrigues/bootstrap-dark-5#dev/v1.2.0",
-    "jquery": "^3.6.1"
+    "bootstrap-datepicker": "^1.9.0",
+    "collapse": "^1.0.1",
+    "jquery": "^3.6.1",
+    "moment": "^2.29.4",
+    "transition": "^0.1.1"
   }
 }

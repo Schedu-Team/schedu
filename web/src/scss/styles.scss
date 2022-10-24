@@ -17,7 +17,14 @@ $secondary-alt: #f5cf87ff;
 }
 
 @import "~bootstrap-dark-5/scss/bootstrap-dark";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap-datepicker/dist/css/bootstrap-datepicker.css";
+
 
 .bi {
     fill: currentcolor;
 }
+
+.ui-datepicker-calendar {
+    display: none;
+    }
