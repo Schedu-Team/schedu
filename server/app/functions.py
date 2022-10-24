@@ -40,6 +40,8 @@ def function_response(
         except Exception as e:
             status_code = 500
             data = {"Error": str(e), "Stack": full_stack()}
+        print(status_code)
+        print(data)
         response = make_response(data, status_code)
         response.headers["Content-Type"] = "application/json"
         return response
