@@ -91,3 +91,22 @@ def test_2(user_id: int) -> Tuple[int, Dict]:
         "Users": users
     }
     return code, data
+
+
+@function_response
+def test_3(first_name: str, last_name: str, graduation_year: int) -> Tuple[int, Dict]:
+    """
+    Runs whatever I need for testing
+    :return: 200, dict of something
+    """
+    code = 200
+
+    added_id = dbm.insert_into("Users", {"password_hash": f"PasswordHash{first_name}{last_name}",
+                                         "password_salt": f"PasswordSalt{first_name}{last_name}",
+                                         "first_name": first_name,
+                                         "last_name": last_name,
+                                         "graduation_year": graduation_year})
+    data = {
+        "Added_id": added_id
+    }
+    return code, data

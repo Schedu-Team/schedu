@@ -3,7 +3,7 @@ Inner class for all dirty work with database
 Because we are prohibited use SQLAlchemy
 """
 import logging
-from typing import Optional, List, Callable
+from typing import Optional, List, Callable, Dict
 
 import flask
 import mysql.connector
@@ -31,6 +31,7 @@ def with_connect(database_request: Callable) -> Callable:
         return result
 
     return wrapped
+
 
 class DBManager:
     def __init__(self):
@@ -67,17 +68,40 @@ class DBManager:
         return True
 
     @with_connect
-    def select_all(self, connection: mysql.connector.connection, table_name: str):
-        cursor = connection.cursor()   # Cursor types are weird garbage
+    def select_all(self, connection: mysql.connector.connection, table_name: str) -> List:
+        cursor = connection.cursor()  # Cursor types are weird garbage
         cursor.execute(f"SELECT * FROM `{table_name}`;")
         records = list(cursor.fetchall())
         cursor.close()
         return records
 
     @with_connect
-    def select_field(self, connection: mysql.connector.connection, table_name: str, column_name: str, column_value: str):
+    def select_field(self, connection: mysql.connector.connection, table_name: str, column_name: str,
+                     column_value: str) -> List:
         cursor = connection.cursor()  # Cursor types are weird garbage
         cursor.execute(f"SELECT * FROM `{table_name}` WHERE `{column_name}` = %s;", (column_value,))
         records = list(cursor.fetchall())
         cursor.close()
         return records
+
+    @with_connect
+    def insert_into(self, connection: mysql.connector.connection, table_name: str, column_value_pairs: Dict) -> int:
+        fields_str = "("
+        placeholders = "("
+        field_values_list = []
+        for key, value in column_value_pairs.items():
+            fields_str += key + ", "
+            placeholders += "%s, "
+            field_values_list.append(value)
+        fields_str = fields_str[:-2] + ")"  # FIXME: Ugly
+        placeholders = placeholders[:-2] + ")"
+        values_tuple = tuple(field_values_list)
+        mysql_query = f"""INSERT INTO `{table_name}` {fields_str} VALUES {placeholders};"""
+        self.logging_device.info(mysql_query)
+
+        cursor = connection.cursor()
+        cursor.execute(mysql_query, values_tuple)
+        connection.commit()
+        last_id: int = cursor.lastrowid
+        cursor.close()
+        return last_id
