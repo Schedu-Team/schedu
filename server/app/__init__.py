@@ -27,13 +27,12 @@ def config_logging():
         }},
         'handlers': {"file": {
             "class": "logging.FileHandler",
-            "formatter": "simple",
-            "filename": ".server.int.log",
+            "filename": ".server.log",
             "mode": "w"
         }},
         'root': {
             'level': 'INFO',
-            'handlers': ['handlers']
+            'handlers': ['file']
         }
     })
 
