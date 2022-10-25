@@ -29,18 +29,20 @@ class DBManager:
                                                  database=self.database,
                                                  user=self.user,
                                                  password=self.password)
-            if connection.is_connected():
-                db_Info = connection.get_server_info()
-                logs.append(f"Connected to MySQL Server version {db_Info}")
-                cursor = connection.cursor()
-                cursor.execute("select database();")
-                record = cursor.fetchone()
-                logs.append(f"You're connected to database: {record}")
         except mysql.connector.Error as e:
             logs.append(f"Error while connecting to MySQL {e}")
-        finally:
-            if connection.is_connected():
-                cursor.close()
-                connection.close()
-                logs.append(f"MySQL connection is closed")
+            return logs
+
+        if connection.is_connected():
+            db_Info = connection.get_server_info()
+            logs.append(f"Connected to MySQL Server version {db_Info}")
+            cursor = connection.cursor()
+            cursor.execute("select database();")
+            record = cursor.fetchone()
+            logs.append(f"You're connected to database: {record}")
+            cursor.close()
+            connection.close()
+            logs.append(f"MySQL connection is closed")
+        else:
+            logs.append(f"wtf, bro")
         return logs
