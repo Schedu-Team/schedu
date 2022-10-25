@@ -42,7 +42,7 @@ def function_response(
             status_code = 500
             data = {"Error": str(e), "Stack": full_stack()}
         if flask_version <= '1.1':
-            data = dict_to_json_str(data)    # DAMN IT, FLASK 1.0!
+            data = dict_to_json_str(data)  # DAMN IT, FLASK 1.0!
         response = make_response(data)  # , status_code)
         response.status_code = status_code  # Damn it, Flask 1! TODO: Install Flask 2 on server
         response.headers["Content-Type"] = "application/json"
@@ -73,6 +73,20 @@ def test() -> Tuple[int, Dict]:
     """
     code = 200
     users = dbm.select_all("Users")
+    data = {
+        "Users": users
+    }
+    return code, data
+
+
+@function_response
+def test_2(user_id: int) -> Tuple[int, Dict]:
+    """
+    Runs whatever I need for testing
+    :return: 200, dict of something
+    """
+    code = 200
+    users = dbm.select_field("Users", "user_id", str(user_id))
     data = {
         "Users": users
     }

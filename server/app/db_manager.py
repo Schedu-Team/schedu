@@ -71,4 +71,13 @@ class DBManager:
         cursor = connection.cursor()   # Cursor types are weird garbage
         cursor.execute(f"SELECT * FROM `{table_name}`;")
         records = list(cursor.fetchall())
+        cursor.close()
+        return records
+
+    @with_connect
+    def select_field(self, connection: mysql.connector.connection, table_name: str, column_name: str, column_value: str):
+        cursor = connection.cursor()  # Cursor types are weird garbage
+        cursor.execute(f"SELECT * FROM `{table_name}` WHERE `{column_name}= %s`;", column_value)
+        records = list(cursor.fetchall())
+        cursor.close()
         return records

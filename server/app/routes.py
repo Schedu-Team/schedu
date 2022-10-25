@@ -21,3 +21,8 @@ def status():
 @app.route("/api/v1/service/test", methods=["GET"])
 def test():
     return functions.test()
+
+
+@app.route("/api/v1/service/test2/<user_id>", methods=["GET"])
+def test2(user_id: int):
+    return functions.test_2(user_id)
