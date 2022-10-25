@@ -70,5 +70,5 @@ class DBManager:
     def select_all(self, connection: mysql.connector.connection, table_name: str):
         cursor = connection.cursor()   # Cursor types are weird garbage
         cursor.execute(f"SELECT * FROM `{table_name}`;")
-        records = cursor.fetch_all()
+        records = list(cursor.fetchall())
         return records
