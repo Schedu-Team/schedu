@@ -12,9 +12,10 @@ from exceptions.UserExceptions import ObjectNotFoundException
 from utils.encrypt import encrypt_password, check_password
 from config import Config
 from exceptions import KnownException
-from utils.utils import gen_token, full_stack
+from utils.utils import gen_token, full_stack, dict_to_json_str
 from flask import make_response
 from flask import Response
+from flask import __version__ as flask_version
 from typing import Callable, Tuple, Dict, Counter, List
 
 
@@ -40,6 +41,8 @@ def function_response(
         except Exception as e:
             status_code = 500
             data = {"Error": str(e), "Stack": full_stack()}
+        if flask_version <= '1.1':
+            data = dict_to_json_str(data)    # DAMN IT, FLASK 1.0!
         response = make_response(data)  # , status_code)
         response.status_code = status_code  # Damn it, Flask 1! TODO: Install Flask 2 on server
         response.headers["Content-Type"] = "application/json"

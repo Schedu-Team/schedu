@@ -1,9 +1,10 @@
-from typing import Tuple
+from typing import Tuple, Dict
 import random
 
 import datetime
 from datetime import datetime as DatetimeT
 import uuid
+import json
 import traceback
 import sys
 
@@ -31,3 +32,7 @@ def gen_token() -> Tuple[str, DatetimeT]:
 
 def gen_rand_key() -> int:
     return random.randint(-Config.RANDOM_BORDER, Config.RANDOM_BORDER)
+
+
+def dict_to_json_str(data: Dict) -> str:
+    return json.dumps(data)
