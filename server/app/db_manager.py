@@ -3,11 +3,34 @@ Inner class for all dirty work with database
 Because we are prohibited use SQLAlchemy
 """
 import logging
-from typing import Optional, List
+from typing import Optional, List, Callable
 
 import flask
 import mysql.connector
 
+from exceptions.DatabaseExceptions import ConnectionFailedException
+
+
+def with_connect(database_request: Callable) -> Callable:
+    def wrapped(self, *args, **kwargs):
+        connection: Optional[mysql.connector.connection] = None
+        while True:
+            try:
+                connection = self.connections.pop()
+            except IndexError:
+                if not self.create_connection():
+                    self.logging_device.error(f"Failed to create connection while processing request")
+                    raise ConnectionFailedException()
+                continue
+            break
+        if connection is None:
+            self.logging_device.error("Got connection, but it is None!?")
+            raise ConnectionFailedException()
+        result = database_request(self, connection, *args, **kwargs)
+        self.connections.append(connection)
+        return result
+
+    return wrapped
 
 class DBManager:
     def __init__(self):
@@ -42,3 +65,10 @@ class DBManager:
         self.logging_device.info(f"Successfully created connection")
         self.connections.append(connection)
         return True
+
+    @with_connect
+    def select_all(self, connection: mysql.connector.connection, table_name: str):
+        cursor = connection.cursor()   # Cursor types are weird garbage
+        cursor.execute(f"SELECT * FROM `{table_name}`;")
+        records = cursor.fetch_all()
+        return records

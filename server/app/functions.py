@@ -26,7 +26,7 @@ def function_response(
     :param result_function: function to wrap, returns code (Int) and data (JSON)
     :return: wrapped function, input stays same, exceptions handled, output converted to str(Response)
     Wrapper for all functions in routes
-    Gets code and data from the wrapped function and returns a [[app.functions.Response]] object, casted to string
+    Gets code and data from the wrapped function and returns a [[app.functions.Response]] object, cast to string
     If an exception occurs, its string goes to the data["Error"] and logs (to stdout)
     Catches DBExceptions with error codes 6xx (699 for unknown db error)
     Catches all other exceptions with error code 500
@@ -72,8 +72,8 @@ def test() -> Tuple[int, Dict]:
     :return: 200, dict of something
     """
     code = 200
-    logs = dbm.create_connection()
+    users = dbm.select_all("Users")
     data = {
-        "Logs": logs
+        "Users": users
     }
     return code, data
