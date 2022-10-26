@@ -21,6 +21,24 @@ def status():
     return functions.status()
 
 
+@app.route("/api/v1/service/test", methods=["GET"])
+def test():
+    return functions.test()
+
+
+@app.route("/api/v1/service/test2/<user_id>", methods=["GET"])
+def test2(user_id: int):
+    return functions.test_2(user_id)
+
+
+@app.route("/api/v1/service/test3", methods=["POST"])
+def test3():
+    first_name: str = request.get_json()["first_name"]
+    last_name: str = request.get_json()["last_name"]
+    graduation_year: int = int(request.get_json()["graduation_year"])
+    return functions.test_3(first_name, last_name, graduation_year)
+
+
 def process_add_entity_form_function(model_type: EntityModel, *args, **kwargs):
     @app.route(*args, **kwargs, methods=["POST"])
     def process_form_data():
