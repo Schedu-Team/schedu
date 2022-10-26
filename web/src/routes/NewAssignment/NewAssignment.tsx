@@ -1,25 +1,26 @@
-import React, { FC } from 'react';
-import styles from './NewAssignment.module.scss';
+import React, { FC } from "react";
+import { Form, FormControl, FormGroup, FormLabel } from "react-bootstrap";
+import Button from "react-bootstrap/Button";
 
 interface NewAssignmentProps {}
 
 const NewAssignment: FC<NewAssignmentProps> = () => (
-    <form>
-        <div className="container">
-            <div className='input-group date' id='datetimepicker1'>
-                <label htmlFor="timestamp">Description</label>
-                <input id="timestamp" type='text' className="form-control"/>
-                <span className="input-group-addon">
-                        <span className="glyphicon glyphicon-calendar"></span>
-                    </span>
-            </div>
-        </div>
-        <div className="form-group">
-            <label htmlFor="descriptionTextarea">Description</label>
-            <textarea className="form-control" id="descriptionTextarea" rows={3}></textarea>
-        </div>
-        <button type="submit" className="btn btn-primary mt-3">Submit</button>
-    </form>
+  <Form>
+    <h2>Create New Assigment</h2>
+    <FormGroup>
+      <FormLabel>Deadline</FormLabel>
+      <FormControl type="datetime-local" />
+    </FormGroup>
+    <FormGroup>
+      <FormLabel>Text</FormLabel>
+      <Form.Control as="textarea" />
+    </FormGroup>
+    <FormGroup>
+      <Button type="submit" className={"mt-3"}>
+        Submit
+      </Button>
+    </FormGroup>
+  </Form>
 );
 
 export default NewAssignment;

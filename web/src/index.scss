@@ -10,7 +10,7 @@ $secondary: #f5cf87ff;
 $primary-alt: #c75c5cff !important;
 $secondary-alt: #f5cf87ff;
 
-#login_button {
+.btn-primary {
   color: white !important;
 }
 
@@ -21,15 +21,15 @@ $secondary-alt: #f5cf87ff;
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  monospace;
 }
 
 .bi {
