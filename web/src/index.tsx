@@ -70,8 +70,8 @@ const router = createBrowserRouter(
                 <Link to={"/new/user"} className={"m-1"}>
                   <Button variant={"secondary"}>New User</Button>
                 </Link>
-                <Link to={"/new/member"} className={"m-1"}>
-                  <Button variant={"secondary"}>New Member</Button>
+                <Link to={"/new/public_group"} className={"m-1"}>
+                  <Button variant={"secondary"}>New Public Group</Button>
                 </Link>
                 <Link to={"/new/temporary_role"} className={"m-1"}>
                   <Button variant={"secondary"}>New Temporary Role</Button>
@@ -82,8 +82,8 @@ const router = createBrowserRouter(
                 </ButtonGroup>
                 <h5>Relations:</h5>
                 <ButtonGroup>
-                <Link to={"/new/public_group"} className={"m-1"}>
-                  <Button variant={"secondary"}>New Public Group</Button>
+                <Link to={"/new/member"} className={"m-1"}>
+                  <Button variant={"secondary"}>New Member</Button>
                 </Link>
                 <Link to={"user_created_assignment"} className={"m-1"}>
                   <Button variant={"secondary"}>New Assignment Creation</Button>
