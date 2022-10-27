@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import ToastHelper from "../../components/ToastHelper";
 import { AssignmentRequest } from "../../openapi";
 import { Api } from "../../index";
+import {ErrorToast, SuccessToast} from "../../components/MyToasts";
 
 interface NewAssignmentProps {}
 
@@ -40,6 +41,11 @@ function NewAssignment() {
           Submit
         </Button>
       </FormGroup>
+
+      {helper.showSuccess && (
+        <SuccessToast body={helper.successContent}></SuccessToast>
+      )}
+      {helper.showError && <ErrorToast body={helper.errorContent}></ErrorToast>}
     </Form>
   );
 }

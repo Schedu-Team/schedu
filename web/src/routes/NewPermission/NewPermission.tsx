@@ -5,6 +5,7 @@ import ToastHelper from "../../components/ToastHelper";
 import { PermissionRequest } from "../../openapi";
 import { Api } from "../../index";
 import { useForm } from "react-hook-form";
+import {ErrorToast, SuccessToast} from "../../components/MyToasts";
 
 interface NewPermissionProps {}
 
@@ -44,6 +45,11 @@ function NewPermission() {
           Submit
         </Button>
       </FormGroup>
+
+      {helper.showSuccess && (
+        <SuccessToast body={helper.successContent}></SuccessToast>
+      )}
+      {helper.showError && <ErrorToast body={helper.errorContent}></ErrorToast>}
     </Form>
   );
 }
