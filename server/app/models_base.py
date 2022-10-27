@@ -7,16 +7,16 @@ from exceptions.insert_exceptions import ConstraintInsertException
 class Field:
     def __init__(self,
                  name: str,
-                 value_type: Any,
+                 value_parser: Any,
                  foreign_key=None,
                  required=True,
                  db_auto=False,  # if true - entirely managed by db (e.g. PRIMARY KEY AUTOINCREMENT)
                  default_value: Any = None):
         self.name: str = name
-        self.value_type: Any = value_type
+        self.value_parser: Any = value_parser
         self.required: bool = required
         self.db_auto: bool = db_auto
-        self.default_value: value_type = default_value
+        self.default_value: Any = default_value
 
         # if managed by db - cannot ask user to enter the value & cannot fill the value ourselves
         assert (not self.db_auto or (not self.required and self.default_value is None))
@@ -38,7 +38,7 @@ class EntityModel:
     # check the constraints
     def __instance_guard(self, instance: Dict[str, Any]):
         for field in self.fields:
-            value: field.value_type = field.value_type(instance[field.name]) \
+            value: field.value_parser = field.value_parser(instance[field.name]) \
                 if field.name in instance and instance[field.name] is not None \
                 else field.default_value
 
@@ -52,7 +52,7 @@ class EntityModel:
         result: Dict[str, Any] = dict()
 
         for field in self.fields:
-            value: field.value_type = field.value_type(kwargs[field.name]) \
+            value: field.value_parser = field.value_parser(kwargs[field.name]) \
                 if field.name in kwargs \
                 else field.default_value
             result[field.name] = value
@@ -71,6 +71,7 @@ class EntityModel:
 
     def all(self):
         field_names: List[str] = list(map(lambda x: x.name, self.fields))
+        field_parsers: List = list(map(lambda x: x.value_parser, self.fields))
 
         query_res: List = dbm.select_all(
             self.table_name,
@@ -79,7 +80,7 @@ class EntityModel:
 
         instances: List[Dict[str, Any]] = []
         for row in query_res:
-            instance = dict(zip(field_names, row))
+            instance = dict(zip(field_names, [parser(value) for value, parser in zip(row, field_parsers)]))
             # self.__instance_guard(instance) # disabled as we assert that all instances are correct in the db
             instances.append(instance)
 

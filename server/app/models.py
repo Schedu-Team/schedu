@@ -1,6 +1,15 @@
 import datetime
+from typing import Any
+from dateutil import parser
 
 from app.models_base import Field, EntityModel
+
+
+def datetime_parser(x: Any) -> datetime.datetime:
+    if isinstance(x, int):
+        return datetime.datetime.fromtimestamp(x)
+    else:
+        return parser.parse(str(x))
 
 
 class UsersModel(EntityModel):
@@ -32,7 +41,7 @@ class AssignmentsModel(EntityModel):
         super().__init__(table_name="Assignments",
                          fields=[
                              Field("assignment_id", int, required=False, db_auto=True),
-                             Field("deadline", datetime.datetime.fromtimestamp),
+                             Field("deadline", datetime_parser),
                              Field("text", str)
                          ])
 
@@ -60,7 +69,7 @@ class PermissionsModel(EntityModel):
 
 class AttachmentsModel(EntityModel):
     def __init__(self):
-        super().__init__(table_name="Permissions",
+        super().__init__(table_name="Attachments",
                          fields=[
                              Field("attachment_id", int, required=False, db_auto=True),
                              Field("file_path", str),
@@ -82,7 +91,7 @@ class TemporaryRolesModel(EntityModel):
         super().__init__(table_name="TemporaryRoles",
                          fields=[
                              Field("role_id", int, foreign_key=RolesModel),
-                             Field("expiry_date", datetime.datetime.fromtimestamp)
+                             Field("expiry_date", datetime_parser)
                          ])
 
 
@@ -101,10 +110,10 @@ class RecurringAssignmentsModel(EntityModel):
 
 class DelayedAssignmentsModel(EntityModel):
     def __init__(self):
-        super().__init__(table_name="RecurringAssignments",
+        super().__init__(table_name="DelayedAssignments",
                          fields=[
                              Field("assignment_id", int, foreign_key=AssignmentsModel),
-                             Field("publication_date", datetime.datetime.fromtimestamp)
+                             Field("publication_date", datetime_parser)
                          ])
 
 
@@ -123,7 +132,7 @@ class Assignment_CREATED_BY_UserModel(EntityModel):
                          fields=[
                              Field("user_id", int, foreign_key=UsersModel),
                              Field("assignment_id", int, foreign_key=AssignmentsModel),
-                             Field("timestamp", datetime.datetime.fromtimestamp)
+                             Field("timestamp", datetime_parser)
                          ])
 
 
@@ -133,7 +142,7 @@ class User_HAS_COMPLETED_AssignmentModel(EntityModel):
                          fields=[
                              Field("user_id", int, foreign_key=UsersModel),
                              Field("assignment_id", int, foreign_key=AssignmentsModel),
-                             Field("timestamp", datetime.datetime.fromtimestamp)
+                             Field("timestamp", datetime_parser)
                          ])
 
 
