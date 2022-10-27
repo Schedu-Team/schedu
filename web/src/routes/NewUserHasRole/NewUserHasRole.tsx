@@ -5,20 +5,29 @@ import Button from "react-bootstrap/Button";
 import { Api } from "../../index";
 import ToastHelper from "../../components/ToastHelper";
 import { ErrorToast, SuccessToast } from "../../components/MyToasts";
+import {useForm} from "react-hook-form";
+import { UserHasRole } from '../../openapi';
 
 interface NewUserHasRoleProps {}
 
 const helper = new ToastHelper();
 
-async function submitForm() {}
+async function submitForm(data: UserHasRole) {
+  await helper.takeoverPromise(Api.userHasRoleAddPost(data))
+}
 
 function NewUserHasRole() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<UserHasRole>();
+
   const [roles, updateRoles] = useState([] as JSX.Element[]);
 
-  /*
   useEffect(() => {
     Api.rolesAllGet().then((res) => {
-      const objs = res.data.map((role) => (
+      const objs = res.data.response.map((role) => (
         <option value={role.role_id} key={"role_" + role.role_id}>
           {role.name}
         </option>
@@ -26,7 +35,7 @@ function NewUserHasRole() {
       updateRoles(objs);
     });
   }, []);
-  */
+  
   const [users, updateUsers] = useState([] as JSX.Element[]);
   useEffect(() => {
     Api.usersAllGet().then((res) => {
@@ -42,17 +51,15 @@ function NewUserHasRole() {
   return (
     <Form>
       <h2>Create New User Has Role Relation</h2>
-      <FormGroup>
+      <FormGroup onSubmit={handleSubmit((data) => submitForm(data))}>
         <FormLabel>User</FormLabel>
-        <FormSelect>
-          {/*<option disabled selected hidden>Select User</option>*/}
+        <FormSelect {...register("user_id", { required: true })}>
           {users}
         </FormSelect>
       </FormGroup>
       <FormGroup>
         <FormLabel>Role</FormLabel>
-        <FormSelect>
-          {/*<option disabled selected hidden>Select Group</option>*/}
+        <FormSelect {...register("role_id", { required: true })}>
           {roles}
         </FormSelect>
       </FormGroup>

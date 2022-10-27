@@ -54,14 +54,12 @@ function NewUserMemberOfGroup() {
       <FormGroup onSubmit={handleSubmit((data) => submitForm(data))}>
         <FormLabel>User</FormLabel>
         <FormSelect {...register("user_id", { required: true })}>
-          {/*<option disabled selected hidden>Select User</option>*/}
           {users}
         </FormSelect>
       </FormGroup>
       <FormGroup>
         <FormLabel>Group</FormLabel>
         <FormSelect {...register("group_id", { required: true })}>
-          {/*<option disabled selected hidden>Select Group</option>*/}
           {groups}
         </FormSelect>
       </FormGroup>

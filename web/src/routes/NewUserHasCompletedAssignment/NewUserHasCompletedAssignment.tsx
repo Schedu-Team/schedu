@@ -5,20 +5,29 @@ import Button from "react-bootstrap/Button";
 import { Api } from "../../index";
 import ToastHelper from "../../components/ToastHelper";
 import { ErrorToast, SuccessToast } from "../../components/MyToasts";
+import { Assignment, UserCompletedAssignment } from '../../openapi';
+import {useForm} from "react-hook-form";
 
 interface NewUserHasCompletedAssignmentProps {}
 
 const helper = new ToastHelper();
 
-async function submitForm() {}
+async function submitForm(data: UserCompletedAssignment) {
+  await helper.takeoverPromise(Api.userCompletedAssignmentAddPost(data))
+}
 
 function NewUserHasCompletedAssignment() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<UserCompletedAssignment>();
+
   const [assignments, updateAssignments] = useState([] as JSX.Element[]);
 
-  /*
   useEffect(() => {
     Api.assignmentsAllGet().then((res) => {
-      const objs = res.data.map((assignment) => (
+      const objs = res.data.response.map((assignment) => (
         <option value={assignment.assignment_id} key={"assignment_" + assignment.assignment_id}>
           {assignment.text.slice(0, Math.min(10, assignment.text.length - 1))}
         </option>
@@ -26,7 +35,7 @@ function NewUserHasCompletedAssignment() {
       updateAssignments(objs);
     });
   }, []);
-  */
+
   const [users, updateUsers] = useState([] as JSX.Element[]);
   useEffect(() => {
     Api.usersAllGet().then((res) => {
@@ -42,17 +51,15 @@ function NewUserHasCompletedAssignment() {
   return (
     <Form>
       <h2>Create New User Has Completed Assignment Relation</h2>
-      <FormGroup>
+      <FormGroup onSubmit={handleSubmit((data) => submitForm(data))}>
         <FormLabel>User</FormLabel>
-        <FormSelect>
-          {/*<option disabled selected hidden>Select User</option>*/}
+        <FormSelect {...register("user_id", { required: true })}>
           {users}
         </FormSelect>
       </FormGroup>
       <FormGroup>
         <FormLabel>Assignment</FormLabel>
-        <FormSelect>
-          {/*<option disabled selected hidden>Select Group</option>*/}
+        <FormSelect {...register("assignment_id", { required: true })}>
           {assignments}
         </FormSelect>
       </FormGroup>
