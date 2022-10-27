@@ -1,0 +1,835 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: "Schedu"
+  description: Polls is a simple API allowing consumers to view polls and vote in them.
+  license:
+    name: Apache 2.0
+    url: https://github.com/Schedu-Team/schedu/blob/master/LICENSE
+host: localhost
+basePath: /api/v1/
+schemes:
+- https
+- http
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /groups/add:
+    x-summary: Add groups
+    post:
+      summary: Create a New Group
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/GroupRequest'
+      responses:
+        200:
+          description: 'Successfully created'
+          schema:
+            type: object
+            properties:
+              insertion_id:
+                type: number
+              insertion_data:
+                $ref: '#/definitions/Group'
+          examples:
+            application/json:
+               insertion_id: 1
+               insertion_data:
+                group_id: 0
+                name: F22_CO-562-A
+                description: Second Year 2022 Operating Systems
+        400:
+          description: 'Bad request'
+  /groups/all:
+    x-summary: List all groups
+    get:
+      summary: List all groups
+      responses:
+        200:
+          description: 'Successfully lists all groups'
+          schema:
+            type: object
+            properties:
+              response:
+                type: array
+                items:
+                  $ref: '#/definitions/Group'
+            required:
+              - response
+          examples:
+            application/json:
+              response:
+                - group_id: 0
+                  name: F22_CO-562-A
+                  description: Second Year 2022 Operating Systems
+                - group_id: 1
+                  name: F22_CO-560-A
+                  description: Second Year 2022 Databases and Web Services
+        400:
+          description: 'Bad request'
+  /users/add:
+    x-summary: Add User
+    post:
+      summary: Create a New User
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UserRequest'
+      responses:
+        200:
+          description: 'Successfully created'
+          schema:
+            type: object
+            properties:
+              insertion_id:
+                type: number
+              insertion_data:
+                $ref: '#/definitions/User'
+          examples:
+            application/json:
+               insertion_id: 1
+               insertion_data:
+                user_id: 0
+                first_name: John
+                last_name: Smith
+                password_hash: aboba
+                password_salt: salt
+                email: john@smith.me
+                gradation_year: 2024
+        400:
+          description: 'Bad request'
+  /users/all:
+    x-summary: List all Users
+    get:
+      summary: List all Users
+      responses:
+        200:
+          description: 'Successfully lists all users'
+          schema:
+            type: object
+            properties:
+              response:
+                type: array
+                items:
+                  $ref: '#/definitions/User'
+            required:
+              - response
+          examples:
+            application/json:
+              response:
+                - user_id: 0
+                  first_name: John
+                  last_name: Smith
+                  password_hash: aboba
+                  password_salt: salt
+                  email: john@smith.me
+                  gradation_year: 2024
+                - user_id: 1
+                  first_name: Roger
+                  last_name: White
+                  password_hash: skibidi
+                  password_salt: pepper
+                  email: roger.white@gmail.com
+                  gradation_year: 2025
+        400:
+          description: 'Bad request'
+  /assignments/add:
+    x-summary: Add Assignment
+    post:
+      summary: Create a New Assignment
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/AssignmentRequest'
+      responses:
+        200:
+          description: 'Successfully created'
+          schema:
+            type: object
+            properties:
+              insertion_id:
+                type: number
+              insertion_data:
+                $ref: '#/definitions/Assignment'
+          examples:
+            application/json:
+               insertion_id: 1
+               insertion_data:
+                assignment_id: 1
+                deadline: "2022-10-27 23:59"
+                text: DBWS Assignment
+        400:
+          description: 'Bad request'
+  /assignments/all:
+    x-summary: List Assignments
+    get:
+      responses:
+        200:
+          description: 'Successfully created'
+          schema:
+            type: object
+            properties:
+              response:
+                type: array
+                items:
+                  $ref: '#/definitions/Assignment'
+            required:
+              - response
+          examples:
+            application/json:
+              response:
+                - assignment_id: 1
+                  deadline: "2022-10-27 23:59"
+                  text: DBWS Assignment
+                - assignment_id: 2
+                  deadline: "2022-11-17 17:30"
+                  text: OS Assignment
+        400:
+          description: 'Bad request'
+  /roles/add:
+    x-summary: Add Role
+    post:
+      summary: Create a New Role
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/RoleRequest'
+      responses:
+        200:
+          description: 'Successfully created'
+          schema:
+            type: object
+            properties:
+              insertion_id:
+                type: number
+              insertion_data:
+                $ref: '#/definitions/Role'
+          examples:
+            application/json:
+               insertion_id: 1
+               insertion_data:
+                role_id: 0
+                name: Admin
+                description: Has access to all resources
+        400:
+          description: 'Bad request'
+  /roles/all:
+    x-summary: List Roles
+    get:
+      responses:
+        200:
+          description: 'Successfully lists roles'
+          schema:
+            type: object
+            properties:
+              response:
+                type: array
+                items:
+                  $ref: '#/definitions/Role'
+            required:
+              - response
+          examples:
+            application/json:
+              response:
+                - role_id: 0
+                  name: Admin
+                  description: Has access to all resources
+                - role_id: 1
+                  name: Reader
+                  description: Can read resources
+        400:
+          description: 'Bad request'
+  /permissions/add:
+    x-summary: Add Permission
+    post:
+      summary: Create a New Permission
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/PermissionRequest'
+      responses:
+        200:
+          description: 'Successfully created'
+          schema:
+            type: object
+            properties:
+              insertion_id:
+                type: number
+              insertion_data:
+                $ref: '#/definitions/Permission'
+          examples:
+            application/json:
+               insertion_id: 1
+               insertion_data:
+                permission_id: 0
+                name: DeadlinesModify
+                description: Can change deadlines
+        400:
+          description: 'Bad request'
+  /permissions/all:
+    x-summary: List Permissions
+    get:
+      responses:
+        200:
+          description: 'Successfully lists permissions'
+          schema:
+            type: object
+            properties:
+              response:
+                type: array
+                items:
+                  $ref: '#/definitions/Permission'
+            required:
+              - response
+          examples:
+            application/json:
+              response:
+                - permission_id: 0
+                  name: DeadlinesModify
+                  description: Can change deadlines
+                - permission_id: 1
+                  name: AssignmentsCreate
+                  description: Can create assignments
+        400:
+          description: 'Bad request'
+  /public_groups/add:
+    x-summary: Add public group
+    post:
+      summary: Create a New Public Group
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/PublicGroup'
+      responses:
+        200:
+          description: 'Successfully created'
+          schema:
+            type: object
+            properties:
+              insertion_id:
+                type: number
+              insertion_data:
+                $ref: '#/definitions/PublicGroup'
+          examples:
+            application/json:
+               insertion_id: 1
+               insertion_data:
+                  group_id: 0
+                  default_role_id: 1
+        400:
+          description: 'Bad request'
+  /public_groups/all:
+    x-summary: List Public Groups
+    get:
+      responses:
+        200:
+          description: 'Successfully lists public groups'
+          schema:
+            type: object
+            properties:
+              response:
+                type: array
+                items:
+                  $ref: '#/definitions/PublicGroup'
+            required:
+              - response
+          examples:
+            application/json:
+              response:
+                - group_id: 0
+                  default_role_id: 1
+                - group_id: 1
+                  default_role_id: 2
+        400:
+          description: 'Bad request'
+  /temporary_roles/add:
+    x-summary: Add temporary role
+    post:
+      summary: Create a New Temporary role
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/TemporaryRole'
+      responses:
+        200:
+          description: 'Successfully created'
+          schema:
+            type: object
+            properties:
+              insertion_id:
+                type: number
+              insertion_data:
+                $ref: '#/definitions/TemporaryRole'
+          examples:
+            application/json:
+               insertion_id: 1
+               insertion_data:
+                  role_id: 0
+                  expiry_date: "2022-10-27T23:59"
+        400:
+          description: 'Bad request'
+  /delayed_assignments/add:
+    x-summary: Add delayed assignments
+    post:
+      summary: Create a New Delayed Assignments
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/DelayedAssignment'
+      responses:
+        200:
+          description: 'Successfully created'
+          schema:
+            type: object
+            properties:
+              insertion_id:
+                type: number
+              insertion_data:
+                $ref: '#/definitions/DelayedAssignment'
+          examples:
+            application/json:
+               insertion_id: 1
+               insertion_data:
+                  assignment_id: 0
+                  publication_date: "2022-10-27T23:59"
+        400:
+          description: 'Bad request'
+  /user_member_of_group/add:
+    x-summary: Add member
+    post:
+      summary: Create a Member
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Member'
+      responses:
+        200:
+          description: 'Successfully created'
+          schema:
+            type: object
+            properties:
+              insertion_id:
+                type: number
+              insertion_data:
+                $ref: '#/definitions/Member'
+          examples:
+            application/json:
+               insertion_id: 1
+               insertion_data:
+                  user_id: 0
+                  group_id: 1
+        400:
+          description: 'Bad request'
+  /user_has_role/add:
+    x-summary: Add UserHasRole
+    post:
+      summary: Create a New UserHasRole
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UserHasRole'
+      responses:
+        200:
+          description: 'Successfully created'
+          schema:
+            type: object
+            properties:
+              insertion_id:
+                type: number
+              insertion_data:
+                $ref: '#/definitions/UserHasRole'
+          examples:
+            application/json:
+               insertion_id: 1
+               insertion_data:
+                  user_id: 0
+                  role_id: 12
+        400:
+          description: 'Bad request'
+  /user_has_completed_assignment/add:
+    x-summary: Add completed assignment
+    post:
+      summary: Create a New Completed
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UserCompletedAssignment'
+      responses:
+        200:
+          description: 'Successfully created'
+          schema:
+            type: object
+            properties:
+              insertion_id:
+                type: number
+              insertion_data:
+                $ref: '#/definitions/UserCompletedAssignment'
+          examples:
+            application/json:
+               insertion_id: 1
+               insertion_data:
+                 user_id: 0
+                 assignment_id: 3
+                 timestamp: "2021-10-27T20:00"
+        400:
+          description: 'Bad request'
+  /assignment_created_by_user/add:
+    x-summary: Add completed assignment
+    post:
+      summary: Create a New Completed
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UserCreatedAssignment'
+      responses:
+        200:
+          description: 'Successfully created'
+          schema:
+            type: object
+            properties:
+              insertion_id:
+                type: number
+              insertion_data:
+                $ref: '#/definitions/UserCreatedAssignment'
+          examples:
+            application/json:
+               insertion_id: 1
+               insertion_data:
+                 user_id: 0
+                 assignment_id: 3
+                 timestamp: "2021-10-27T20:00"
+        400:
+          description: 'Bad request'
+definitions:
+  InsertionResult:
+    title: Result of a successful insertion to the database
+    type: object
+    properties:
+      inserted_id:
+        type: integer
+      inserted_data:
+        type: object
+    required:
+      - inserted_id
+      - inserted_data
+    example:
+      inserted_id: 1
+      inserted_data:
+        type: object
+        properties:
+  GroupRequest:
+    title: Group Request
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+    required:
+      - name
+      - description
+    example:
+      name: F22_CO-562-A
+      description: Second Year 2022 Operating Systems
+  Group:
+    title: Group
+    type: object
+    properties:
+      group_id:
+        type: number
+      name:
+        type: string
+      description:
+        type: string
+    required:
+      - group_id
+      - name
+      - description
+    example:
+      group_id: 0
+      name: F22_CO-562-A
+      description: Second Year 2022 Operating Systems
+  User:
+    title: User
+    type: object
+    properties:
+      user_id:
+        type: number
+      first_name:
+        type: string
+      last_name:
+        type: string
+      password_hash:
+        type: string
+      password_salt:
+        type: string
+      email:
+        type: string
+      graduation_year:
+        type: number
+    required:
+      - user_id
+      - first_name
+      - last_name
+      - password_hash
+      - password_salt
+      - email
+      - graduation_year
+    example:
+      user_id: 0
+      first_name: John
+      last_name: Smith
+      password_hash: aboba
+      password_salt: salt
+      email: john@smith.me
+      gradation_year: 2024
+  UserRequest:
+    title: UserRequest
+    type: object
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      password_hash:
+        type: string
+      password_salt:
+        type: string
+      email:
+        type: string
+      graduation_year:
+        type: number
+    required:
+      - first_name
+      - last_name
+      - password_hash
+      - password_salt
+      - email
+      - graduation_year
+    example:
+      first_name: John
+      last_name: Smith
+      password_hash: aboba
+      password_salt: salt
+      email: john@smith.me
+      gradation_year: 2024
+  Assignment:
+    type: object
+    properties:
+      assignment_id:
+        type: number
+      deadline:
+        type: string
+        format: date-time
+      text:
+        type: string
+    required:
+      - assignment_id
+      - deadline
+      - text
+    example:
+      assignment_id: 1
+      deadline: "2022-10-27T23:59"
+      text: DBWS Assignment
+  AssignmentRequest:
+    type: object
+    properties:
+      deadline:
+        type: string
+        format: date-time
+      text:
+        type: string
+    required:
+      - deadline
+      - text
+    example:
+      deadline: "2022-10-27T23:59"
+      text: DBWS Assignment
+  Role:
+    type: object
+    properties:
+      role_id:
+        type: number
+      name:
+        type: string
+      description:
+        type: string
+    required:
+      - role_id
+      - name
+      - description
+    example:
+      role_id: 0
+      name: Admin
+      description: Has access to all resources
+  RoleRequest:
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+    required:
+      - name
+      - description
+    example:
+      name: Admin
+      description: Has access to all resources
+  Permission:
+    type: object
+    properties:
+      permission_id:
+        type: number
+      name:
+        type: string
+      description:
+        type: string
+      type:
+        type: number
+    required:
+      - permission_id
+      - name
+      - description
+      - type
+    example:
+      permission_id: 0
+      name: DeadlinesModify
+      description: Can change deadlines
+  PermissionRequest:
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      type:
+        type: number
+    required:
+      - name
+      - description
+      - type
+    example:
+      name: DeadlinesModify
+      description: Can change deadlines
+  PublicGroup:
+    type: object
+    properties:
+      group_id:
+        type: number
+      default_role_id:
+        type: number
+    required:
+      - group_id
+      - default_role_id
+    example:
+      group_id: 0
+      default_role_id: 1
+  TemporaryRole:
+    type: object
+    properties:
+      role_id:
+        type: number
+      expiry_date:
+        type: string
+        format: date-time
+    required:
+      - role_id
+      - expiry_date
+    example:
+      role_id: 0
+      expiry_date: "2022-10-27T23:59"
+  DelayedAssignment:
+    type: object
+    properties:
+      assignment_id:
+        type: number
+      publication_date:
+        type: string
+        format: date-time
+    required:
+      - assignment_id
+      - publication_date
+    example:
+      assignment_id: 0
+      publication_date: "2022-10-27T23:59"
+  Member:
+    type: object
+    properties:
+      user_id:
+        type: number
+      group_id:
+        type: number
+    required:
+      - user_id
+      - group_id
+    example:
+      user_id: 0
+      group_id: 3
+  UserHasRole:
+    type: object
+    properties:
+      user_id:
+        type: number
+      role_id:
+        type: number
+    required:
+      - user_id
+      - role_id
+    example:
+      user_id: 0
+      role_id: 239
+  UserCompletedAssignment:
+    type: object
+    properties:
+      user_id:
+        type: number
+      assignment_id:
+        type: number
+      timestamp:
+        type: string
+        format: date-time
+    example:
+      user_id: 0
+      assignment_id: 3
+      timestamp: "2022-10-27T20:00"
+  UserCreatedAssignment:
+    type: object
+    properties:
+      user_id:
+        type: number
+      assignment_id:
+        type: number
+      timestamp:
+        type: string
+        format: date-time
+    example:
+      user_id: 0
+      assignment_id: 3
+      timestamp: "2022-10-27T20:00"
