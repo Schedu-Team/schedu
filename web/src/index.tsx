@@ -26,6 +26,7 @@ import { DefaultApi } from "./openapi";
 import { API_ENDPOINT } from "./react-app-env";
 import ToastHelper from "./components/ToastHelper";
 import {ErrorToast, SuccessToast} from "./components/MyToasts";
+import NewUserMemberOfGroup from "./routes/NewUserMemberOfGroup/NewUserMemberOfGroup";
 
 export const Api = new DefaultApi(undefined, API_ENDPOINT);
 
@@ -64,6 +65,9 @@ const router = createBrowserRouter(
                 <Link to={"/new/user"} className={"m-1"}>
                   <Button variant={"secondary"}>New User</Button>
                 </Link>
+                <Link to={"/new/member"} className={"m-1"}>
+                  <Button variant={"secondary"}>New Member</Button>
+                </Link>
               </ButtonGroup>
               <hr />
               <Outlet />
@@ -94,6 +98,10 @@ const router = createBrowserRouter(
               path: "role",
               element: <NewRole />,
             },
+            {
+              path: "member",
+              element: <NewUserMemberOfGroup />
+            }
           ],
         },
       ],

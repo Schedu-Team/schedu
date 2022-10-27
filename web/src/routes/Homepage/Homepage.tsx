@@ -19,14 +19,13 @@ function Homepage() {
         >
           <div className="d-flex w-100 justify-content-between">
             <h5 className="mb-1">{group.name}</h5>
-            <small>17 people</small>
+            <small>17 people</small> {/*TODO: calculate*/}
           </div>
           <p className="mb-1"> {group.description}...</p>
-          <small className="text-muted">Next deadline: in 2 days</small>
+          <small className="text-muted">Next deadline: in 2 days</small>{" "}
+          {/*TODO: calculate*/}
         </a>
       ));
-      console.log(res);
-      console.log(objs);
       updateGroups(objs);
     });
   }, []);
