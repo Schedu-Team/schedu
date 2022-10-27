@@ -1,89 +1,6 @@
-from typing import List, Any, Dict
+import datetime
 
-from app.extensions import dbm
-from exceptions.insert_exceptions import ConstraintInsertException
-
-
-class Field:
-    def __init__(self,
-                 name: str,
-                 value_type: Any,
-                 foreign_key=None,
-                 required=True,
-                 db_auto=False,  # if true - entirely managed by db (e.g. PRIMARY KEY AUTOINCREMENT)
-                 default_value: Any = None):
-        self.name: str = name
-        self.value_type: Any = value_type
-        self.required: bool = required
-        self.db_auto: bool = db_auto
-        self.default_value: value_type = default_value
-
-        # if managed by db - cannot ask user to enter the value & cannot fill the value ourselves
-        assert (not self.db_auto or (not self.required and self.default_value is None))
-
-        # pair of (<referenced entity>, <referenced field name>)
-        # default value of <referenced filed name> is self.name
-        self.foreign_key: (EntityModel, str)
-        if isinstance(foreign_key, EntityModel):
-            self.foreign_key = (foreign_key, self.name)
-        else:
-            self.foreign_key = foreign_key
-
-
-class EntityModel:
-    def __init__(self, table_name: str, fields: List[Field]):
-        self.table_name: str = table_name
-        self.fields: List[Field] = fields
-
-    # check the constraints
-    def __instance_guard(self, instance: Dict[str, Any]):
-        for field in self.fields:
-            value: field.value_type = field.value_type(instance[field.name]) \
-                if field.name in instance and instance[field.name] is not None \
-                else field.default_value
-
-            if field.required and value is None:
-                raise ConstraintInsertException("Field `%s` is required" % (field.name,))
-
-            if field.db_auto and value is not None:
-                raise ConstraintInsertException("Field `%s` is entirely managed by the DB" % (field.name,))
-
-    def instance(self, **kwargs) -> Dict[str, Any]:
-        result: Dict[str, Any] = dict()
-
-        for field in self.fields:
-            value: field.value_type = field.value_type(kwargs[field.name]) \
-                if field.name in kwargs \
-                else field.default_value
-            result[field.name] = value
-
-        self.__instance_guard(result)
-
-        return result
-
-    def add(self, instance: Dict[str, Any]) -> int:
-        self.__instance_guard(instance)
-
-        return dbm.insert_into(
-            table_name=self.table_name,
-            column_value_pairs=instance
-        )
-
-    def all(self):
-        field_names: List[str] = list(map(lambda x: x.name, self.fields))
-
-        query_res: List = dbm.select_all(
-            self.table_name,
-            fields=field_names
-        )
-
-        instances: List[Dict[str, Any]] = []
-        for row in query_res:
-            instance = dict(zip(field_names, row))
-            # self.__instance_guard(instance) # disabled as we assert that all instances are correct in the db
-            instances.append(instance)
-
-        return instances
+from app.models_base import Field, EntityModel
 
 
 class UsersModel(EntityModel):
@@ -107,4 +24,159 @@ class GroupsModel(EntityModel):
                              Field("group_id", int, required=False, db_auto=True),
                              Field("name", str),
                              Field("description", str)
+                         ])
+
+
+class AssignmentsModel(EntityModel):
+    def __init__(self):
+        super().__init__(table_name="Assignments",
+                         fields=[
+                             Field("assignment_id", int, required=False, db_auto=True),
+                             Field("deadline", datetime.datetime.fromtimestamp),
+                             Field("text", str)
+                         ])
+
+
+class RolesModel(EntityModel):
+    def __init__(self):
+        super().__init__(table_name="Roles",
+                         fields=[
+                             Field("role_id", int, required=False, db_auto=True),
+                             Field("name", str),
+                             Field("description", str)
+                         ])
+
+
+class PermissionsModel(EntityModel):
+    def __init__(self):
+        super().__init__(table_name="Permissions",
+                         fields=[
+                             Field("permission_id", int, required=False, db_auto=True),
+                             Field("name", str),
+                             Field("description", str),
+                             Field("type", int)
+                         ])
+
+
+class AttachmentsModel(EntityModel):
+    def __init__(self):
+        super().__init__(table_name="Permissions",
+                         fields=[
+                             Field("attachment_id", int, required=False, db_auto=True),
+                             Field("file_path", str),
+                             Field("file_type", str)
+                         ])
+
+
+class PublicGroupsModel(EntityModel):
+    def __init__(self):
+        super().__init__(table_name="PublicGroups",
+                         fields=[
+                             Field("group_id", int, foreign_key=GroupsModel),
+                             Field("default_role_id", int, foreign_key=(RolesModel, "role_id"))
+                         ])
+
+
+class TemporaryRolesModel(EntityModel):
+    def __init__(self):
+        super().__init__(table_name="TemporaryRoles",
+                         fields=[
+                             Field("role_id", int, foreign_key=RolesModel),
+                             Field("expiry_date", datetime.datetime.fromtimestamp)
+                         ])
+
+
+class RecurringAssignmentsModel(EntityModel):
+    def __init__(self):
+        super().__init__(table_name="RecurringAssignments",
+                         fields=[
+                             Field("assignment_id", int, foreign_key=AssignmentsModel),
+                             Field("interval", int)
+                         ])
+
+
+# class RecurringAssignmentsIgnoredDaysModel(EntityModel):
+#     pass
+
+
+class DelayedAssignmentsModel(EntityModel):
+    def __init__(self):
+        super().__init__(table_name="RecurringAssignments",
+                         fields=[
+                             Field("assignment_id", int, foreign_key=AssignmentsModel),
+                             Field("publication_date", datetime.datetime.fromtimestamp)
+                         ])
+
+
+class User_MEMBER_OF_GroupModel(EntityModel):
+    def __init__(self):
+        super().__init__(table_name="User_MEMBER_OF_Group",
+                         fields=[
+                             Field("user_id", int, foreign_key=UsersModel),
+                             Field("group_id", int, foreign_key=GroupsModel)
+                         ])
+
+
+class Assignment_CREATED_BY_UserModel(EntityModel):
+    def __init__(self):
+        super().__init__(table_name="Assignment_CREATED_BY_User",
+                         fields=[
+                             Field("user_id", int, foreign_key=UsersModel),
+                             Field("assignment_id", int, foreign_key=AssignmentsModel),
+                             Field("timestamp", datetime.datetime.fromtimestamp)
+                         ])
+
+
+class User_HAS_COMPLETED_AssignmentModel(EntityModel):
+    def __init__(self):
+        super().__init__(table_name="User_HAS_COMPLETED_Assignment",
+                         fields=[
+                             Field("user_id", int, foreign_key=UsersModel),
+                             Field("assignment_id", int, foreign_key=AssignmentsModel),
+                             Field("timestamp", datetime.datetime.fromtimestamp)
+                         ])
+
+
+class Assignment_HAS_AttachmentModel(EntityModel):
+    def __init__(self):
+        super().__init__(table_name="Assignment_HAS_Attachment",
+                         fields=[
+                             Field("attachment_id", int, foreign_key=AttachmentsModel),
+                             Field("assignment_id", int, foreign_key=AssignmentsModel)
+                         ])
+
+
+class Assignment_RELATES_TO_GroupModel(EntityModel):
+    def __init__(self):
+        super().__init__(table_name="Assignment_RELATES_TO_Group",
+                         fields=[
+                             Field("group_id", int, foreign_key=GroupsModel),
+                             Field("assignment_id", int, foreign_key=AssignmentsModel)
+                         ])
+
+
+class Role_INCLUDES_PermissionModel(EntityModel):
+    def __init__(self):
+        super().__init__(table_name="Role_INCLUDES_Permission",
+                         fields=[
+                             Field("role_id", int, foreign_key=RolesModel),
+                             Field("permission_id", int, foreign_key=PermissionsModel)
+                         ])
+
+
+class Role_RELATES_TO_GroupModel(EntityModel):
+    def __init__(self):
+        super().__init__(table_name="Role_RELATES_TO_Group",
+                         fields=[
+                             Field("role_id", int, foreign_key=RolesModel),
+                             Field("group_id", int, foreign_key=GroupsModel)
+                         ])
+
+
+class User_HAS_RoleModel(EntityModel):
+    def __init__(self):
+        super().__init__(table_name="User_HAS_Role",
+                         fields=[
+                             Field("role_id", int, foreign_key=RolesModel),
+                             Field("user_id", int, foreign_key=UsersModel)
                          ])

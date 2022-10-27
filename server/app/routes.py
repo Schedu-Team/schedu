@@ -7,7 +7,7 @@ import app.functions as functions
 from app import app
 
 from app.forms import Form
-from app.models import EntityModel
+from app.models_base import EntityModel
 from app.storage import Storage
 from utils.utils import remove_none_from_dict
 
