@@ -68,9 +68,15 @@ class DBManager:
         return True
 
     @with_connect
-    def select_all(self, connection: mysql.connector.connection, table_name: str) -> List:
+    def select_all(self, connection: mysql.connector.connection, table_name: str,
+                   fields: List[str] = None) -> List:
         cursor = connection.cursor()  # Cursor types are weird garbage
-        cursor.execute(f"SELECT * FROM `{table_name}`;")
+
+        fields_in_query = "*" if fields is None else ", ".join(
+            map(lambda x: f"`{x}`", fields)
+        )
+        cursor.execute(f"SELECT {fields_in_query} FROM `{table_name}`;")
+
         records = list(cursor.fetchall())
         cursor.close()
         return records

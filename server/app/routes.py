@@ -48,6 +48,8 @@ def extract_form_data():
         return request.get_json()
 
 
+# FORM HANDLERS
+
 def add_entity_form_handler_function(model_type: EntityModel, *args, **kwargs):
     @app.route(*args, **kwargs, methods=["POST"], endpoint="process_add_%s_form_function" % (model_type.table_name,))
     @functions.function_response
@@ -66,3 +68,21 @@ def add_entity_form_handler_function(model_type: EntityModel, *args, **kwargs):
 
 add_entity_form_handler_function(Storage.Users, "/api/v1/users/add")
 add_entity_form_handler_function(Storage.Groups, "/api/v1/groups/add")
+
+
+# GET ALL
+
+def get_all_entities_function(model_type: EntityModel, *args, **kwargs):
+    @app.route(*args, **kwargs, methods=["GET"], endpoint="get_all_%s" % (model_type.table_name,))
+    @functions.function_response
+    def process_form_data():
+        result = model_type.all()
+        return 200, {
+            'response': result
+        }
+
+    return process_form_data
+
+
+get_all_entities_function(Storage.Users, "/api/v1/users/all")
+get_all_entities_function(Storage.Groups, "/api/v1/groups/all")

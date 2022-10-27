@@ -69,6 +69,22 @@ class EntityModel:
             column_value_pairs=instance
         )
 
+    def all(self):
+        field_names: List[str] = list(map(lambda x: x.name, self.fields))
+
+        query_res: List = dbm.select_all(
+            self.table_name,
+            fields=field_names
+        )
+
+        instances: List[Dict[str, Any]] = []
+        for row in query_res:
+            instance = dict(zip(field_names, row))
+            # self.__instance_guard(instance) # disabled as we assert that all instances are correct in the db
+            instances.append(instance)
+
+        return instances
+
 
 class UsersModel(EntityModel):
     def __init__(self):
@@ -79,7 +95,7 @@ class UsersModel(EntityModel):
                              Field("password_salt", str),
                              Field("first_name", str),
                              Field("last_name", str),
-                             Field("year_of_study", int, required=False),
+                             Field("graduation_year", int, required=False),
                              Field("email", str, required=False),
                          ])
 
