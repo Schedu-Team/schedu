@@ -46,6 +46,7 @@ def function_response(
         response = make_response(data)  # , status_code)
         response.status_code = status_code  # Damn it, Flask 1! TODO: Install Flask 2 on server
         response.headers["Content-Type"] = "application/json"
+        response.headers["Access-Control-Allow-Origin"] = "*"
         return response
 
     return wrapped
