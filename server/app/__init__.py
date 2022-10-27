@@ -2,6 +2,7 @@ import flask.app
 from flask import Flask
 from app.extensions import storage, dbm
 from logging.config import dictConfig
+from flask_cors import CORS
 # from app import models
 from config import Config
 
@@ -39,5 +40,6 @@ def config_logging():
 
 config_logging()
 app = create_app()
+cors = CORS(app, resources={r"*": {"origins": "*"}})
 
 from app import routes  # FIXME: ugly.
