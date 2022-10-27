@@ -51,6 +51,7 @@ const router = createBrowserRouter(
           element: (
             <div>
               <h3>Maintenance page</h3>
+              <h5>Entities:</h5>
               <ButtonGroup>
                 <Link to={"/new/assignment"} className={"m-1"}>
                   <Button variant={"secondary"}>New Assignment</Button>
@@ -64,6 +65,8 @@ const router = createBrowserRouter(
                 <Link to={"/new/role"} className={"m-1"}>
                   <Button variant={"secondary"}>New Role</Button>
                 </Link>
+                </ButtonGroup>
+                <ButtonGroup>
                 <Link to={"/new/user"} className={"m-1"}>
                   <Button variant={"secondary"}>New User</Button>
                 </Link>
@@ -76,6 +79,9 @@ const router = createBrowserRouter(
                 <Link to={"/new/delayed_assignment"} className={"m-1"}>
                   <Button variant={"secondary"}>New Delayed Assignment</Button>
                 </Link>
+                </ButtonGroup>
+                <h5>Relations:</h5>
+                <ButtonGroup>
                 <Link to={"/new/public_group"} className={"m-1"}>
                   <Button variant={"secondary"}>New Public Group</Button>
                 </Link>
