@@ -47,26 +47,26 @@ function App() {
                   Home
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink
-                  to="/assignments"
-                  className={({ isActive }) =>
-                    "nav-link " + (isActive ? activeClassName : "")
-                  }
-                >
-                  Assignments
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink
-                  to="/groups"
-                  className={({ isActive }) =>
-                    "nav-link " + (isActive ? activeClassName : "")
-                  }
-                >
-                  Groups
-                </NavLink>
-              </li>
+              {/*<li className="nav-item">*/}
+              {/*  <NavLink*/}
+              {/*    to="/assignments"*/}
+              {/*    className={({ isActive }) =>*/}
+              {/*      "nav-link " + (isActive ? activeClassName : "")*/}
+              {/*    }*/}
+              {/*  >*/}
+              {/*    Assignments*/}
+              {/*  </NavLink>*/}
+              {/*</li>*/}
+              {/*<li className="nav-item">*/}
+              {/*  <NavLink*/}
+              {/*    to="/groups"*/}
+              {/*    className={({ isActive }) =>*/}
+              {/*      "nav-link " + (isActive ? activeClassName : "")*/}
+              {/*    }*/}
+              {/*  >*/}
+              {/*    Groups*/}
+              {/*  </NavLink>*/}
+              {/*</li>*/}
               <li className="nav-item">
                 <NavLink
                   to="/new"

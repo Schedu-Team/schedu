@@ -1,0 +1,75 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: "Schedu"
+  description: Polls is a simple API allowing consumers to view polls and vote in them.
+  license:
+    name: Apache 2.0
+    url: https://github.com/Schedu-Team/schedu/blob/master/LICENSE
+host: localhost
+basePath: /api/v1/
+schemes:
+- https
+- http
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /groups/add:
+    x-summary: Add groups
+    post:
+      description: >-
+        You can create a Group
+      summary: Create a New Group
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/GroupRequest'
+      responses:
+        200:
+          description: 'Successfully created'
+          schema:
+            $ref: '#/definitions/InsertionResult'
+          examples:
+            application/json:
+               insertion_id: 1
+               insertion_data:
+                name: F22_CO-562-A
+                description: Second Year 2022 Operating Systems
+        400:
+          description: 'Bad request'
+definitions:
+  InsertionResult:
+    title: Result of a successful insertion to the database
+    type: object
+    properties:
+      inserted_id:
+        type: integer
+      inserted_data:
+        type: object
+    required:
+      - inserted_id
+      - inserted_data
+    example:
+      inserted_id: 1
+      inserted_data:
+        type: object
+        properties:
+          
+  GroupRequest:
+    title: Group Request
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+    required:
+      - name
+      - description
+    example:
+      name: F22_CO-562-A
+      description: Second Year 2022 Operating Systems
