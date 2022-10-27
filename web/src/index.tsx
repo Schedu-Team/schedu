@@ -19,6 +19,10 @@ import NewUser from "./routes/NewUser/NewUser";
 import NewPermission from "./routes/NewPermission/NewPermission";
 import NewRole from "./routes/NewRole/NewRole";
 import NewAttachment from "./routes/NewAttachment/NewAttachment";
+import NewUserHasRole from "./routes/NewUserHasRole/NewUserHasRole";
+import NewUserHasCompletedAssignment from "./routes/NewUserHasCompletedAssignment/NewUserHasCompletedAssignment";
+import NewAssignmentCreatedByUser from "./routes/NewAssignmentCreatedByUser/NewAssignmentCreatedByUser";
+import NewUserMemberOfGroup from "./routes/NewUserMemberOfGroup/NewUserMemberOfGroup";
 import { ButtonGroup } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import NotFound from "./routes/NotFound/NotFound";
@@ -26,7 +30,6 @@ import { DefaultApi } from "./openapi";
 import { API_ENDPOINT } from "./react-app-env";
 import ToastHelper from "./components/ToastHelper";
 import {ErrorToast, SuccessToast} from "./components/MyToasts";
-import NewUserMemberOfGroup from "./routes/NewUserMemberOfGroup/NewUserMemberOfGroup";
 
 export const Api = new DefaultApi(undefined, API_ENDPOINT);
 
@@ -68,6 +71,15 @@ const router = createBrowserRouter(
                 <Link to={"/new/member"} className={"m-1"}>
                   <Button variant={"secondary"}>New Member</Button>
                 </Link>
+                <Link to={"/user_created_assignment/add"} className={"m-1"}>
+                  <Button variant={"secondary"}>New Assignment Creation</Button>
+                </Link>
+                <Link to={"/user_has_role/add"} className={"m-1"}>
+                  <Button variant={"secondary"}>New User Has Role</Button>
+                </Link>
+                <Link to={"/user_has_completed_assignment/add"} className={"m-1"}>
+                  <Button variant={"secondary"}>New Assignment Completion</Button>
+                </Link>
               </ButtonGroup>
               <hr />
               <Outlet />
@@ -101,6 +113,18 @@ const router = createBrowserRouter(
             {
               path: "member",
               element: <NewUserMemberOfGroup />
+            },
+            {
+              path: "user_created_assignment",
+              element: <NewAssignmentCreatedByUser />
+            },
+            {
+              path: "user_has_role",
+              element: <NewUserHasRole />
+            },
+            {
+              path: "user_has_completed_assignment",
+              element: <NewUserHasCompletedAssignment />
             }
           ],
         },
