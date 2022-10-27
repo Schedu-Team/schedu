@@ -18,7 +18,9 @@ import NewGroup from "./routes/NewGroup/NewGroup";
 import NewUser from "./routes/NewUser/NewUser";
 import NewPermission from "./routes/NewPermission/NewPermission";
 import NewRole from "./routes/NewRole/NewRole";
-import NewAttachment from "./routes/NewAttachment/NewAttachment";
+import NewDelayedAssignment from "./routes/NewDelayedAssignment/NewDelayedAssignment";
+import NewTemporaryRole from "./routes/NewTemporaryRole/NewTemporaryRole";
+import NewPublicGroup from "./routes/NewPublicGroup/NewPublicGroup";
 import NewUserHasRole from "./routes/NewUserHasRole/NewUserHasRole";
 import NewUserHasCompletedAssignment from "./routes/NewUserHasCompletedAssignment/NewUserHasCompletedAssignment";
 import NewAssignmentCreatedByUser from "./routes/NewAssignmentCreatedByUser/NewAssignmentCreatedByUser";
@@ -68,6 +70,15 @@ const router = createBrowserRouter(
                 <Link to={"/new/member"} className={"m-1"}>
                   <Button variant={"secondary"}>New Member</Button>
                 </Link>
+                <Link to={"/new/temporary_role"} className={"m-1"}>
+                  <Button variant={"secondary"}>New Temporary Role</Button>
+                </Link>
+                <Link to={"/new/delayed_assignment"} className={"m-1"}>
+                  <Button variant={"secondary"}>New Delayed Assignment</Button>
+                </Link>
+                <Link to={"/new/public_group"} className={"m-1"}>
+                  <Button variant={"secondary"}>New Public Group</Button>
+                </Link>
                 <Link to={"user_created_assignment"} className={"m-1"}>
                   <Button variant={"secondary"}>New Assignment Creation</Button>
                 </Link>
@@ -102,6 +113,18 @@ const router = createBrowserRouter(
             {
               path: "role",
               element: <NewRole />,
+            },
+            {
+              path: "temporary_role",
+              element: <NewTemporaryRole />,
+            },
+            {
+              path: "delayed_assignment",
+              element: <NewDelayedAssignment />
+            },
+            {
+              path: "public_group",
+              element: <NewPublicGroup />
             },
             {
               path: "member",
