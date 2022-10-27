@@ -41,7 +41,7 @@ def function_response(
         except Exception as e:
             status_code = 500
             data = {"Error": str(e), "Stack": full_stack()}
-        if flask_version <= '1.1':
+        if 1 or flask_version <= '1.1':
             data = dict_to_json_str(data)  # DAMN IT, FLASK 1.0!
         response = make_response(data)  # , status_code)
         response.status_code = status_code  # Damn it, Flask 1! TODO: Install Flask 2 on server

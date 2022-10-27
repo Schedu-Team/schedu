@@ -8,6 +8,7 @@ import json
 import traceback
 import sys
 
+import app
 from config import Config
 
 
@@ -34,8 +35,20 @@ def gen_rand_key() -> int:
     return random.randint(-Config.RANDOM_BORDER, Config.RANDOM_BORDER)
 
 
+def dict_items_to_json_serializable(data: Dict):
+    keys = list(data.keys())
+    for k in keys:
+        if isinstance(data[k], dict):
+            data[k] = dict_items_to_json_serializable(data[k])
+        if isinstance(data[k], list):
+            data[k] = [dict_items_to_json_serializable(e) for e in data[k]]
+        elif isinstance(data[k], datetime.datetime):
+            data[k] = data[k].strftime("%Y-%m-%dT%H:%M")
+    return data
+
+
 def dict_to_json_str(data: Dict) -> str:
-    return json.dumps(data)
+    return json.dumps(dict_items_to_json_serializable(data))
 
 
 def remove_none_from_dict(data: Dict[Any, Any]) -> Dict[Any, Any]:
