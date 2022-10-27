@@ -2,6 +2,7 @@ from typing import Any, List, Dict
 
 from app.extensions import dbm
 from exceptions.insert_exceptions import ConstraintInsertException
+from utils.utils import remove_none_from_dict
 
 
 class Field:
@@ -13,7 +14,7 @@ class Field:
                  db_auto=False,  # if true - entirely managed by db (e.g. PRIMARY KEY AUTOINCREMENT)
                  default_value: Any = None):
         self.name: str = name
-        self.value_parser: Any = value_parser
+        self.value_parser: Any = lambda x: value_parser(x) if x is not None else None
         self.required: bool = required
         self.db_auto: bool = db_auto
         self.default_value: Any = default_value
@@ -84,4 +85,4 @@ class EntityModel:
             # self.__instance_guard(instance) # disabled as we assert that all instances are correct in the db
             instances.append(instance)
 
-        return instances
+        return [remove_none_from_dict(e) for e in instances]
