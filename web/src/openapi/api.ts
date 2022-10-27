@@ -24,6 +24,31 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 /**
  * 
  * @export
+ * @interface Group
+ */
+export interface Group {
+    /**
+     * 
+     * @type {number}
+     * @memberof Group
+     */
+    'group_id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Group
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Group
+     */
+    'description': string;
+}
+/**
+ * 
+ * @export
  * @interface GroupRequest
  */
 export interface GroupRequest {
@@ -39,6 +64,25 @@ export interface GroupRequest {
      * @memberof GroupRequest
      */
     'description': string;
+}
+/**
+ * 
+ * @export
+ * @interface GroupsAddPost200Response
+ */
+export interface GroupsAddPost200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof GroupsAddPost200Response
+     */
+    'insertion_id'?: number;
+    /**
+     * 
+     * @type {Group}
+     * @memberof GroupsAddPost200Response
+     */
+    'insertion_data'?: Group;
 }
 /**
  * 
@@ -59,6 +103,117 @@ export interface InsertionResult {
      */
     'inserted_data': object;
 }
+/**
+ * 
+ * @export
+ * @interface User
+ */
+export interface User {
+    /**
+     * 
+     * @type {number}
+     * @memberof User
+     */
+    'user_id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof User
+     */
+    'first_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof User
+     */
+    'last_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof User
+     */
+    'password_hash': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof User
+     */
+    'password_salt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof User
+     */
+    'email': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof User
+     */
+    'graduation_year': number;
+}
+/**
+ * 
+ * @export
+ * @interface UserRequest
+ */
+export interface UserRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof UserRequest
+     */
+    'first_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserRequest
+     */
+    'last_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserRequest
+     */
+    'password_hash': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserRequest
+     */
+    'password_salt': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserRequest
+     */
+    'email': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserRequest
+     */
+    'graduation_year': number;
+}
+/**
+ * 
+ * @export
+ * @interface UsersAddPost200Response
+ */
+export interface UsersAddPost200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof UsersAddPost200Response
+     */
+    'insertion_id'?: number;
+    /**
+     * 
+     * @type {User}
+     * @memberof UsersAddPost200Response
+     */
+    'insertion_data'?: User;
+}
 
 /**
  * DefaultApi - axios parameter creator
@@ -67,7 +222,7 @@ export interface InsertionResult {
 export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * You can create a Group
+         * 
          * @summary Create a New Group
          * @param {GroupRequest} body 
          * @param {*} [options] Override http request option.
@@ -102,6 +257,102 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary List all groups
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        groupsAllGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/groups/all`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a New User
+         * @param {UserRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersAddPost: async (body: UserRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('usersAddPost', 'body', body)
+            const localVarPath = `/users/add`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary List all Users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersAllGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/users/all`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -113,14 +364,45 @@ export const DefaultApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration)
     return {
         /**
-         * You can create a Group
+         * 
          * @summary Create a New Group
          * @param {GroupRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async groupsAddPost(body: GroupRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InsertionResult>> {
+        async groupsAddPost(body: GroupRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GroupsAddPost200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.groupsAddPost(body, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary List all groups
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async groupsAllGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Group>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.groupsAllGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create a New User
+         * @param {UserRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersAddPost(body: UserRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsersAddPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.usersAddPost(body, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary List all Users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async usersAllGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<User>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.usersAllGet(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -134,14 +416,42 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = DefaultApiFp(configuration)
     return {
         /**
-         * You can create a Group
+         * 
          * @summary Create a New Group
          * @param {GroupRequest} body 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        groupsAddPost(body: GroupRequest, options?: any): AxiosPromise<InsertionResult> {
+        groupsAddPost(body: GroupRequest, options?: any): AxiosPromise<GroupsAddPost200Response> {
             return localVarFp.groupsAddPost(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List all groups
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        groupsAllGet(options?: any): AxiosPromise<Array<Group>> {
+            return localVarFp.groupsAllGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a New User
+         * @param {UserRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersAddPost(body: UserRequest, options?: any): AxiosPromise<UsersAddPost200Response> {
+            return localVarFp.usersAddPost(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary List all Users
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        usersAllGet(options?: any): AxiosPromise<Array<User>> {
+            return localVarFp.usersAllGet(options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -154,7 +464,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
  */
 export class DefaultApi extends BaseAPI {
     /**
-     * You can create a Group
+     * 
      * @summary Create a New Group
      * @param {GroupRequest} body 
      * @param {*} [options] Override http request option.
@@ -163,6 +473,40 @@ export class DefaultApi extends BaseAPI {
      */
     public groupsAddPost(body: GroupRequest, options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).groupsAddPost(body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List all groups
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public groupsAllGet(options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).groupsAllGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a New User
+     * @param {UserRequest} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public usersAddPost(body: UserRequest, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).usersAddPost(body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary List all Users
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public usersAllGet(options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).usersAllGet(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -2,14 +2,17 @@ import React from "react";
 import { Form, FormControl, FormGroup, FormLabel } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { Api } from "../../index";
-import { FieldValues, useForm } from "react-hook-form";
-import {GroupRequest} from "../../openapi";
+import { useForm } from "react-hook-form";
+import { GroupRequest } from "../../openapi";
+import ToastHelper from "../../components/ToastHelper";
+import { ErrorToast, SuccessToast } from "../../components/MyToasts";
 
 interface NewGroupProps {}
 
+const helper = new ToastHelper();
+
 async function submitForm(groupRequest: GroupRequest) {
-  const res = await Api.groupsAddPost(groupRequest);
-  console.log(res);
+  await helper.takeoverPromise(Api.groupsAddPost(groupRequest));
 }
 
 function NewGroup() {
@@ -38,6 +41,11 @@ function NewGroup() {
           Submit
         </Button>
       </FormGroup>
+
+      {helper.showSuccess && (
+        <SuccessToast body={helper.successContent}></SuccessToast>
+      )}
+      {helper.showError && <ErrorToast body={helper.errorContent}></ErrorToast>}
     </Form>
   );
 }

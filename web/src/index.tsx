@@ -24,6 +24,8 @@ import Button from "react-bootstrap/Button";
 import NotFound from "./routes/NotFound/NotFound";
 import { DefaultApi } from "./openapi";
 import { API_ENDPOINT } from "./react-app-env";
+import ToastHelper from "./components/ToastHelper";
+import {ErrorToast, SuccessToast} from "./components/MyToasts";
 
 export const Api = new DefaultApi(undefined, API_ENDPOINT);
 

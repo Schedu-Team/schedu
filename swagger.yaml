@@ -19,8 +19,6 @@ paths:
   /groups/add:
     x-summary: Add groups
     post:
-      description: >-
-        You can create a Group
       summary: Create a New Group
       parameters:
         - name: body
@@ -32,13 +30,102 @@ paths:
         200:
           description: 'Successfully created'
           schema:
-            $ref: '#/definitions/InsertionResult'
+            type: object
+            properties:
+              insertion_id:
+                type: number
+              insertion_data:
+                $ref: '#/definitions/Group'
           examples:
             application/json:
                insertion_id: 1
                insertion_data:
+                group_id: 0
                 name: F22_CO-562-A
                 description: Second Year 2022 Operating Systems
+        400:
+          description: 'Bad request'
+  /groups/all:
+    x-summary: List all groups
+    get:
+      summary: List all groups
+      responses:
+        200:
+          description: 'Successfully lists all groups'
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Group'
+          examples:
+            application/json:
+              - group_id: 0
+                name: F22_CO-562-A
+                description: Second Year 2022 Operating Systems
+              - group_id: 1
+                name: F22_CO-560-A
+                description: Second Year 2022 Databases and Web Services
+        400:
+          description: 'Bad request'
+  /users/add:
+    x-summary: Add User
+    post:
+      summary: Create a New User
+      parameters:
+        - name: body
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/UserRequest'
+      responses:
+        200:
+          description: 'Successfully created'
+          schema:
+            type: object
+            properties:
+              insertion_id:
+                type: number
+              insertion_data:
+                $ref: '#/definitions/User'
+          examples:
+            application/json:
+               insertion_id: 1
+               insertion_data:
+                user_id: 0
+                first_name: John
+                last_name: Smith
+                password_hash: aboba
+                password_salt: salt
+                email: john@smith.me
+                gradation_year: 2024
+        400:
+          description: 'Bad request'
+  /users/all:
+    x-summary: List all Users
+    get:
+      summary: List all Users
+      responses:
+        200:
+          description: 'Successfully lists all users'
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+          examples:
+            application/json:
+              - user_id: 0
+                first_name: John
+                last_name: Smith
+                password_hash: aboba
+                password_salt: salt
+                email: john@smith.me
+                gradation_year: 2024
+              - user_id: 1
+                first_name: Roger
+                last_name: White
+                password_hash: skibidi
+                password_salt: pepper
+                email: roger.white@gmail.com
+                gradation_year: 2025
         400:
           description: 'Bad request'
 definitions:
@@ -58,7 +145,6 @@ definitions:
       inserted_data:
         type: object
         properties:
-          
   GroupRequest:
     title: Group Request
     type: object
@@ -73,3 +159,85 @@ definitions:
     example:
       name: F22_CO-562-A
       description: Second Year 2022 Operating Systems
+  Group:
+    title: Group
+    type: object
+    properties:
+      group_id:
+        type: number
+      name:
+        type: string
+      description:
+        type: string
+    required:
+      - group_id
+      - name
+      - description
+    example:
+      group_id: 0
+      name: F22_CO-562-A
+      description: Second Year 2022 Operating Systems
+  User:
+    title: User
+    type: object
+    properties:
+      user_id:
+        type: number
+      first_name:
+        type: string
+      last_name:
+        type: string
+      password_hash:
+        type: string
+      password_salt:
+        type: string
+      email:
+        type: string
+      graduation_year:
+        type: number
+    required:
+      - user_id
+      - first_name
+      - last_name
+      - password_hash
+      - password_salt
+      - email
+      - graduation_year
+    example:
+      user_id: 0
+      first_name: John
+      last_name: Smith
+      password_hash: aboba
+      password_salt: salt
+      email: john@smith.me
+      gradation_year: 2024
+  UserRequest:
+    title: UserRequest
+    type: object
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      password_hash:
+        type: string
+      password_salt:
+        type: string
+      email:
+        type: string
+      graduation_year:
+        type: number
+    required:
+      - first_name
+      - last_name
+      - password_hash
+      - password_salt
+      - email
+      - graduation_year
+    example:
+      first_name: John
+      last_name: Smith
+      password_hash: aboba
+      password_salt: salt
+      email: john@smith.me
+      gradation_year: 2024
