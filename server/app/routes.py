@@ -3,11 +3,13 @@ from collections import Counter
 from typing import List, Dict
 
 from flask import request
-import server.app.functions as functions
-from server.app import app
+import app.functions as functions
+from app import app
 
-from server.app.forms import Form
-from server.app.models import EntityModel, Users, Groups
+from app.forms import Form
+from app.models import EntityModel
+from app.storage import Storage
+from utils.utils import remove_none_from_dict
 
 
 @app.route("/")
@@ -40,13 +42,20 @@ def test3():
 
 
 def process_add_entity_form_function(model_type: EntityModel, *args, **kwargs):
-    @app.route(*args, **kwargs, methods=["POST"])
+    @app.route(*args, **kwargs, methods=["POST"], endpoint="process_add_%s_form_function" % (model_type.table_name,))
+    @functions.function_response
     def process_form_data():
         form: Form = Form(model_type)
         form_data: Dict = request.form
         obj: Dict = form.parse(form_data)
-        model_type.add(obj)
+        added_id = model_type.add(obj)
+        return 200, {
+            'inserted_id': added_id,
+            'inserted_data': remove_none_from_dict(obj)
+        }
+
+    return process_form_data
 
 
-process_add_entity_form_function(Users, "/users/add")
-process_add_entity_form_function(Groups, "/groups/add")
+process_add_entity_form_function(Storage.Users, "/api/v1/users/add")
+process_add_entity_form_function(Storage.Groups, "/api/v1/groups/add")

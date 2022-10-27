@@ -1,2 +1,6 @@
+from app import models
+
+
 class Storage:
-    pass
+    Users = models.UsersModel()
+    Groups = models.GroupsModel()

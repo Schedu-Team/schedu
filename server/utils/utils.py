@@ -1,4 +1,4 @@
-from typing import Tuple, Dict
+from typing import Tuple, Dict, Any
 import random
 
 import datetime
@@ -36,3 +36,13 @@ def gen_rand_key() -> int:
 
 def dict_to_json_str(data: Dict) -> str:
     return json.dumps(data)
+
+
+def remove_none_from_dict(data: Dict[Any, Any]) -> Dict[Any, Any]:
+    to_remove = []
+    for k in data:
+        if data[k] is None:
+            to_remove.append(k)
+    for k in to_remove:
+        del data[k]
+    return data

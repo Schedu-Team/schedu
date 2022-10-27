@@ -72,9 +72,9 @@ def test() -> Tuple[int, Dict]:
     :return: 200, dict of something
     """
     code = 200
-    users = dbm.select_all("Users")
+    users = dbm.select_all("Groups")
     data = {
-        "Users": users
+        "Groups": users
     }
     return code, data
 

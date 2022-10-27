@@ -1,14 +1,27 @@
-from typing import List, Any, Mapping, Dict
+from typing import List, Any, Dict
+
+from app.extensions import dbm
+from exceptions.insert_exceptions import ConstraintInsertException
 
 
 class Field:
-    # default_value = None => filed is required
-    def __init__(self, name: str, value_type: Any, foreign_key=None, default_value: Any = None):
+    def __init__(self,
+                 name: str,
+                 value_type: Any,
+                 foreign_key=None,
+                 required=True,
+                 db_auto=False,  # if true - entirely managed by db (e.g. PRIMARY KEY AUTOINCREMENT)
+                 default_value: Any = None):
         self.name: str = name
         self.value_type: Any = value_type
+        self.required: bool = required
+        self.db_auto: bool = db_auto
         self.default_value: value_type = default_value
 
-        # pair of (<referenced entity>, <referenced filed name>)
+        # if managed by db - cannot ask user to enter the value & cannot fill the value ourselves
+        assert (not self.db_auto or (not self.required and self.default_value is None))
+
+        # pair of (<referenced entity>, <referenced field name>)
         # default value of <referenced filed name> is self.name
         self.foreign_key: (EntityModel, str)
         if isinstance(foreign_key, EntityModel):
@@ -18,8 +31,22 @@ class Field:
 
 
 class EntityModel:
-    def __init__(self, fields: List[Field]):
+    def __init__(self, table_name: str, fields: List[Field]):
+        self.table_name: str = table_name
         self.fields: List[Field] = fields
+
+    # check the constraints
+    def __instance_guard(self, instance: Dict[str, Any]):
+        for field in self.fields:
+            value: field.value_type = field.value_type(instance[field.name]) \
+                if field.name in instance and instance[field.name] is not None \
+                else field.default_value
+
+            if field.required and value is None:
+                raise ConstraintInsertException("Field `%s` is required" % (field.name,))
+
+            if field.db_auto and value is not None:
+                raise ConstraintInsertException("Field `%s` is entirely managed by the DB" % (field.name,))
 
     def instance(self, **kwargs) -> Dict[str, Any]:
         result: Dict[str, Any] = dict()
@@ -28,40 +55,40 @@ class EntityModel:
             value: field.value_type = field.value_type(kwargs[field.name]) \
                 if field.name in kwargs \
                 else field.default_value
-
-            if value is None:
-                raise ValueError("Field `%s` is required" % (field.name,))
             result[field.name] = value
+
+        self.__instance_guard(result)
 
         return result
 
-    def add(self, instance: Dict[str, Any]):
-        raise NotImplementedError("TODO")
+    def add(self, instance: Dict[str, Any]) -> int:
+        self.__instance_guard(instance)
+
+        return dbm.insert_into(
+            table_name=self.table_name,
+            column_value_pairs=instance
+        )
 
 
 class UsersModel(EntityModel):
     def __init__(self):
-        super().__init__(fields=[
-            Field("user_id", int),
-            Field("password_hash", str),
-            Field("password_salt", str),
-            Field("first_name", str),
-            Field("last_name", str),
-            Field("year_of_study", int),
-            Field("email", str),
-        ])
-
-
-Users = UsersModel()
+        super().__init__(table_name="Users",
+                         fields=[
+                             Field("user_id", int, required=False, db_auto=True),
+                             Field("password_hash", str),
+                             Field("password_salt", str),
+                             Field("first_name", str),
+                             Field("last_name", str),
+                             Field("year_of_study", int, required=False),
+                             Field("email", str, required=False),
+                         ])
 
 
 class GroupsModel(EntityModel):
     def __init__(self):
-        super().__init__(fields=[
-            Field("group_id", int),
-            Field("name", str),
-            Field("description", str)
-        ])
-
-
-Groups = GroupsModel()
+        super().__init__(table_name="Groups",
+                         fields=[
+                             Field("group_id", int, required=False, db_auto=True),
+                             Field("name", str),
+                             Field("description", str)
+                         ])

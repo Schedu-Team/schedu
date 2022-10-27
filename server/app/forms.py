@@ -1,6 +1,6 @@
 from typing import Dict, Any
 
-from server.app.models import EntityModel
+from app.models import EntityModel
 
 
 class Form:
