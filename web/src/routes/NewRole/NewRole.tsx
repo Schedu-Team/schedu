@@ -1,26 +1,46 @@
-import React, { FC } from "react";
+import React from "react";
 import { Form, FormControl, FormGroup, FormLabel } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import ToastHelper from "../../components/ToastHelper";
+import { RoleRequest } from "../../openapi";
+import { Api } from "../../index";
+import { useForm } from "react-hook-form";
 
 interface NewRoleProps {}
 
-const NewRole: FC<NewRoleProps> = () => (
-  <Form>
-    <h2>Create New Role</h2>
-    <FormGroup>
-      <FormLabel>Name</FormLabel>
-      <FormControl type="text" />
-    </FormGroup>
-    <FormGroup>
-      <FormLabel>Description</FormLabel>
-      <Form.Control as="textarea" />
-    </FormGroup>
-    <FormGroup>
-      <Button type="submit" className={"mt-3"}>
-        Submit
-      </Button>
-    </FormGroup>
-  </Form>
-);
+const helper = new ToastHelper();
+
+async function submitForm(data: RoleRequest) {
+  await helper.takeoverPromise(Api.rolesAddPost(data));
+}
+
+function NewRole() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RoleRequest>();
+  return (
+    <Form onSubmit={handleSubmit((data) => submitForm(data))}>
+      <h2>Create New Role</h2>
+      <FormGroup>
+        <FormLabel>Name</FormLabel>
+        <FormControl type="text" {...register("name", { required: true })} />
+      </FormGroup>
+      <FormGroup>
+        <FormLabel>Description</FormLabel>
+        <Form.Control
+          as="textarea"
+          {...register("description", { required: true })}
+        />
+      </FormGroup>
+      <FormGroup>
+        <Button type="submit" className={"mt-3"}>
+          Submit
+        </Button>
+      </FormGroup>
+    </Form>
+  );
+}
 
 export default NewRole;

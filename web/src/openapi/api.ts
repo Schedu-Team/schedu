@@ -288,12 +288,6 @@ export interface Permission {
 export interface PermissionRequest {
     /**
      * 
-     * @type {number}
-     * @memberof PermissionRequest
-     */
-    'permission_id'?: number;
-    /**
-     * 
      * @type {string}
      * @memberof PermissionRequest
      */
@@ -425,12 +419,6 @@ export interface Role {
  * @interface RoleRequest
  */
 export interface RoleRequest {
-    /**
-     * 
-     * @type {number}
-     * @memberof RoleRequest
-     */
-    'role_id'?: number;
     /**
      * 
      * @type {string}

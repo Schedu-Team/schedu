@@ -687,8 +687,6 @@ definitions:
   RoleRequest:
     type: object
     properties:
-      role_id:
-        type: number
       name:
         type: string
       description:
@@ -722,8 +720,6 @@ definitions:
   PermissionRequest:
     type: object
     properties:
-      permission_id:
-        type: number
       name:
         type: string
       description:

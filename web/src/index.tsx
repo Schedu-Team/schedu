@@ -53,9 +53,6 @@ const router = createBrowserRouter(
                 <Link to={"/new/assignment"} className={"m-1"}>
                   <Button variant={"secondary"}>New Assignment</Button>
                 </Link>
-                <Link to={"/new/attachment"} className={"m-1"}>
-                  <Button variant={"secondary"}>New Attachment</Button>
-                </Link>
                 <Link to={"/new/group"} className={"m-1"}>
                   <Button variant={"secondary"}>New Group</Button>
                 </Link>
@@ -89,10 +86,6 @@ const router = createBrowserRouter(
             {
               path: "assignment",
               element: <NewAssignment />,
-            },
-            {
-              path: "attachment",
-              element: <NewAttachment />,
             },
             {
               path: "group",
