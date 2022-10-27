@@ -41,12 +41,19 @@ def test3():
     return functions.test_3(first_name, last_name, graduation_year)
 
 
+def extract_form_data():
+    if request.content_type == "application/x-www-form-urlencoded":
+        return request.form
+    else:
+        return request.get_json()
+
+
 def add_entity_form_handler_function(model_type: EntityModel, *args, **kwargs):
     @app.route(*args, **kwargs, methods=["POST"], endpoint="process_add_%s_form_function" % (model_type.table_name,))
     @functions.function_response
     def process_form_data():
         form: Form = Form(model_type)
-        form_data: Dict = request.form
+        form_data: Dict = extract_form_data()
         obj: Dict = form.parse(form_data)
         added_id = model_type.add(obj)
         return 200, {
