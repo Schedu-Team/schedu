@@ -30,7 +30,7 @@ function NewAssignmentCreatedByUser() {
   const [users, updateUsers] = useState([] as JSX.Element[]);
   useEffect(() => {
     Api.usersAllGet().then((res) => {
-      const objs = res.data.map((user) => (
+      const objs = res.data.response.map((user) => (
         <option value={user.user_id} key={"user_" + user.user_id}>
           {user.first_name + " " + user.last_name}
         </option>

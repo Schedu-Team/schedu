@@ -4,19 +4,23 @@ import Button from "react-bootstrap/Button";
 import { Api } from "../../index";
 import ToastHelper from "../../components/ToastHelper";
 import { ErrorToast, SuccessToast } from "../../components/MyToasts";
+import {Member} from "../../openapi";
+import {useForm} from "react-hook-form";
 
 interface NewUserMemberOfGroupProps {}
 
 const helper = new ToastHelper();
 
-async function submitForm() {}
+async function submitForm(data: Member) {
+  await helper.takeoverPromise(Api.userMemberOfGroupAddPost(data))
+}
 
 function NewUserMemberOfGroup() {
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  // } = useForm<GroupRequest>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Member>();
 
   const [groups, updateGroups] = useState([] as JSX.Element[]);
 
@@ -47,16 +51,16 @@ function NewUserMemberOfGroup() {
   return (
     <Form>
       <h2>Create New Member</h2>
-      <FormGroup>
+      <FormGroup onSubmit={handleSubmit((data) => submitForm(data))}>
         <FormLabel>User</FormLabel>
-        <FormSelect>
+        <FormSelect {...register("user_id", { required: true })}>
           {/*<option disabled selected hidden>Select User</option>*/}
           {users}
         </FormSelect>
       </FormGroup>
       <FormGroup>
         <FormLabel>Group</FormLabel>
-        <FormSelect>
+        <FormSelect {...register("group_id", { required: true })}>
           {/*<option disabled selected hidden>Select Group</option>*/}
           {groups}
         </FormSelect>
