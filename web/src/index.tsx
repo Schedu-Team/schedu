@@ -71,13 +71,13 @@ const router = createBrowserRouter(
                 <Link to={"/new/member"} className={"m-1"}>
                   <Button variant={"secondary"}>New Member</Button>
                 </Link>
-                <Link to={"/user_created_assignment/add"} className={"m-1"}>
+                <Link to={"user_created_assignment"} className={"m-1"}>
                   <Button variant={"secondary"}>New Assignment Creation</Button>
                 </Link>
-                <Link to={"/user_has_role/add"} className={"m-1"}>
+                <Link to={"user_has_role"} className={"m-1"}>
                   <Button variant={"secondary"}>New User Has Role</Button>
                 </Link>
-                <Link to={"/user_has_completed_assignment/add"} className={"m-1"}>
+                <Link to={"user_has_completed_assignment"} className={"m-1"}>
                   <Button variant={"secondary"}>New Assignment Completion</Button>
                 </Link>
               </ButtonGroup>
