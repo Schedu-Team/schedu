@@ -45,7 +45,7 @@ function NewTemporaryRole() {
         <FormControl type="datetime-local" {...register("expiry_date", { required: true })} />
       </FormGroup>
       <FormGroup>
-        <FormLabel>Role id</FormLabel>
+        <FormLabel>Role</FormLabel>
         <FormSelect {...register("role_id", { required: true })}>
           {roles}
         </FormSelect>

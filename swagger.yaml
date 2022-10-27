@@ -63,12 +63,13 @@ paths:
               - response
           examples:
             application/json:
-              - group_id: 0
-                name: F22_CO-562-A
-                description: Second Year 2022 Operating Systems
-              - group_id: 1
-                name: F22_CO-560-A
-                description: Second Year 2022 Databases and Web Services
+              response:
+                - group_id: 0
+                  name: F22_CO-562-A
+                  description: Second Year 2022 Operating Systems
+                - group_id: 1
+                  name: F22_CO-560-A
+                  description: Second Year 2022 Databases and Web Services
         400:
           description: 'Bad request'
   /users/add:
@@ -122,20 +123,21 @@ paths:
               - response
           examples:
             application/json:
-              - user_id: 0
-                first_name: John
-                last_name: Smith
-                password_hash: aboba
-                password_salt: salt
-                email: john@smith.me
-                gradation_year: 2024
-              - user_id: 1
-                first_name: Roger
-                last_name: White
-                password_hash: skibidi
-                password_salt: pepper
-                email: roger.white@gmail.com
-                gradation_year: 2025
+              response:
+                - user_id: 0
+                  first_name: John
+                  last_name: Smith
+                  password_hash: aboba
+                  password_salt: salt
+                  email: john@smith.me
+                  gradation_year: 2024
+                - user_id: 1
+                  first_name: Roger
+                  last_name: White
+                  password_hash: skibidi
+                  password_salt: pepper
+                  email: roger.white@gmail.com
+                  gradation_year: 2025
         400:
           description: 'Bad request'
   /assignments/add:
@@ -184,12 +186,13 @@ paths:
               - response
           examples:
             application/json:
-              - assignment_id: 1
-                deadline: "2022-10-27 23:59"
-                text: DBWS Assignment
-              - assignment_id: 2
-                deadline: "2022-11-17 17:30"
-                text: OS Assignment
+              response:
+                - assignment_id: 1
+                  deadline: "2022-10-27 23:59"
+                  text: DBWS Assignment
+                - assignment_id: 2
+                  deadline: "2022-11-17 17:30"
+                  text: OS Assignment
         400:
           description: 'Bad request'
   /roles/add:
@@ -238,12 +241,13 @@ paths:
               - response
           examples:
             application/json:
-              - role_id: 0
-                name: Admin
-                description: Has access to all resources
-              - role_id: 1
-                name: Reader
-                description: Can read resources
+              response:
+                - role_id: 0
+                  name: Admin
+                  description: Has access to all resources
+                - role_id: 1
+                  name: Reader
+                  description: Can read resources
         400:
           description: 'Bad request'
   /permissions/add:
@@ -292,12 +296,13 @@ paths:
               - response
           examples:
             application/json:
-              - permission_id: 0
-                name: DeadlinesModify
-                description: Can change deadlines
-              - permission_id: 1
-                name: AssignmentsCreate
-                description: Can create assignments
+              response:
+                - permission_id: 0
+                  name: DeadlinesModify
+                  description: Can change deadlines
+                - permission_id: 1
+                  name: AssignmentsCreate
+                  description: Can create assignments
         400:
           description: 'Bad request'
   /public_groups/add:
