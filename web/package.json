@@ -34,7 +34,7 @@
     "sort-by": "^1.2.0",
     "transition": "^0.1.1",
     "typescript": "^4.8.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^3.0.4"
   },
   "scripts": {
     "start": "react-scripts start",
