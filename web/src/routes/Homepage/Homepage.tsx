@@ -10,7 +10,7 @@ function Homepage() {
   // load all groups
   useEffect(() => {
     Api.groupsAllGet().then((res) => {
-      const objs = res.data.map((group) => (
+      const objs = res.data.response.map((group) => (
         <a
           href="#"
           className="list-group-item list-group-item-action"

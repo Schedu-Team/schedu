@@ -23,7 +23,7 @@ function NewUserMemberOfGroup() {
   // load all groups
   useEffect(() => {
     Api.groupsAllGet().then((res) => {
-      const objs = res.data.map((group) => (
+      const objs = res.data.response.map((group) => (
         <option value={group.group_id} key={"group_" + group.group_id}>
           {group.name}
         </option>
@@ -35,7 +35,7 @@ function NewUserMemberOfGroup() {
   const [users, updateUsers] = useState([] as JSX.Element[]);
   useEffect(() => {
     Api.usersAllGet().then((res) => {
-      const objs = res.data.map((user) => (
+      const objs = res.data.response.map((user) => (
         <option value={user.user_id} key={"user_" + user.user_id}>
           {user.first_name + " " + user.last_name}
         </option>

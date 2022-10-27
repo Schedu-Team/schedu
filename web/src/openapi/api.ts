@@ -24,6 +24,120 @@ import { BASE_PATH, COLLECTION_FORMATS, RequestArgs, BaseAPI, RequiredError } fr
 /**
  * 
  * @export
+ * @interface Assignment
+ */
+export interface Assignment {
+    /**
+     * 
+     * @type {number}
+     * @memberof Assignment
+     */
+    'assignment_id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Assignment
+     */
+    'deadline': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Assignment
+     */
+    'text': string;
+}
+/**
+ * 
+ * @export
+ * @interface AssignmentRequest
+ */
+export interface AssignmentRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AssignmentRequest
+     */
+    'deadline': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof AssignmentRequest
+     */
+    'text': string;
+}
+/**
+ * 
+ * @export
+ * @interface AssignmentsAddPost200Response
+ */
+export interface AssignmentsAddPost200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof AssignmentsAddPost200Response
+     */
+    'insertion_id'?: number;
+    /**
+     * 
+     * @type {Assignment}
+     * @memberof AssignmentsAddPost200Response
+     */
+    'insertion_data'?: Assignment;
+}
+/**
+ * 
+ * @export
+ * @interface AssignmentsAllGet200Response
+ */
+export interface AssignmentsAllGet200Response {
+    /**
+     * 
+     * @type {Array<Assignment>}
+     * @memberof AssignmentsAllGet200Response
+     */
+    'response': Array<Assignment>;
+}
+/**
+ * 
+ * @export
+ * @interface DelayedAssignment
+ */
+export interface DelayedAssignment {
+    /**
+     * 
+     * @type {number}
+     * @memberof DelayedAssignment
+     */
+    'assignment_id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof DelayedAssignment
+     */
+    'publication_date': string;
+}
+/**
+ * 
+ * @export
+ * @interface DelayedAssignmentsAddPost200Response
+ */
+export interface DelayedAssignmentsAddPost200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof DelayedAssignmentsAddPost200Response
+     */
+    'insertion_id'?: number;
+    /**
+     * 
+     * @type {DelayedAssignment}
+     * @memberof DelayedAssignmentsAddPost200Response
+     */
+    'insertion_data'?: DelayedAssignment;
+}
+/**
+ * 
+ * @export
  * @interface Group
  */
 export interface Group {
@@ -87,6 +201,19 @@ export interface GroupsAddPost200Response {
 /**
  * 
  * @export
+ * @interface GroupsAllGet200Response
+ */
+export interface GroupsAllGet200Response {
+    /**
+     * 
+     * @type {Array<Group>}
+     * @memberof GroupsAllGet200Response
+     */
+    'response': Array<Group>;
+}
+/**
+ * 
+ * @export
  * @interface InsertionResult
  */
 export interface InsertionResult {
@@ -102,6 +229,290 @@ export interface InsertionResult {
      * @memberof InsertionResult
      */
     'inserted_data': object;
+}
+/**
+ * 
+ * @export
+ * @interface Member
+ */
+export interface Member {
+    /**
+     * 
+     * @type {number}
+     * @memberof Member
+     */
+    'user_id': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof Member
+     */
+    'group_id': number;
+}
+/**
+ * 
+ * @export
+ * @interface Permission
+ */
+export interface Permission {
+    /**
+     * 
+     * @type {number}
+     * @memberof Permission
+     */
+    'permission_id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Permission
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Permission
+     */
+    'description': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Permission
+     */
+    'type': number;
+}
+/**
+ * 
+ * @export
+ * @interface PermissionRequest
+ */
+export interface PermissionRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof PermissionRequest
+     */
+    'permission_id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof PermissionRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PermissionRequest
+     */
+    'description': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof PermissionRequest
+     */
+    'type': number;
+}
+/**
+ * 
+ * @export
+ * @interface PermissionsAddPost200Response
+ */
+export interface PermissionsAddPost200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof PermissionsAddPost200Response
+     */
+    'insertion_id'?: number;
+    /**
+     * 
+     * @type {Permission}
+     * @memberof PermissionsAddPost200Response
+     */
+    'insertion_data'?: Permission;
+}
+/**
+ * 
+ * @export
+ * @interface PermissionsAllGet200Response
+ */
+export interface PermissionsAllGet200Response {
+    /**
+     * 
+     * @type {Array<Permission>}
+     * @memberof PermissionsAllGet200Response
+     */
+    'response': Array<Permission>;
+}
+/**
+ * 
+ * @export
+ * @interface PublicGroup
+ */
+export interface PublicGroup {
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicGroup
+     */
+    'group_id': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicGroup
+     */
+    'default_role_id': number;
+}
+/**
+ * 
+ * @export
+ * @interface PublicGroupsAddPost200Response
+ */
+export interface PublicGroupsAddPost200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof PublicGroupsAddPost200Response
+     */
+    'insertion_id'?: number;
+    /**
+     * 
+     * @type {PublicGroup}
+     * @memberof PublicGroupsAddPost200Response
+     */
+    'insertion_data'?: PublicGroup;
+}
+/**
+ * 
+ * @export
+ * @interface PublicGroupsAllGet200Response
+ */
+export interface PublicGroupsAllGet200Response {
+    /**
+     * 
+     * @type {Array<PublicGroup>}
+     * @memberof PublicGroupsAllGet200Response
+     */
+    'response': Array<PublicGroup>;
+}
+/**
+ * 
+ * @export
+ * @interface Role
+ */
+export interface Role {
+    /**
+     * 
+     * @type {number}
+     * @memberof Role
+     */
+    'role_id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof Role
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof Role
+     */
+    'description': string;
+}
+/**
+ * 
+ * @export
+ * @interface RoleRequest
+ */
+export interface RoleRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof RoleRequest
+     */
+    'role_id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof RoleRequest
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof RoleRequest
+     */
+    'description': string;
+}
+/**
+ * 
+ * @export
+ * @interface RolesAddPost200Response
+ */
+export interface RolesAddPost200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof RolesAddPost200Response
+     */
+    'insertion_id'?: number;
+    /**
+     * 
+     * @type {Role}
+     * @memberof RolesAddPost200Response
+     */
+    'insertion_data'?: Role;
+}
+/**
+ * 
+ * @export
+ * @interface RolesAllGet200Response
+ */
+export interface RolesAllGet200Response {
+    /**
+     * 
+     * @type {Array<Role>}
+     * @memberof RolesAllGet200Response
+     */
+    'response': Array<Role>;
+}
+/**
+ * 
+ * @export
+ * @interface TemporaryRole
+ */
+export interface TemporaryRole {
+    /**
+     * 
+     * @type {number}
+     * @memberof TemporaryRole
+     */
+    'role_id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TemporaryRole
+     */
+    'expiry_date': string;
+}
+/**
+ * 
+ * @export
+ * @interface TemporaryRolesAddPost200Response
+ */
+export interface TemporaryRolesAddPost200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof TemporaryRolesAddPost200Response
+     */
+    'insertion_id'?: number;
+    /**
+     * 
+     * @type {TemporaryRole}
+     * @memberof TemporaryRolesAddPost200Response
+     */
+    'insertion_data'?: TemporaryRole;
 }
 /**
  * 
@@ -151,6 +562,151 @@ export interface User {
      * @memberof User
      */
     'graduation_year': number;
+}
+/**
+ * 
+ * @export
+ * @interface UserCompletedAssignment
+ */
+export interface UserCompletedAssignment {
+    /**
+     * 
+     * @type {number}
+     * @memberof UserCompletedAssignment
+     */
+    'user_id'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserCompletedAssignment
+     */
+    'assignment_id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserCompletedAssignment
+     */
+    'timestamp'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface UserCompletedAssignmentAddPost200Response
+ */
+export interface UserCompletedAssignmentAddPost200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof UserCompletedAssignmentAddPost200Response
+     */
+    'insertion_id'?: number;
+    /**
+     * 
+     * @type {UserCompletedAssignment}
+     * @memberof UserCompletedAssignmentAddPost200Response
+     */
+    'insertion_data'?: UserCompletedAssignment;
+}
+/**
+ * 
+ * @export
+ * @interface UserCreatedAssignment
+ */
+export interface UserCreatedAssignment {
+    /**
+     * 
+     * @type {number}
+     * @memberof UserCreatedAssignment
+     */
+    'user_id'?: number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserCreatedAssignment
+     */
+    'assignment_id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserCreatedAssignment
+     */
+    'timestamp'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface UserCreatedAssignmentAddPost200Response
+ */
+export interface UserCreatedAssignmentAddPost200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof UserCreatedAssignmentAddPost200Response
+     */
+    'insertion_id'?: number;
+    /**
+     * 
+     * @type {UserCreatedAssignment}
+     * @memberof UserCreatedAssignmentAddPost200Response
+     */
+    'insertion_data'?: UserCreatedAssignment;
+}
+/**
+ * 
+ * @export
+ * @interface UserHasRole
+ */
+export interface UserHasRole {
+    /**
+     * 
+     * @type {number}
+     * @memberof UserHasRole
+     */
+    'user_id': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserHasRole
+     */
+    'role_id': number;
+}
+/**
+ * 
+ * @export
+ * @interface UserHasRoleAddPost200Response
+ */
+export interface UserHasRoleAddPost200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof UserHasRoleAddPost200Response
+     */
+    'insertion_id'?: number;
+    /**
+     * 
+     * @type {UserHasRole}
+     * @memberof UserHasRoleAddPost200Response
+     */
+    'insertion_data'?: UserHasRole;
+}
+/**
+ * 
+ * @export
+ * @interface UserMemberOfGroupAddPost200Response
+ */
+export interface UserMemberOfGroupAddPost200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof UserMemberOfGroupAddPost200Response
+     */
+    'insertion_id'?: number;
+    /**
+     * 
+     * @type {Member}
+     * @memberof UserMemberOfGroupAddPost200Response
+     */
+    'insertion_data'?: Member;
 }
 /**
  * 
@@ -214,6 +770,19 @@ export interface UsersAddPost200Response {
      */
     'insertion_data'?: User;
 }
+/**
+ * 
+ * @export
+ * @interface UsersAllGet200Response
+ */
+export interface UsersAllGet200Response {
+    /**
+     * 
+     * @type {Array<User>}
+     * @memberof UsersAllGet200Response
+     */
+    'response': Array<User>;
+}
 
 /**
  * DefaultApi - axios parameter creator
@@ -221,6 +790,107 @@ export interface UsersAddPost200Response {
  */
 export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * 
+         * @summary Create a New Assignment
+         * @param {AssignmentRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        assignmentsAddPost: async (body: AssignmentRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('assignmentsAddPost', 'body', body)
+            const localVarPath = `/assignments/add`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        assignmentsAllGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/assignments/all`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a New Delayed Assignments
+         * @param {DelayedAssignment} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        delayedAssignmentsAddPost: async (body: DelayedAssignment, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('delayedAssignmentsAddPost', 'body', body)
+            const localVarPath = `/delayed_assignments/add`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * 
          * @summary Create a New Group
@@ -281,6 +951,381 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a New Permission
+         * @param {PermissionRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        permissionsAddPost: async (body: PermissionRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('permissionsAddPost', 'body', body)
+            const localVarPath = `/permissions/add`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        permissionsAllGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/permissions/all`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a New Public Group
+         * @param {PublicGroup} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        publicGroupsAddPost: async (body: PublicGroup, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('publicGroupsAddPost', 'body', body)
+            const localVarPath = `/public_groups/add`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        publicGroupsAllGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/public_groups/all`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a New Role
+         * @param {RoleRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rolesAddPost: async (body: RoleRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('rolesAddPost', 'body', body)
+            const localVarPath = `/roles/add`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rolesAllGet: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/roles/all`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a New Temporary role
+         * @param {TemporaryRole} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        temporaryRolesAddPost: async (body: TemporaryRole, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('temporaryRolesAddPost', 'body', body)
+            const localVarPath = `/temporary_roles/add`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a New Completed
+         * @param {UserCompletedAssignment} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userCompletedAssignmentAddPost: async (body: UserCompletedAssignment, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('userCompletedAssignmentAddPost', 'body', body)
+            const localVarPath = `/user_completed_assignment/add`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a New Completed
+         * @param {UserCreatedAssignment} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userCreatedAssignmentAddPost: async (body: UserCreatedAssignment, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('userCreatedAssignmentAddPost', 'body', body)
+            const localVarPath = `/user_created_assignment/add`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a New UserHasRole
+         * @param {UserHasRole} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userHasRoleAddPost: async (body: UserHasRole, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('userHasRoleAddPost', 'body', body)
+            const localVarPath = `/user_has_role/add`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a Member
+         * @param {Member} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userMemberOfGroupAddPost: async (body: Member, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('userMemberOfGroupAddPost', 'body', body)
+            const localVarPath = `/user_member_of_group/add`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -365,6 +1410,37 @@ export const DefaultApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Create a New Assignment
+         * @param {AssignmentRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async assignmentsAddPost(body: AssignmentRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AssignmentsAddPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.assignmentsAddPost(body, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async assignmentsAllGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AssignmentsAllGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.assignmentsAllGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create a New Delayed Assignments
+         * @param {DelayedAssignment} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async delayedAssignmentsAddPost(body: DelayedAssignment, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<DelayedAssignmentsAddPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.delayedAssignmentsAddPost(body, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Create a New Group
          * @param {GroupRequest} body 
          * @param {*} [options] Override http request option.
@@ -380,8 +1456,123 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async groupsAllGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<Group>>> {
+        async groupsAllGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GroupsAllGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.groupsAllGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create a New Permission
+         * @param {PermissionRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async permissionsAddPost(body: PermissionRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PermissionsAddPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.permissionsAddPost(body, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async permissionsAllGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PermissionsAllGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.permissionsAllGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create a New Public Group
+         * @param {PublicGroup} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async publicGroupsAddPost(body: PublicGroup, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PublicGroupsAddPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.publicGroupsAddPost(body, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async publicGroupsAllGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PublicGroupsAllGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.publicGroupsAllGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create a New Role
+         * @param {RoleRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async rolesAddPost(body: RoleRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RolesAddPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.rolesAddPost(body, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async rolesAllGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RolesAllGet200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.rolesAllGet(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create a New Temporary role
+         * @param {TemporaryRole} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async temporaryRolesAddPost(body: TemporaryRole, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<TemporaryRolesAddPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.temporaryRolesAddPost(body, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create a New Completed
+         * @param {UserCompletedAssignment} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async userCompletedAssignmentAddPost(body: UserCompletedAssignment, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserCompletedAssignmentAddPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.userCompletedAssignmentAddPost(body, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create a New Completed
+         * @param {UserCreatedAssignment} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async userCreatedAssignmentAddPost(body: UserCreatedAssignment, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserCreatedAssignmentAddPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.userCreatedAssignmentAddPost(body, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create a New UserHasRole
+         * @param {UserHasRole} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async userHasRoleAddPost(body: UserHasRole, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserHasRoleAddPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.userHasRoleAddPost(body, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create a Member
+         * @param {Member} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async userMemberOfGroupAddPost(body: Member, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserMemberOfGroupAddPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.userMemberOfGroupAddPost(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -401,7 +1592,7 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async usersAllGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<User>>> {
+        async usersAllGet(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UsersAllGet200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.usersAllGet(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -415,6 +1606,34 @@ export const DefaultApiFp = function(configuration?: Configuration) {
 export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = DefaultApiFp(configuration)
     return {
+        /**
+         * 
+         * @summary Create a New Assignment
+         * @param {AssignmentRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        assignmentsAddPost(body: AssignmentRequest, options?: any): AxiosPromise<AssignmentsAddPost200Response> {
+            return localVarFp.assignmentsAddPost(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        assignmentsAllGet(options?: any): AxiosPromise<AssignmentsAllGet200Response> {
+            return localVarFp.assignmentsAllGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a New Delayed Assignments
+         * @param {DelayedAssignment} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        delayedAssignmentsAddPost(body: DelayedAssignment, options?: any): AxiosPromise<DelayedAssignmentsAddPost200Response> {
+            return localVarFp.delayedAssignmentsAddPost(body, options).then((request) => request(axios, basePath));
+        },
         /**
          * 
          * @summary Create a New Group
@@ -431,8 +1650,112 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        groupsAllGet(options?: any): AxiosPromise<Array<Group>> {
+        groupsAllGet(options?: any): AxiosPromise<GroupsAllGet200Response> {
             return localVarFp.groupsAllGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a New Permission
+         * @param {PermissionRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        permissionsAddPost(body: PermissionRequest, options?: any): AxiosPromise<PermissionsAddPost200Response> {
+            return localVarFp.permissionsAddPost(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        permissionsAllGet(options?: any): AxiosPromise<PermissionsAllGet200Response> {
+            return localVarFp.permissionsAllGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a New Public Group
+         * @param {PublicGroup} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        publicGroupsAddPost(body: PublicGroup, options?: any): AxiosPromise<PublicGroupsAddPost200Response> {
+            return localVarFp.publicGroupsAddPost(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        publicGroupsAllGet(options?: any): AxiosPromise<PublicGroupsAllGet200Response> {
+            return localVarFp.publicGroupsAllGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a New Role
+         * @param {RoleRequest} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rolesAddPost(body: RoleRequest, options?: any): AxiosPromise<RolesAddPost200Response> {
+            return localVarFp.rolesAddPost(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        rolesAllGet(options?: any): AxiosPromise<RolesAllGet200Response> {
+            return localVarFp.rolesAllGet(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a New Temporary role
+         * @param {TemporaryRole} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        temporaryRolesAddPost(body: TemporaryRole, options?: any): AxiosPromise<TemporaryRolesAddPost200Response> {
+            return localVarFp.temporaryRolesAddPost(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a New Completed
+         * @param {UserCompletedAssignment} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userCompletedAssignmentAddPost(body: UserCompletedAssignment, options?: any): AxiosPromise<UserCompletedAssignmentAddPost200Response> {
+            return localVarFp.userCompletedAssignmentAddPost(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a New Completed
+         * @param {UserCreatedAssignment} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userCreatedAssignmentAddPost(body: UserCreatedAssignment, options?: any): AxiosPromise<UserCreatedAssignmentAddPost200Response> {
+            return localVarFp.userCreatedAssignmentAddPost(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a New UserHasRole
+         * @param {UserHasRole} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userHasRoleAddPost(body: UserHasRole, options?: any): AxiosPromise<UserHasRoleAddPost200Response> {
+            return localVarFp.userHasRoleAddPost(body, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a Member
+         * @param {Member} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userMemberOfGroupAddPost(body: Member, options?: any): AxiosPromise<UserMemberOfGroupAddPost200Response> {
+            return localVarFp.userMemberOfGroupAddPost(body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -450,7 +1773,7 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        usersAllGet(options?: any): AxiosPromise<Array<User>> {
+        usersAllGet(options?: any): AxiosPromise<UsersAllGet200Response> {
             return localVarFp.usersAllGet(options).then((request) => request(axios, basePath));
         },
     };
@@ -463,6 +1786,40 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
  * @extends {BaseAPI}
  */
 export class DefaultApi extends BaseAPI {
+    /**
+     * 
+     * @summary Create a New Assignment
+     * @param {AssignmentRequest} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public assignmentsAddPost(body: AssignmentRequest, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).assignmentsAddPost(body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public assignmentsAllGet(options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).assignmentsAllGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a New Delayed Assignments
+     * @param {DelayedAssignment} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public delayedAssignmentsAddPost(body: DelayedAssignment, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).delayedAssignmentsAddPost(body, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Create a New Group
@@ -484,6 +1841,132 @@ export class DefaultApi extends BaseAPI {
      */
     public groupsAllGet(options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).groupsAllGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a New Permission
+     * @param {PermissionRequest} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public permissionsAddPost(body: PermissionRequest, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).permissionsAddPost(body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public permissionsAllGet(options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).permissionsAllGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a New Public Group
+     * @param {PublicGroup} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public publicGroupsAddPost(body: PublicGroup, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).publicGroupsAddPost(body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public publicGroupsAllGet(options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).publicGroupsAllGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a New Role
+     * @param {RoleRequest} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public rolesAddPost(body: RoleRequest, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).rolesAddPost(body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public rolesAllGet(options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).rolesAllGet(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a New Temporary role
+     * @param {TemporaryRole} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public temporaryRolesAddPost(body: TemporaryRole, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).temporaryRolesAddPost(body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a New Completed
+     * @param {UserCompletedAssignment} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public userCompletedAssignmentAddPost(body: UserCompletedAssignment, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).userCompletedAssignmentAddPost(body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a New Completed
+     * @param {UserCreatedAssignment} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public userCreatedAssignmentAddPost(body: UserCreatedAssignment, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).userCreatedAssignmentAddPost(body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a New UserHasRole
+     * @param {UserHasRole} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public userHasRoleAddPost(body: UserHasRole, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).userHasRoleAddPost(body, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a Member
+     * @param {Member} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public userMemberOfGroupAddPost(body: Member, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).userMemberOfGroupAddPost(body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
