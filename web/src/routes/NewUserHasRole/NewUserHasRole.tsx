@@ -1,19 +1,18 @@
-import styles from './NewUserHasRole.module.scss';
 import React, { useEffect, useState } from "react";
 import { Form, FormGroup, FormLabel, FormSelect } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { Api } from "../../index";
 import ToastHelper from "../../components/ToastHelper";
 import { ErrorToast, SuccessToast } from "../../components/MyToasts";
-import {useForm} from "react-hook-form";
-import { UserHasRole } from '../../openapi';
+import { useForm } from "react-hook-form";
+import { UserHasRole } from "../../openapi";
 
 interface NewUserHasRoleProps {}
 
 const helper = new ToastHelper();
 
 async function submitForm(data: UserHasRole) {
-  await helper.takeoverPromise(Api.userHasRoleAddPost(data))
+  await helper.takeoverPromise(Api.userHasRoleAddPost(data));
 }
 
 function NewUserHasRole() {
@@ -35,7 +34,7 @@ function NewUserHasRole() {
       updateRoles(objs);
     });
   }, []);
-  
+
   const [users, updateUsers] = useState([] as JSX.Element[]);
   useEffect(() => {
     Api.usersAllGet().then((res) => {

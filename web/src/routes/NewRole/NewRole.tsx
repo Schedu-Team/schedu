@@ -5,7 +5,7 @@ import ToastHelper from "../../components/ToastHelper";
 import { RoleRequest } from "../../openapi";
 import { Api } from "../../index";
 import { useForm } from "react-hook-form";
-import {ErrorToast, SuccessToast} from "../../components/MyToasts";
+import { ErrorToast, SuccessToast } from "../../components/MyToasts";
 
 interface NewRoleProps {}
 

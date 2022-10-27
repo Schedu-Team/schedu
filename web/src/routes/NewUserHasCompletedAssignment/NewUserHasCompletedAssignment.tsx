@@ -1,19 +1,24 @@
-import styles from './NewUserHasCompletedAssignment.module.scss';
 import React, { useEffect, useState } from "react";
-import { Form, FormGroup, FormLabel, FormSelect, FormControl } from "react-bootstrap";
+import {
+  Form,
+  FormControl,
+  FormGroup,
+  FormLabel,
+  FormSelect,
+} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { Api } from "../../index";
 import ToastHelper from "../../components/ToastHelper";
 import { ErrorToast, SuccessToast } from "../../components/MyToasts";
-import { Assignment, UserCompletedAssignment } from '../../openapi';
-import {useForm} from "react-hook-form";
+import { UserCompletedAssignment } from "../../openapi";
+import { useForm } from "react-hook-form";
 
 interface NewUserHasCompletedAssignmentProps {}
 
 const helper = new ToastHelper();
 
 async function submitForm(data: UserCompletedAssignment) {
-  await helper.takeoverPromise(Api.userCompletedAssignmentAddPost(data))
+  await helper.takeoverPromise(Api.userHasCompletedAssignmentAddPost(data));
 }
 
 function NewUserHasCompletedAssignment() {
@@ -28,7 +33,10 @@ function NewUserHasCompletedAssignment() {
   useEffect(() => {
     Api.assignmentsAllGet().then((res) => {
       const objs = res.data.response.map((assignment) => (
-        <option value={assignment.assignment_id} key={"assignment_" + assignment.assignment_id}>
+        <option
+          value={assignment.assignment_id}
+          key={"assignment_" + assignment.assignment_id}
+        >
           {assignment.text.slice(0, Math.min(10, assignment.text.length - 1))}
         </option>
       ));
@@ -65,7 +73,10 @@ function NewUserHasCompletedAssignment() {
       </FormGroup>
       <FormGroup>
         <FormLabel>Timestamp</FormLabel>
-        <FormControl type="datetime-local" />
+        <FormControl
+          type="datetime-local"
+          {...register("timestamp", { required: true })}
+        />
       </FormGroup>
       <FormGroup>
         <Button type="submit" className={"mt-3"}>

@@ -49,6 +49,25 @@ export interface Assignment {
 /**
  * 
  * @export
+ * @interface AssignmentCreatedByUserAddPost200Response
+ */
+export interface AssignmentCreatedByUserAddPost200Response {
+    /**
+     * 
+     * @type {number}
+     * @memberof AssignmentCreatedByUserAddPost200Response
+     */
+    'insertion_id'?: number;
+    /**
+     * 
+     * @type {UserCreatedAssignment}
+     * @memberof AssignmentCreatedByUserAddPost200Response
+     */
+    'insertion_data'?: UserCreatedAssignment;
+}
+/**
+ * 
+ * @export
  * @interface AssignmentRequest
  */
 export interface AssignmentRequest {
@@ -579,25 +598,6 @@ export interface UserCompletedAssignment {
 /**
  * 
  * @export
- * @interface UserCompletedAssignmentAddPost200Response
- */
-export interface UserCompletedAssignmentAddPost200Response {
-    /**
-     * 
-     * @type {number}
-     * @memberof UserCompletedAssignmentAddPost200Response
-     */
-    'insertion_id'?: number;
-    /**
-     * 
-     * @type {UserCompletedAssignment}
-     * @memberof UserCompletedAssignmentAddPost200Response
-     */
-    'insertion_data'?: UserCompletedAssignment;
-}
-/**
- * 
- * @export
  * @interface UserCreatedAssignment
  */
 export interface UserCreatedAssignment {
@@ -623,21 +623,21 @@ export interface UserCreatedAssignment {
 /**
  * 
  * @export
- * @interface UserCreatedAssignmentAddPost200Response
+ * @interface UserHasCompletedAssignmentAddPost200Response
  */
-export interface UserCreatedAssignmentAddPost200Response {
+export interface UserHasCompletedAssignmentAddPost200Response {
     /**
      * 
      * @type {number}
-     * @memberof UserCreatedAssignmentAddPost200Response
+     * @memberof UserHasCompletedAssignmentAddPost200Response
      */
     'insertion_id'?: number;
     /**
      * 
-     * @type {UserCreatedAssignment}
-     * @memberof UserCreatedAssignmentAddPost200Response
+     * @type {UserCompletedAssignment}
+     * @memberof UserHasCompletedAssignmentAddPost200Response
      */
-    'insertion_data'?: UserCreatedAssignment;
+    'insertion_data'?: UserCompletedAssignment;
 }
 /**
  * 
@@ -778,6 +778,42 @@ export interface UsersAllGet200Response {
  */
 export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
+        /**
+         * 
+         * @summary Create a New Completed
+         * @param {UserCreatedAssignment} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        assignmentCreatedByUserAddPost: async (body: UserCreatedAssignment, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'body' is not null or undefined
+            assertParamExists('assignmentCreatedByUserAddPost', 'body', body)
+            const localVarPath = `/assignment_created_by_user/add`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
         /**
          * 
          * @summary Create a New Assignment
@@ -1183,46 +1219,10 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userCompletedAssignmentAddPost: async (body: UserCompletedAssignment, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        userHasCompletedAssignmentAddPost: async (body: UserCompletedAssignment, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'body' is not null or undefined
-            assertParamExists('userCompletedAssignmentAddPost', 'body', body)
-            const localVarPath = `/user_completed_assignment/add`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(body, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
-         * @summary Create a New Completed
-         * @param {UserCreatedAssignment} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        userCreatedAssignmentAddPost: async (body: UserCreatedAssignment, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'body' is not null or undefined
-            assertParamExists('userCreatedAssignmentAddPost', 'body', body)
-            const localVarPath = `/user_created_assignment/add`;
+            assertParamExists('userHasCompletedAssignmentAddPost', 'body', body)
+            const localVarPath = `/user_has_completed_assignment/add`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1398,6 +1398,17 @@ export const DefaultApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Create a New Completed
+         * @param {UserCreatedAssignment} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async assignmentCreatedByUserAddPost(body: UserCreatedAssignment, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AssignmentCreatedByUserAddPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.assignmentCreatedByUserAddPost(body, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Create a New Assignment
          * @param {AssignmentRequest} body 
          * @param {*} [options] Override http request option.
@@ -1526,19 +1537,8 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async userCompletedAssignmentAddPost(body: UserCompletedAssignment, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserCompletedAssignmentAddPost200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.userCompletedAssignmentAddPost(body, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
-         * @summary Create a New Completed
-         * @param {UserCreatedAssignment} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async userCreatedAssignmentAddPost(body: UserCreatedAssignment, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserCreatedAssignmentAddPost200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.userCreatedAssignmentAddPost(body, options);
+        async userHasCompletedAssignmentAddPost(body: UserCompletedAssignment, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserHasCompletedAssignmentAddPost200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.userHasCompletedAssignmentAddPost(body, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1594,6 +1594,16 @@ export const DefaultApiFp = function(configuration?: Configuration) {
 export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = DefaultApiFp(configuration)
     return {
+        /**
+         * 
+         * @summary Create a New Completed
+         * @param {UserCreatedAssignment} body 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        assignmentCreatedByUserAddPost(body: UserCreatedAssignment, options?: any): AxiosPromise<AssignmentCreatedByUserAddPost200Response> {
+            return localVarFp.assignmentCreatedByUserAddPost(body, options).then((request) => request(axios, basePath));
+        },
         /**
          * 
          * @summary Create a New Assignment
@@ -1712,18 +1722,8 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        userCompletedAssignmentAddPost(body: UserCompletedAssignment, options?: any): AxiosPromise<UserCompletedAssignmentAddPost200Response> {
-            return localVarFp.userCompletedAssignmentAddPost(body, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @summary Create a New Completed
-         * @param {UserCreatedAssignment} body 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        userCreatedAssignmentAddPost(body: UserCreatedAssignment, options?: any): AxiosPromise<UserCreatedAssignmentAddPost200Response> {
-            return localVarFp.userCreatedAssignmentAddPost(body, options).then((request) => request(axios, basePath));
+        userHasCompletedAssignmentAddPost(body: UserCompletedAssignment, options?: any): AxiosPromise<UserHasCompletedAssignmentAddPost200Response> {
+            return localVarFp.userHasCompletedAssignmentAddPost(body, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1774,6 +1774,18 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
  * @extends {BaseAPI}
  */
 export class DefaultApi extends BaseAPI {
+    /**
+     * 
+     * @summary Create a New Completed
+     * @param {UserCreatedAssignment} body 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public assignmentCreatedByUserAddPost(body: UserCreatedAssignment, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).assignmentCreatedByUserAddPost(body, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Create a New Assignment
@@ -1917,20 +1929,8 @@ export class DefaultApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof DefaultApi
      */
-    public userCompletedAssignmentAddPost(body: UserCompletedAssignment, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).userCompletedAssignmentAddPost(body, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @summary Create a New Completed
-     * @param {UserCreatedAssignment} body 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public userCreatedAssignmentAddPost(body: UserCreatedAssignment, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).userCreatedAssignmentAddPost(body, options).then((request) => request(this.axios, this.basePath));
+    public userHasCompletedAssignmentAddPost(body: UserCompletedAssignment, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).userHasCompletedAssignmentAddPost(body, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

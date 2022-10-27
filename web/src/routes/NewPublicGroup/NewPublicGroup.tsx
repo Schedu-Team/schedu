@@ -1,12 +1,11 @@
-import React, {FC, useEffect, useState} from 'react';
-import styles from './NewPublicGroup.module.scss';
+import React, { useEffect, useState } from "react";
 import ToastHelper from "../../components/ToastHelper";
-import {GroupRequest, PublicGroup} from "../../openapi";
-import {Api} from "../../index";
-import {useForm} from "react-hook-form";
-import {Form, FormControl, FormGroup, FormLabel, FormSelect} from "react-bootstrap";
+import { PublicGroup } from "../../openapi";
+import { Api } from "../../index";
+import { useForm } from "react-hook-form";
+import { Form, FormGroup, FormLabel, FormSelect } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import {ErrorToast, SuccessToast} from "../../components/MyToasts";
+import { ErrorToast, SuccessToast } from "../../components/MyToasts";
 
 interface NewPublicGroupProps {}
 
@@ -23,7 +22,6 @@ function NewPublicGroup() {
     formState: { errors },
   } = useForm<PublicGroup>();
 
-
   const [roles, updateRoles] = useState([] as JSX.Element[]);
 
   // load all groups
@@ -37,7 +35,6 @@ function NewPublicGroup() {
       updateRoles(objs);
     });
   }, []);
-
 
   const [groups, updateGroups] = useState([] as JSX.Element[]);
 

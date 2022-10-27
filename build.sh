@@ -5,6 +5,7 @@
 cd web
 npm i
 export PUBLIC_URL="/~akovrigin"
+export ENDPOINT="http://clabsql.clamv.jacobs-university.de:30566/api/v1"
 npm run build
 )
 

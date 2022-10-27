@@ -1,9 +1,15 @@
-import React, {useEffect, useState} from "react";
-import {Form, FormControl, FormGroup, FormLabel, FormSelect} from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import {
+  Form,
+  FormControl,
+  FormGroup,
+  FormLabel,
+  FormSelect,
+} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { Api } from "../../index";
 import { useForm } from "react-hook-form";
-import {GroupRequest, TemporaryRole} from "../../openapi";
+import { TemporaryRole } from "../../openapi";
 import ToastHelper from "../../components/ToastHelper";
 import { ErrorToast, SuccessToast } from "../../components/MyToasts";
 
@@ -21,7 +27,6 @@ function NewTemporaryRole() {
     handleSubmit,
     formState: { errors },
   } = useForm<TemporaryRole>();
-
 
   const [roles, updateRoles] = useState([] as JSX.Element[]);
 
@@ -42,7 +47,10 @@ function NewTemporaryRole() {
       <h2>Create New Temporary Role</h2>
       <FormGroup>
         <FormLabel>Name</FormLabel>
-        <FormControl type="datetime-local" {...register("expiry_date", { required: true })} />
+        <FormControl
+          type="datetime-local"
+          {...register("expiry_date", { required: true })}
+        />
       </FormGroup>
       <FormGroup>
         <FormLabel>Role</FormLabel>

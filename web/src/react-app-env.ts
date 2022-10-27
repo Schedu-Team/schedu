@@ -2,4 +2,4 @@
 
 export const API_ENDPOINT =
   process.env.ENDPOINT ??
-  "https://private-61dc68-schedu.apiary-mock.com/api/v1";
+  "http://clabsql.clamv.jacobs-university.de:30566/api/v1";

@@ -4,15 +4,15 @@ import Button from "react-bootstrap/Button";
 import { Api } from "../../index";
 import ToastHelper from "../../components/ToastHelper";
 import { ErrorToast, SuccessToast } from "../../components/MyToasts";
-import {Member} from "../../openapi";
-import {useForm} from "react-hook-form";
+import { Member } from "../../openapi";
+import { useForm } from "react-hook-form";
 
 interface NewUserMemberOfGroupProps {}
 
 const helper = new ToastHelper();
 
 async function submitForm(data: Member) {
-  await helper.takeoverPromise(Api.userMemberOfGroupAddPost(data))
+  await helper.takeoverPromise(Api.userMemberOfGroupAddPost(data));
 }
 
 function NewUserMemberOfGroup() {

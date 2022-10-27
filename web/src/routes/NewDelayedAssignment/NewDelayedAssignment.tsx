@@ -1,12 +1,17 @@
-import React, {FC, useEffect, useState} from 'react';
-import styles from './NewDelayedAssignment.module.scss';
+import React, { useEffect, useState } from "react";
 import ToastHelper from "../../components/ToastHelper";
-import {AssignmentRequest, DelayedAssignment, GroupRequest} from "../../openapi";
-import {Api} from "../../index";
-import {useForm} from "react-hook-form";
-import {Form, FormControl, FormGroup, FormLabel, FormSelect} from "react-bootstrap";
+import { DelayedAssignment } from "../../openapi";
+import { Api } from "../../index";
+import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormControl,
+  FormGroup,
+  FormLabel,
+  FormSelect,
+} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import {ErrorToast, SuccessToast} from "../../components/MyToasts";
+import { ErrorToast, SuccessToast } from "../../components/MyToasts";
 
 interface NewDelayedAssignmentProps {}
 
@@ -29,7 +34,10 @@ function NewDelayedAssignment() {
   useEffect(() => {
     Api.assignmentsAllGet().then((res) => {
       const objs = res.data.response.map((assignment) => (
-        <option value={assignment.assignment_id} key={"role_" + assignment.assignment_id}>
+        <option
+          value={assignment.assignment_id}
+          key={"role_" + assignment.assignment_id}
+        >
           {assignment.text.slice(0, Math.min(10, assignment.text.length - 1))}
         </option>
       ));
