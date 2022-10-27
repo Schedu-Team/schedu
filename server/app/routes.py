@@ -41,7 +41,7 @@ def test3():
     return functions.test_3(first_name, last_name, graduation_year)
 
 
-def process_add_entity_form_function(model_type: EntityModel, *args, **kwargs):
+def add_entity_form_handler_function(model_type: EntityModel, *args, **kwargs):
     @app.route(*args, **kwargs, methods=["POST"], endpoint="process_add_%s_form_function" % (model_type.table_name,))
     @functions.function_response
     def process_form_data():
@@ -57,5 +57,5 @@ def process_add_entity_form_function(model_type: EntityModel, *args, **kwargs):
     return process_form_data
 
 
-process_add_entity_form_function(Storage.Users, "/api/v1/users/add")
-process_add_entity_form_function(Storage.Groups, "/api/v1/groups/add")
+add_entity_form_handler_function(Storage.Users, "/api/v1/users/add")
+add_entity_form_handler_function(Storage.Groups, "/api/v1/groups/add")
