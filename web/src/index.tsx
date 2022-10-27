@@ -91,11 +91,14 @@ const router = createBrowserRouter([
       },
     ],
   },
-]);
+], {
+  basename: process.env.PUBLIC_URL
+});
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
