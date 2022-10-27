@@ -2,4 +2,4 @@ flask>=2.0.2
 bcrypt>=3.2.0
 mysql-connector-python
 flask-cors
-dateutils
+python-dateutil
