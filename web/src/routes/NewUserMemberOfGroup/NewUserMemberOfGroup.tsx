@@ -49,9 +49,9 @@ function NewUserMemberOfGroup() {
   }, []);
 
   return (
-    <Form>
+    <Form onSubmit={handleSubmit((data) => submitForm(data))}>
       <h2>Create New Member</h2>
-      <FormGroup onSubmit={handleSubmit((data) => submitForm(data))}>
+      <FormGroup>
         <FormLabel>User</FormLabel>
         <FormSelect {...register("user_id", { required: true })}>
           {users}

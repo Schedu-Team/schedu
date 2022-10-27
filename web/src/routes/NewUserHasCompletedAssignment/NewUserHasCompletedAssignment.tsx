@@ -49,9 +49,9 @@ function NewUserHasCompletedAssignment() {
   }, []);
 
   return (
-    <Form>
+    <Form onSubmit={handleSubmit((data) => submitForm(data))}>
       <h2>Create New User Has Completed Assignment Relation</h2>
-      <FormGroup onSubmit={handleSubmit((data) => submitForm(data))}>
+      <FormGroup>
         <FormLabel>User</FormLabel>
         <FormSelect {...register("user_id", { required: true })}>
           {users}
