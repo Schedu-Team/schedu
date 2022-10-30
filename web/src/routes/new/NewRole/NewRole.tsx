@@ -1,30 +1,29 @@
 import React from "react";
 import { Form, FormControl, FormGroup, FormLabel } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import ToastHelper from "../../components/ToastHelper";
-import { PermissionRequest } from "../../openapi";
-import { Api } from "../../index";
+import ToastHelper from "../../../components/ToastHelper";
+import { RoleRequest } from "../../../openapi";
+import { Api } from "../../../index";
 import { useForm } from "react-hook-form";
-import { ErrorToast, SuccessToast } from "../../components/MyToasts";
+import { ErrorToast, SuccessToast } from "../../../components/MyToasts";
 
-interface NewPermissionProps {}
+interface NewRoleProps {}
 
 const helper = new ToastHelper();
 
-async function submitForm(data: PermissionRequest) {
-  await helper.takeoverPromise(Api.permissionsAddPost(data));
+async function submitForm(data: RoleRequest) {
+  await helper.takeoverPromise(Api.rolesAddPost(data));
 }
 
-function NewPermission() {
+function NewRole() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<PermissionRequest>();
-
+  } = useForm<RoleRequest>();
   return (
     <Form onSubmit={handleSubmit((data) => submitForm(data))}>
-      <h2>Create New Permission</h2>
+      <h2>Create New Role</h2>
       <FormGroup>
         <FormLabel>Name</FormLabel>
         <FormControl type="text" {...register("name", { required: true })} />
@@ -35,10 +34,6 @@ function NewPermission() {
           as="textarea"
           {...register("description", { required: true })}
         />
-      </FormGroup>
-      <FormGroup>
-        <FormLabel>Type</FormLabel>
-        <FormControl type="number" {...register("type", { required: true })} />
       </FormGroup>
       <FormGroup>
         <Button type="submit" className={"mt-3"}>
@@ -54,4 +49,4 @@ function NewPermission() {
   );
 }
 
-export default NewPermission;
+export default NewRole;

@@ -7,26 +7,26 @@ import {
   FormSelect,
 } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import { Api } from "../../index";
-import ToastHelper from "../../components/ToastHelper";
-import { ErrorToast, SuccessToast } from "../../components/MyToasts";
-import { UserCreatedAssignment } from "../../openapi";
+import { Api } from "../../../index";
+import ToastHelper from "../../../components/ToastHelper";
+import { ErrorToast, SuccessToast } from "../../../components/MyToasts";
+import { UserCompletedAssignment } from "../../../openapi";
 import { useForm } from "react-hook-form";
 
-interface NewAssignmentCreatedByUserProps {}
+interface NewUserHasCompletedAssignmentProps {}
 
 const helper = new ToastHelper();
 
-async function submitForm(data: UserCreatedAssignment) {
-  await helper.takeoverPromise(Api.assignmentCreatedByUserAddPost(data));
+async function submitForm(data: UserCompletedAssignment) {
+  await helper.takeoverPromise(Api.userHasCompletedAssignmentAddPost(data));
 }
 
-function NewAssignmentCreatedByUser() {
+function NewUserHasCompletedAssignment() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<UserCreatedAssignment>();
+  } = useForm<UserCompletedAssignment>();
 
   const [assignments, updateAssignments] = useState([] as JSX.Element[]);
 
@@ -58,7 +58,7 @@ function NewAssignmentCreatedByUser() {
 
   return (
     <Form onSubmit={handleSubmit((data) => submitForm(data))}>
-      <h2>Create New Assignment Created By User Relation</h2>
+      <h2>Create New User Has Completed Assignment Relation</h2>
       <FormGroup>
         <FormLabel>User</FormLabel>
         <FormSelect {...register("user_id", { required: true })}>
@@ -92,4 +92,4 @@ function NewAssignmentCreatedByUser() {
   );
 }
 
-export default NewAssignmentCreatedByUser;
+export default NewUserHasCompletedAssignment;

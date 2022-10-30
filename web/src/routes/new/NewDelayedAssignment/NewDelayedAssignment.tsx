@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import ToastHelper from "../../components/ToastHelper";
-import { DelayedAssignment } from "../../openapi";
-import { Api } from "../../index";
+import ToastHelper from "../../../components/ToastHelper";
+import { DelayedAssignment } from "../../../openapi";
+import { Api } from "../../../index";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -11,7 +11,7 @@ import {
   FormSelect,
 } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import { ErrorToast, SuccessToast } from "../../components/MyToasts";
+import { ErrorToast, SuccessToast } from "../../../components/MyToasts";
 
 interface NewDelayedAssignmentProps {}
 

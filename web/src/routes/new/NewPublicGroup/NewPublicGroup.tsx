@@ -1,29 +1,30 @@
 import React, { useEffect, useState } from "react";
+import ToastHelper from "../../../components/ToastHelper";
+import { PublicGroup } from "../../../openapi";
+import { Api } from "../../../index";
+import { useForm } from "react-hook-form";
 import { Form, FormGroup, FormLabel, FormSelect } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import { Api } from "../../index";
-import ToastHelper from "../../components/ToastHelper";
-import { ErrorToast, SuccessToast } from "../../components/MyToasts";
-import { useForm } from "react-hook-form";
-import { UserHasRole } from "../../openapi";
+import { ErrorToast, SuccessToast } from "../../../components/MyToasts";
 
-interface NewUserHasRoleProps {}
+interface NewPublicGroupProps {}
 
 const helper = new ToastHelper();
 
-async function submitForm(data: UserHasRole) {
-  await helper.takeoverPromise(Api.userHasRoleAddPost(data));
+async function submitForm(data: PublicGroup) {
+  await helper.takeoverPromise(Api.publicGroupsAddPost(data));
 }
 
-function NewUserHasRole() {
+function NewPublicGroup() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<UserHasRole>();
+  } = useForm<PublicGroup>();
 
   const [roles, updateRoles] = useState([] as JSX.Element[]);
 
+  // load all groups
   useEffect(() => {
     Api.rolesAllGet().then((res) => {
       const objs = res.data.response.map((role) => (
@@ -35,30 +36,32 @@ function NewUserHasRole() {
     });
   }, []);
 
-  const [users, updateUsers] = useState([] as JSX.Element[]);
+  const [groups, updateGroups] = useState([] as JSX.Element[]);
+
+  // load all groups
   useEffect(() => {
-    Api.usersAllGet().then((res) => {
-      const objs = res.data.response.map((user) => (
-        <option value={user.user_id} key={"user_" + user.user_id}>
-          {user.first_name + " " + user.last_name}
+    Api.groupsAllGet().then((res) => {
+      const objs = res.data.response.map((group) => (
+        <option value={group.group_id} key={"group_" + group.group_id}>
+          {group.name}
         </option>
       ));
-      updateUsers(objs);
+      updateGroups(objs);
     });
   }, []);
 
   return (
     <Form onSubmit={handleSubmit((data) => submitForm(data))}>
-      <h2>Create New User Has Role Relation</h2>
+      <h2>Create New Public Group</h2>
       <FormGroup>
-        <FormLabel>User</FormLabel>
-        <FormSelect {...register("user_id", { required: true })}>
-          {users}
+        <FormLabel>Group</FormLabel>
+        <FormSelect {...register("group_id", { required: true })}>
+          {groups}
         </FormSelect>
       </FormGroup>
       <FormGroup>
         <FormLabel>Role</FormLabel>
-        <FormSelect {...register("role_id", { required: true })}>
+        <FormSelect {...register("default_role_id", { required: true })}>
           {roles}
         </FormSelect>
       </FormGroup>
@@ -76,4 +79,4 @@ function NewUserHasRole() {
   );
 }
 
-export default NewUserHasRole;
+export default NewPublicGroup;

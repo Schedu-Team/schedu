@@ -1,29 +1,29 @@
 import React from "react";
 import { Form, FormControl, FormGroup, FormLabel } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import ToastHelper from "../../components/ToastHelper";
-import { RoleRequest } from "../../openapi";
-import { Api } from "../../index";
+import { Api } from "../../../index";
 import { useForm } from "react-hook-form";
-import { ErrorToast, SuccessToast } from "../../components/MyToasts";
+import { GroupRequest } from "../../../openapi";
+import ToastHelper from "../../../components/ToastHelper";
+import { ErrorToast, SuccessToast } from "../../../components/MyToasts";
 
-interface NewRoleProps {}
+interface NewGroupProps {}
 
 const helper = new ToastHelper();
 
-async function submitForm(data: RoleRequest) {
-  await helper.takeoverPromise(Api.rolesAddPost(data));
+async function submitForm(groupRequest: GroupRequest) {
+  await helper.takeoverPromise(Api.groupsAddPost(groupRequest));
 }
 
-function NewRole() {
+function NewGroup() {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<RoleRequest>();
+  } = useForm<GroupRequest>();
   return (
     <Form onSubmit={handleSubmit((data) => submitForm(data))}>
-      <h2>Create New Role</h2>
+      <h2>Create New Group</h2>
       <FormGroup>
         <FormLabel>Name</FormLabel>
         <FormControl type="text" {...register("name", { required: true })} />
@@ -32,7 +32,8 @@ function NewRole() {
         <FormLabel>Description</FormLabel>
         <Form.Control
           as="textarea"
-          {...register("description", { required: true })}
+          id="description"
+          {...register("description")}
         />
       </FormGroup>
       <FormGroup>
@@ -49,4 +50,4 @@ function NewRole() {
   );
 }
 
-export default NewRole;
+export default NewGroup;

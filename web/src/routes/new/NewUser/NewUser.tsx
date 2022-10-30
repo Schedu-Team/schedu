@@ -2,10 +2,10 @@ import React from "react";
 import { Form, FormControl, FormGroup, FormLabel } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { useForm } from "react-hook-form";
-import { UserRequest } from "../../openapi";
-import { ErrorToast, SuccessToast } from "../../components/MyToasts";
-import ToastHelper from "../../components/ToastHelper";
-import { Api } from "../../index";
+import { UserRequest } from "../../../openapi";
+import { ErrorToast, SuccessToast } from "../../../components/MyToasts";
+import ToastHelper from "../../../components/ToastHelper";
+import { Api } from "../../../index";
 
 interface NewUserProps {}
 

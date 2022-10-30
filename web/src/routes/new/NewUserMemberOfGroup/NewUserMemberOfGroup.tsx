@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Form, FormGroup, FormLabel, FormSelect } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
-import { Api } from "../../index";
-import ToastHelper from "../../components/ToastHelper";
-import { ErrorToast, SuccessToast } from "../../components/MyToasts";
-import { Member } from "../../openapi";
+import { Api } from "../../../index";
+import ToastHelper from "../../../components/ToastHelper";
+import { ErrorToast, SuccessToast } from "../../../components/MyToasts";
+import { Member } from "../../../openapi";
 import { useForm } from "react-hook-form";
 
 interface NewUserMemberOfGroupProps {}
