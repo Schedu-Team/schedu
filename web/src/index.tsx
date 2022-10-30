@@ -32,6 +32,15 @@ import { DefaultApi } from "./openapi";
 import { API_ENDPOINT } from "./react-app-env";
 import ToastHelper from "./components/ToastHelper";
 import {ErrorToast, SuccessToast} from "./components/MyToasts";
+import SearchPage from "./routes/search/SearchPage/SearchPage";
+import GroupSearchResultsPage from "./routes/search/GroupSearchResultsPage/GroupSearchResultsPage";
+import GroupDetail from "./routes/detail/GroupDetail/GroupDetail";
+import AssignmentSearchResultsPage from "./routes/search/AssignmentSearchResultsPage/AssignmentSearchResultsPage";
+import AssignmentDetail from "./routes/detail/AssignmentDetail/AssignmentDetail";
+import UserSearchResultsPage from "./routes/search/UserSearchResultsPage/UserSearchResultsPage";
+import UserDetail from "./routes/detail/UserDetail/UserDetail";
+import RoleSearchResultsPage from "./routes/search/RoleSearchResultsPage/RoleSearchResultsPage";
+import RoleDetail from "./routes/detail/RoleDetail/RoleDetail";
 
 export const Api = new DefaultApi(undefined, API_ENDPOINT);
 
@@ -150,6 +159,42 @@ const router = createBrowserRouter(
             }
           ],
         },
+        {
+          path: "/search",
+          element: <SearchPage/>
+        },
+        {
+          path: "/groups",
+          element: <GroupSearchResultsPage/>
+        },
+        {
+          path: "/groups/:id",
+          element: <GroupDetail/>
+        },
+        {
+          path: "/assignments",
+          element: <AssignmentSearchResultsPage/>
+        },
+        {
+          path: "/assignments/:id",
+          element: <AssignmentDetail/>
+        },
+        {
+          path: "/users",
+          element: <UserSearchResultsPage/>
+        },
+        {
+          path: "/users/:id",
+          element: <UserDetail/>
+        },
+        {
+          path: "/roles",
+          element: <RoleSearchResultsPage/>
+        },
+        {
+          path: "/roles/:id",
+          element: <RoleDetail/>
+        }
       ],
     },
   ],
