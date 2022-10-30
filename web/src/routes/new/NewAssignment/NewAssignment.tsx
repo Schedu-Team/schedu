@@ -27,10 +27,7 @@ function NewAssignment() {
       <h2>Create New Assignment</h2>
       <FormGroup>
         <FormLabel>Deadline</FormLabel>
-        <FormControl
-          type="datetime-local"
-          {...register("deadline", { required: true })}
-        />
+        <FormControl type="datetime-local" {...register("deadline", { required: true })} />
       </FormGroup>
       <FormGroup>
         <FormLabel>Text</FormLabel>
@@ -42,9 +39,7 @@ function NewAssignment() {
         </Button>
       </FormGroup>
 
-      {helper.showSuccess && (
-        <SuccessToast body={helper.successContent}></SuccessToast>
-      )}
+      {helper.showSuccess && <SuccessToast body={helper.successContent}></SuccessToast>}
       {helper.showError && <ErrorToast body={helper.errorContent}></ErrorToast>}
     </Form>
   );

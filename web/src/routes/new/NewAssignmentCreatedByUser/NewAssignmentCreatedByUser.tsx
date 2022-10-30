@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Form,
-  FormControl,
-  FormGroup,
-  FormLabel,
-  FormSelect,
-} from "react-bootstrap";
+import { Form, FormControl, FormGroup, FormLabel, FormSelect } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { Api } from "../../../index";
 import ToastHelper from "../../../components/ToastHelper";
@@ -33,10 +27,7 @@ function NewAssignmentCreatedByUser() {
   useEffect(() => {
     Api.assignmentsAllGet().then((res) => {
       const objs = res.data.response.map((assignment) => (
-        <option
-          value={assignment.assignment_id}
-          key={"assignment_" + assignment.assignment_id}
-        >
+        <option value={assignment.assignment_id} key={"assignment_" + assignment.assignment_id}>
           {assignment.text.slice(0, Math.min(10, assignment.text.length - 1))}
         </option>
       ));
@@ -61,22 +52,15 @@ function NewAssignmentCreatedByUser() {
       <h2>Create New Assignment Created By User Relation</h2>
       <FormGroup>
         <FormLabel>User</FormLabel>
-        <FormSelect {...register("user_id", { required: true })}>
-          {users}
-        </FormSelect>
+        <FormSelect {...register("user_id", { required: true })}>{users}</FormSelect>
       </FormGroup>
       <FormGroup>
         <FormLabel>Assignment</FormLabel>
-        <FormSelect {...register("assignment_id", { required: true })}>
-          {assignments}
-        </FormSelect>
+        <FormSelect {...register("assignment_id", { required: true })}>{assignments}</FormSelect>
       </FormGroup>
       <FormGroup>
         <FormLabel>Timestamp</FormLabel>
-        <FormControl
-          type="datetime-local"
-          {...register("timestamp", { required: true })}
-        />
+        <FormControl type="datetime-local" {...register("timestamp", { required: true })} />
       </FormGroup>
       <FormGroup>
         <Button type="submit" className={"mt-3"}>
@@ -84,9 +68,7 @@ function NewAssignmentCreatedByUser() {
         </Button>
       </FormGroup>
 
-      {helper.showSuccess && (
-        <SuccessToast body={helper.successContent}></SuccessToast>
-      )}
+      {helper.showSuccess && <SuccessToast body={helper.successContent}></SuccessToast>}
       {helper.showError && <ErrorToast body={helper.errorContent}></ErrorToast>}
     </Form>
   );

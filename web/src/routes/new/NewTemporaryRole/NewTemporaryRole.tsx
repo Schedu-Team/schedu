@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  Form,
-  FormControl,
-  FormGroup,
-  FormLabel,
-  FormSelect,
-} from "react-bootstrap";
+import { Form, FormControl, FormGroup, FormLabel, FormSelect } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { Api } from "../../../index";
 import { useForm } from "react-hook-form";
@@ -47,16 +41,11 @@ function NewTemporaryRole() {
       <h2>Create New Temporary Role</h2>
       <FormGroup>
         <FormLabel>Name</FormLabel>
-        <FormControl
-          type="datetime-local"
-          {...register("expiry_date", { required: true })}
-        />
+        <FormControl type="datetime-local" {...register("expiry_date", { required: true })} />
       </FormGroup>
       <FormGroup>
         <FormLabel>Role</FormLabel>
-        <FormSelect {...register("role_id", { required: true })}>
-          {roles}
-        </FormSelect>
+        <FormSelect {...register("role_id", { required: true })}>{roles}</FormSelect>
       </FormGroup>
       <FormGroup>
         <Button type="submit" className={"mt-3"}>
@@ -64,9 +53,7 @@ function NewTemporaryRole() {
         </Button>
       </FormGroup>
 
-      {helper.showSuccess && (
-        <SuccessToast body={helper.successContent}></SuccessToast>
-      )}
+      {helper.showSuccess && <SuccessToast body={helper.successContent}></SuccessToast>}
       {helper.showError && <ErrorToast body={helper.errorContent}></ErrorToast>}
     </Form>
   );

@@ -55,15 +55,11 @@ function NewPublicGroup() {
       <h2>Create New Public Group</h2>
       <FormGroup>
         <FormLabel>Group</FormLabel>
-        <FormSelect {...register("group_id", { required: true })}>
-          {groups}
-        </FormSelect>
+        <FormSelect {...register("group_id", { required: true })}>{groups}</FormSelect>
       </FormGroup>
       <FormGroup>
         <FormLabel>Role</FormLabel>
-        <FormSelect {...register("default_role_id", { required: true })}>
-          {roles}
-        </FormSelect>
+        <FormSelect {...register("default_role_id", { required: true })}>{roles}</FormSelect>
       </FormGroup>
       <FormGroup>
         <Button type="submit" className={"mt-3"}>
@@ -71,9 +67,7 @@ function NewPublicGroup() {
         </Button>
       </FormGroup>
 
-      {helper.showSuccess && (
-        <SuccessToast body={helper.successContent}></SuccessToast>
-      )}
+      {helper.showSuccess && <SuccessToast body={helper.successContent}></SuccessToast>}
       {helper.showError && <ErrorToast body={helper.errorContent}></ErrorToast>}
     </Form>
   );

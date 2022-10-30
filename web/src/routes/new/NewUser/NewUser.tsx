@@ -14,9 +14,7 @@ const helper = new ToastHelper();
 async function submitForm(userRequestForm: UserRequestForm) {
   const password_hash = "dummy-hash"; // TODO: password hashing on the server side
   const password_salt = "dummy-salt";
-  const graduation_year = Number(
-    userRequestForm.graduation_month.split("-")[0]
-  );
+  const graduation_year = Number(userRequestForm.graduation_month.split("-")[0]);
   const userRequest: UserRequest = {
     email: userRequestForm.email,
     first_name: userRequestForm.fname,
@@ -60,26 +58,18 @@ function NewUser() {
       </FormGroup>
       <FormGroup>
         <FormLabel>Password</FormLabel>
-        <FormControl
-          type="password"
-          {...register("password", { required: true })}
-        />
+        <FormControl type="password" {...register("password", { required: true })} />
       </FormGroup>
       <FormGroup>
         <FormLabel>Graduation month</FormLabel>
-        <FormControl
-          type="month"
-          {...register("graduation_month", { required: true })}
-        />
+        <FormControl type="month" {...register("graduation_month", { required: true })} />
       </FormGroup>
       <FormGroup>
         <Button type="submit" className={"mt-3"}>
           Submit
         </Button>
       </FormGroup>
-      {helper.showSuccess && (
-        <SuccessToast body={helper.successContent}></SuccessToast>
-      )}
+      {helper.showSuccess && <SuccessToast body={helper.successContent}></SuccessToast>}
       {helper.showError && <ErrorToast body={helper.errorContent}></ErrorToast>}
     </Form>
   );

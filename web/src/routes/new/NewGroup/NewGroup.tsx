@@ -30,11 +30,7 @@ function NewGroup() {
       </FormGroup>
       <FormGroup>
         <FormLabel>Description</FormLabel>
-        <Form.Control
-          as="textarea"
-          id="description"
-          {...register("description")}
-        />
+        <Form.Control as="textarea" id="description" {...register("description")} />
       </FormGroup>
       <FormGroup>
         <Button type="submit" className={"mt-3"}>
@@ -42,9 +38,7 @@ function NewGroup() {
         </Button>
       </FormGroup>
 
-      {helper.showSuccess && (
-        <SuccessToast body={helper.successContent}></SuccessToast>
-      )}
+      {helper.showSuccess && <SuccessToast body={helper.successContent}></SuccessToast>}
       {helper.showError && <ErrorToast body={helper.errorContent}></ErrorToast>}
     </Form>
   );

@@ -52,15 +52,11 @@ function NewUserHasRole() {
       <h2>Create New User Has Role Relation</h2>
       <FormGroup>
         <FormLabel>User</FormLabel>
-        <FormSelect {...register("user_id", { required: true })}>
-          {users}
-        </FormSelect>
+        <FormSelect {...register("user_id", { required: true })}>{users}</FormSelect>
       </FormGroup>
       <FormGroup>
         <FormLabel>Role</FormLabel>
-        <FormSelect {...register("role_id", { required: true })}>
-          {roles}
-        </FormSelect>
+        <FormSelect {...register("role_id", { required: true })}>{roles}</FormSelect>
       </FormGroup>
       <FormGroup>
         <Button type="submit" className={"mt-3"}>
@@ -68,9 +64,7 @@ function NewUserHasRole() {
         </Button>
       </FormGroup>
 
-      {helper.showSuccess && (
-        <SuccessToast body={helper.successContent}></SuccessToast>
-      )}
+      {helper.showSuccess && <SuccessToast body={helper.successContent}></SuccessToast>}
       {helper.showError && <ErrorToast body={helper.errorContent}></ErrorToast>}
     </Form>
   );

@@ -30,10 +30,7 @@ function NewRole() {
       </FormGroup>
       <FormGroup>
         <FormLabel>Description</FormLabel>
-        <Form.Control
-          as="textarea"
-          {...register("description", { required: true })}
-        />
+        <Form.Control as="textarea" {...register("description", { required: true })} />
       </FormGroup>
       <FormGroup>
         <Button type="submit" className={"mt-3"}>
@@ -41,9 +38,7 @@ function NewRole() {
         </Button>
       </FormGroup>
 
-      {helper.showSuccess && (
-        <SuccessToast body={helper.successContent}></SuccessToast>
-      )}
+      {helper.showSuccess && <SuccessToast body={helper.successContent}></SuccessToast>}
       {helper.showError && <ErrorToast body={helper.errorContent}></ErrorToast>}
     </Form>
   );

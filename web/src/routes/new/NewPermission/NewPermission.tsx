@@ -31,10 +31,7 @@ function NewPermission() {
       </FormGroup>
       <FormGroup>
         <FormLabel>Description</FormLabel>
-        <Form.Control
-          as="textarea"
-          {...register("description", { required: true })}
-        />
+        <Form.Control as="textarea" {...register("description", { required: true })} />
       </FormGroup>
       <FormGroup>
         <FormLabel>Type</FormLabel>
@@ -46,9 +43,7 @@ function NewPermission() {
         </Button>
       </FormGroup>
 
-      {helper.showSuccess && (
-        <SuccessToast body={helper.successContent}></SuccessToast>
-      )}
+      {helper.showSuccess && <SuccessToast body={helper.successContent}></SuccessToast>}
       {helper.showError && <ErrorToast body={helper.errorContent}></ErrorToast>}
     </Form>
   );
