@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   version: '1.0'
   title: "Schedu"
-  description: Polls is a simple API allowing consumers to view polls and vote in them.
+  description: Student-friendly Assignments and Deadlines Management System
   license:
     name: Apache 2.0
     url: https://github.com/Schedu-Team/schedu/blob/master/LICENSE
@@ -102,7 +102,7 @@ paths:
                 password_hash: aboba
                 password_salt: salt
                 email: john@smith.me
-                gradation_year: 2024
+                graduation_year: 2024
         400:
           description: 'Bad request'
   /users/all:
@@ -130,14 +130,14 @@ paths:
                   password_hash: aboba
                   password_salt: salt
                   email: john@smith.me
-                  gradation_year: 2024
+                  graduation_year: 2024
                 - user_id: 1
                   first_name: Roger
                   last_name: White
                   password_hash: skibidi
                   password_salt: pepper
                   email: roger.white@gmail.com
-                  gradation_year: 2025
+                  graduation_year: 2025
         400:
           description: 'Bad request'
   /assignments/add:
@@ -609,7 +609,7 @@ definitions:
       password_hash: aboba
       password_salt: salt
       email: john@smith.me
-      gradation_year: 2024
+      graduation_year: 2024
   UserRequest:
     title: UserRequest
     type: object
@@ -639,7 +639,7 @@ definitions:
       password_hash: aboba
       password_salt: salt
       email: john@smith.me
-      gradation_year: 2024
+      graduation_year: 2024
   Assignment:
     type: object
     properties:
