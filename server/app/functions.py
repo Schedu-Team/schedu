@@ -41,9 +41,8 @@ def function_response(
         except Exception as e:
             status_code = 500
             data = {"Error": str(e), "Stack": full_stack()}
-        if 1 or flask_version <= '1.1':
-            data = dict_to_json_str(data)  # DAMN IT, FLASK 1.0!
-        response = make_response(data)  # , status_code)
+        data = dict_to_json_str(data)  # Datetime is not json serializable, so we do it in this function
+        response = make_response(data)
         response.status_code = status_code  # Damn it, Flask 1! TODO: Install Flask 2 on server
         response.headers["Content-Type"] = "application/json"
         response.headers["Access-Control-Allow-Origin"] = "*"
@@ -53,15 +52,16 @@ def function_response(
 
 
 @function_response
-def status() -> Tuple[int, Dict]:  # TODO: rewrite to add meaningful information
+def status() -> Tuple[int, Dict]:
     """
     Get the server's state
-    :return: 200, {'State': 'Active', 'API version': [str], 'DB manager': 'OK/FAILED'}
+    :return: 200, {'State': 'Active', 'API version': str, 'Amount of connections': int}
     """
     code = 200
     data = {
         "State": "Active",
-        "API version": "v1",
+        "API version": f"v{Config.API_VERSION}",
+        "Amount of connections": len(dbm.connections)
     }
     return code, data
 

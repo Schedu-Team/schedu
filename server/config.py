@@ -12,3 +12,4 @@ class Config(object):
     TOKEN_LIFETIME_SEC = 60 * 60 * 24 * 3
     RANDOM_BORDER = 2 ** 30
     ADMIN_SECRET = os.environ.get("ADMIN_SECRET") or "mad-hatters"
+    API_VERSION = "1"
