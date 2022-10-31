@@ -21,3 +21,8 @@ class ObjectAlreadyExistsException(UserException):
 class NotTheOwnerOfObjectException(UserException):
     def __init__(self, object_name):
         super().__init__(403, f"Not the owner of {object_name}")
+
+
+class DataParseFailedException(UserException):
+    def __init__(self, data_parse_msg):
+        super().__init__(400, f"Failed to parse data: {data_parse_msg}")

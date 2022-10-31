@@ -8,7 +8,27 @@ from typing import Optional, List, Callable, Dict
 import flask
 import mysql.connector
 
-from exceptions.DatabaseExceptions import ConnectionFailedException
+from exceptions.DatabaseExceptions import ConnectionFailedException, ForeignKeyViolationException, \
+    UnknownConstraintViolationException
+from exceptions.insert_exceptions import DataInvalidException
+from exceptions import KnownException
+
+
+def handle_db_error(database_request: Callable) -> Callable:
+    def wrapped(self, *args, **kwargs):
+        try:
+            return database_request(self, *args, **kwargs)
+        except mysql.connector.errors.DataError as e:
+            raise DataInvalidException(message=e.msg)
+        except mysql.connector.errors.IntegrityError as e:
+            if "a foreign key constraint fails" in e.msg:
+                raise ForeignKeyViolationException(e.msg)
+            else:
+                raise UnknownConstraintViolationException(e.msg)
+        except mysql.connector.Error as e:
+            raise KnownException(500, f"Database exception of type: {str(type(e))} and message {e.msg}")
+
+    return wrapped
 
 
 def with_connect(database_request: Callable) -> Callable:
@@ -67,6 +87,7 @@ class DBManager:
         self.connections.append(connection)
         return True
 
+    @handle_db_error
     @with_connect
     def select_all(self, connection: mysql.connector.connection, table_name: str,
                    fields: List[str] = None) -> List:
@@ -81,6 +102,7 @@ class DBManager:
         cursor.close()
         return records
 
+    @handle_db_error
     @with_connect
     def select_field(self, connection: mysql.connector.connection, table_name: str, column_name: str,
                      column_value: str) -> List:
@@ -90,6 +112,7 @@ class DBManager:
         cursor.close()
         return records
 
+    @handle_db_error
     @with_connect
     def insert_into(self, connection: mysql.connector.connection, table_name: str, column_value_pairs: Dict) -> int:
         fields_str = "("
