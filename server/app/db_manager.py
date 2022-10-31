@@ -9,7 +9,7 @@ import flask
 import mysql.connector
 
 from exceptions.DatabaseExceptions import ConnectionFailedException, ForeignKeyViolationException, \
-    UnknownConstraintViolationException
+    UnknownConstraintViolationException, DatabaseException
 from exceptions.insert_exceptions import DataInvalidException
 from exceptions import KnownException
 
@@ -26,7 +26,7 @@ def handle_db_error(database_request: Callable) -> Callable:
             else:
                 raise UnknownConstraintViolationException(e.msg)
         except mysql.connector.Error as e:
-            raise KnownException(500, f"Database exception of type: {str(type(e))} and message {e.msg}")
+            raise DatabaseException(500, f"Database exception of type: {str(type(e))} and message {e.msg}")
 
     return wrapped
 
