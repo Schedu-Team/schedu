@@ -1,5 +1,6 @@
 from typing import Dict
 
+import dateutil.parser
 from flask import request
 import app.functions as functions
 from app import app
@@ -7,6 +8,7 @@ from app import app
 from app.forms import Form
 from app.models_base import EntityModel
 from app.storage import Storage
+from exceptions.UserExceptions import DataParseFailedException
 from utils.utils import remove_none_from_dict
 
 
@@ -19,24 +21,6 @@ def index():
 @app.route("/api/v1/service/status", methods=["GET"])
 def status():
     return functions.status()
-
-
-@app.route("/api/v1/service/test", methods=["GET"])
-def test():
-    return functions.test()
-
-
-@app.route("/api/v1/service/test2/<user_id>", methods=["GET"])
-def test2(user_id: int):
-    return functions.test_2(user_id)
-
-
-@app.route("/api/v1/service/test3", methods=["POST"])
-def test3():
-    first_name: str = request.get_json()["first_name"]
-    last_name: str = request.get_json()["last_name"]
-    graduation_year: int = int(request.get_json()["graduation_year"])
-    return functions.test_3(first_name, last_name, graduation_year)
 
 
 def extract_form_data():
@@ -54,7 +38,12 @@ def add_entity_form_handler_function(model_type: EntityModel, *args, **kwargs):
     def process_form_data():
         form: Form = Form(model_type)
         form_data: Dict = extract_form_data()
-        obj: Dict = form.parse(form_data)
+        try:
+            obj: Dict = form.parse(form_data)
+        except dateutil.parser.ParserError as e:
+            raise DataParseFailedException(f"failed to parse datetime: {str(e)}")
+        except Exception as e:
+            raise DataParseFailedException(str(e))
         added_id = model_type.add(obj)
         return 200, {
             'inserted_id': added_id,

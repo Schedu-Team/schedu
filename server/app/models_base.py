@@ -44,10 +44,10 @@ class EntityModel:
                 else field.default_value
 
             if field.required and value is None:
-                raise ConstraintInsertException("Field `%s` is required" % (field.name,))
+                raise ConstraintInsertException(message="Field `%s` is required" % (field.name,))
 
             if field.db_auto and value is not None:
-                raise ConstraintInsertException("Field `%s` is entirely managed by the DB" % (field.name,))
+                raise ConstraintInsertException(message="Field `%s` is entirely managed by the DB" % (field.name,))
 
     def instance(self, **kwargs) -> Dict[str, Any]:
         result: Dict[str, Any] = dict()

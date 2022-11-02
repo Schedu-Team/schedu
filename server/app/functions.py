@@ -41,9 +41,8 @@ def function_response(
         except Exception as e:
             status_code = 500
             data = {"Error": str(e), "Stack": full_stack()}
-        if 1 or flask_version <= '1.1':
-            data = dict_to_json_str(data)  # DAMN IT, FLASK 1.0!
-        response = make_response(data)  # , status_code)
+        data = dict_to_json_str(data)  # Datetime is not json serializable, so we do it in this function
+        response = make_response(data)
         response.status_code = status_code  # Damn it, Flask 1! TODO: Install Flask 2 on server
         response.headers["Content-Type"] = "application/json"
         response.headers["Access-Control-Allow-Origin"] = "*"
@@ -53,61 +52,15 @@ def function_response(
 
 
 @function_response
-def status() -> Tuple[int, Dict]:  # TODO: rewrite to add meaningful information
+def status() -> Tuple[int, Dict]:
     """
     Get the server's state
-    :return: 200, {'State': 'Active', 'API version': [str], 'DB manager': 'OK/FAILED'}
+    :return: 200, {'State': 'Active', 'API version': str, 'Amount of connections': int}
     """
     code = 200
     data = {
         "State": "Active",
-        "API version": "v1",
-    }
-    return code, data
-
-
-@function_response
-def test() -> Tuple[int, Dict]:
-    """
-    Runs whatever I need for testing
-    :return: 200, dict of something
-    """
-    code = 200
-    users = dbm.select_all("Users")
-    data = {
-        "Users": users
-    }
-    return code, data
-
-
-@function_response
-def test_2(user_id: int) -> Tuple[int, Dict]:
-    """
-    Runs whatever I need for testing
-    :return: 200, dict of something
-    """
-    code = 200
-    users = dbm.select_field("Users", "user_id", str(user_id))
-    data = {
-        "Users": users
-    }
-    return code, data
-
-
-@function_response
-def test_3(first_name: str, last_name: str, graduation_year: int) -> Tuple[int, Dict]:
-    """
-    Runs whatever I need for testing
-    :return: 200, dict of something
-    """
-    code = 200
-
-    added_id = dbm.insert_into("Users", {"password_hash": f"PasswordHash{first_name}{last_name}",
-                                         "password_salt": f"PasswordSalt{first_name}{last_name}",
-                                         "first_name": first_name,
-                                         "last_name": last_name,
-                                         "graduation_year": graduation_year})
-    data = {
-        "Added_id": added_id
+        "API version": f"v{Config.API_VERSION}",
+        "Amount of connections": len(dbm.connections)
     }
     return code, data
