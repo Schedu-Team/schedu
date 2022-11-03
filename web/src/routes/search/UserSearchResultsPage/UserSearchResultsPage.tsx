@@ -14,8 +14,8 @@ function UserSearchResultsPage() {
     filter: (user, query) => {
       const queryL = query.toLowerCase();
       return (
-        user.graduation_year.toString().includes(queryL) ||
-        user.email.toLowerCase().includes(queryL) ||
+        user.graduation_year?.toString().includes(queryL) ||
+        user.email?.toLowerCase().includes(queryL) ||
         (user.first_name + " " + user.last_name).toLowerCase().includes(queryL)
       );
     },
