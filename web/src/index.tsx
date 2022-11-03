@@ -13,18 +13,18 @@ import "jquery/dist/jquery.min.js";
 import "bootstrap/dist/js/bootstrap.min.js";
 
 import Homepage from "./routes/Homepage/Homepage";
-import NewAssignment from "./routes/NewAssignment/NewAssignment";
-import NewGroup from "./routes/NewGroup/NewGroup";
-import NewUser from "./routes/NewUser/NewUser";
-import NewPermission from "./routes/NewPermission/NewPermission";
-import NewRole from "./routes/NewRole/NewRole";
-import NewDelayedAssignment from "./routes/NewDelayedAssignment/NewDelayedAssignment";
-import NewTemporaryRole from "./routes/NewTemporaryRole/NewTemporaryRole";
-import NewPublicGroup from "./routes/NewPublicGroup/NewPublicGroup";
-import NewUserHasRole from "./routes/NewUserHasRole/NewUserHasRole";
-import NewUserHasCompletedAssignment from "./routes/NewUserHasCompletedAssignment/NewUserHasCompletedAssignment";
-import NewAssignmentCreatedByUser from "./routes/NewAssignmentCreatedByUser/NewAssignmentCreatedByUser";
-import NewUserMemberOfGroup from "./routes/NewUserMemberOfGroup/NewUserMemberOfGroup";
+import NewAssignment from "./routes/new/NewAssignment/NewAssignment";
+import NewGroup from "./routes/new/NewGroup/NewGroup";
+import NewUser from "./routes/new/NewUser/NewUser";
+import NewPermission from "./routes/new/NewPermission/NewPermission";
+import NewRole from "./routes/new/NewRole/NewRole";
+import NewDelayedAssignment from "./routes/new/NewDelayedAssignment/NewDelayedAssignment";
+import NewTemporaryRole from "./routes/new/NewTemporaryRole/NewTemporaryRole";
+import NewPublicGroup from "./routes/new/NewPublicGroup/NewPublicGroup";
+import NewUserHasRole from "./routes/new/NewUserHasRole/NewUserHasRole";
+import NewUserHasCompletedAssignment from "./routes/new/NewUserHasCompletedAssignment/NewUserHasCompletedAssignment";
+import NewAssignmentCreatedByUser from "./routes/new/NewAssignmentCreatedByUser/NewAssignmentCreatedByUser";
+import NewUserMemberOfGroup from "./routes/new/NewUserMemberOfGroup/NewUserMemberOfGroup";
 import { ButtonGroup } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import NotFound from "./routes/NotFound/NotFound";
@@ -32,6 +32,15 @@ import { DefaultApi } from "./openapi";
 import { API_ENDPOINT } from "./react-app-env";
 import ToastHelper from "./components/ToastHelper";
 import {ErrorToast, SuccessToast} from "./components/MyToasts";
+import SearchPage from "./routes/search/SearchPage/SearchPage";
+import GroupSearchResultsPage from "./routes/search/GroupSearchResultsPage/GroupSearchResultsPage";
+import GroupDetail from "./routes/detail/GroupDetail/GroupDetail";
+import AssignmentSearchResultsPage from "./routes/search/AssignmentSearchResultsPage/AssignmentSearchResultsPage";
+import AssignmentDetail from "./routes/detail/AssignmentDetail/AssignmentDetail";
+import UserSearchResultsPage from "./routes/search/UserSearchResultsPage/UserSearchResultsPage";
+import UserDetail from "./routes/detail/UserDetail/UserDetail";
+import RoleSearchResultsPage from "./routes/search/RoleSearchResultsPage/RoleSearchResultsPage";
+import RoleDetail from "./routes/detail/RoleDetail/RoleDetail";
 
 export const Api = new DefaultApi(undefined, API_ENDPOINT);
 
@@ -150,6 +159,42 @@ const router = createBrowserRouter(
             }
           ],
         },
+        {
+          path: "/search",
+          element: <SearchPage/>
+        },
+        {
+          path: "/groups",
+          element: <GroupSearchResultsPage/>
+        },
+        {
+          path: "/groups/:id",
+          element: <GroupDetail/>
+        },
+        {
+          path: "/assignments",
+          element: <AssignmentSearchResultsPage/>
+        },
+        {
+          path: "/assignments/:id",
+          element: <AssignmentDetail/>
+        },
+        {
+          path: "/users",
+          element: <UserSearchResultsPage/>
+        },
+        {
+          path: "/users/:id",
+          element: <UserDetail/>
+        },
+        {
+          path: "/roles",
+          element: <RoleSearchResultsPage/>
+        },
+        {
+          path: "/roles/:id",
+          element: <RoleDetail/>
+        }
       ],
     },
   ],

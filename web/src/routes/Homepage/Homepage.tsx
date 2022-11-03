@@ -22,8 +22,7 @@ function Homepage() {
             <small>17 people</small> {/*TODO: calculate*/}
           </div>
           <p className="mb-1"> {group.description}...</p>
-          <small className="text-muted">Next deadline: in 2 days</small>{" "}
-          {/*TODO: calculate*/}
+          <small className="text-muted">Next deadline: in 2 days</small> {/*TODO: calculate*/}
         </a>
       ));
       updateGroups(objs);
@@ -35,11 +34,7 @@ function Homepage() {
       <div className="col-md-6">
         <h2>Your upcoming deadlines</h2>
         <ListGroup>
-          <a
-            href="#"
-            className="list-group-item list-group-item-action"
-            aria-current="true"
-          >
+          <a href="#" className="list-group-item list-group-item-action" aria-current="true">
             <div className="d-flex w-100 justify-content-between">
               <h5 className="mb-1">F22_CO-560-A</h5>
               <small>Tomorrow</small>

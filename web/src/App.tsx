@@ -77,6 +77,16 @@ function App() {
                   Maintenance page
                 </NavLink>
               </li>
+              <li className="nav-item">
+                <NavLink
+                  to="/search"
+                  className={({ isActive }) =>
+                    "nav-link " + (isActive ? activeClassName : "")
+                  }
+                >
+                  Search
+                </NavLink>
+              </li>
             </ul>
             <span className="navbar-text actions">
               <a
