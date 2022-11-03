@@ -29,8 +29,8 @@ function UserDetail() {
         {user?.first_name} {user?.last_name}
       </h3>
       <hr />
-      <p>Email: {user?.email}</p>
-      <p>Graduation year: {user?.graduation_year}</p>
+      <p>Email: {user?.email ?? "unspecified"}</p>
+      <p>Graduation year: {user?.graduation_year ?? "unspecified"}</p>
     </>
   );
 }

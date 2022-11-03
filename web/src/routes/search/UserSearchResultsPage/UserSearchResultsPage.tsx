@@ -30,8 +30,8 @@ function UserSearchResultsPage() {
             {user.first_name} {user.last_name}
           </h5>
         </div>
-        <p className="mb-1"> Graduation: {user.graduation_year}</p>
-        <small>Email: {user.email}</small>
+        <p className="mb-1"> Graduation: {user.graduation_year ?? "unspecified"}</p>
+        <small>Email: {user.email ?? "unspecified"}</small>
       </Link>
     ),
   });

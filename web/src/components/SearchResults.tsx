@@ -45,7 +45,11 @@ function SearchResults<DataType>({ getData, filter, show }: SearchResultsProps<D
   return (
     <>
       <h2>Search Results</h2>
-      <Form>
+      <Form
+        onSubmit={handleSubmit((res) => {
+          console.log(res + " searched");
+        })}
+      >
         <FormGroup>
           <FormLabel>Your search query:</FormLabel>
           <input
