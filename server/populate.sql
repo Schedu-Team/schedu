@@ -1,14 +1,14 @@
-INSERT INTO `Users` (`password_hash`, `password_salt`, `first_name`, `last_name`, `graduation_year`, `email`) VALUES 
-	("PasswordHashMarkIpatov", "Mark", "Ipatov", 2024, "markthehopeful@gmail.com"),
-	("PasswordHashAlexKovrigin", "Alex", "Kovrigin", 2024, "alexmail@alexkovrigin.me"),
-	("PasswordHashPetrTsvetkov", "Petr", "Tsvetkov", 2024, NULL),
-	("PasswordHashKirillIvanov", "Kirill", "Ivanov", 2024, "k.ivanov@jacobs-university.de"),
-	("PasswordHashMikhailBudnikov", "Mikhail", "Budnikov", 2024, NULL),
-	("PasswordHashKirillKarnauhov", "Kirill", "Karnauhov", 2023, "k.karnauhov@jacobs-university.de"),
-	("PasswordHashAndreyShein", "Andrei", "Shein", 2023, NULL),
-	("PasswordHashValeryGolovin", "Valery", "Golovin", 2023, "v.golovin@jacobs-university.de"),
-	("PasswordHashPeterBaumann", "Peter", "Baumann", NULL, "p.baumann@jacobs-university.de"),
-	("PasswordHashJürgenSchönwälder", "Jürgen", "Schönwälder", NULL, NULL);
+INSERT INTO `Users` (`username`, `password_hash`, `password_salt`, `first_name`, `last_name`, `graduation_year`, `email`) VALUES
+	("mipatov", "PasswordHashMarkIpatov", "Mark", "Ipatov", 2024, "markthehopeful@gmail.com"),
+	("waleko", "PasswordHashAlexKovrigin", "Alex", "Kovrigin", 2024, "alexmail@alexkovrigin.me"),
+	("petrtsv", "PasswordHashPetrTsvetkov", "Petr", "Tsvetkov", 2024, NULL),
+	("kirdmivus", "PasswordHashKirillIvanov", "Kirill", "Ivanov", 2024, "k.ivanov@jacobs-university.de"),
+	("mixxxa", "PasswordHashMikhailBudnikov", "Mikhail", "Budnikov", 2024, NULL),
+	("kotlin", "PasswordHashKirillKarnauhov", "Kirill", "Karnauhov", 2023, "k.karnauhov@jacobs-university.de"),
+	("andshein", "PasswordHashAndreyShein", "Andrei", "Shein", 2023, NULL),
+	("valgol", "PasswordHashValeryGolovin", "Valery", "Golovin", 2023, "v.golovin@jacobs-university.de"),
+	("p.baumann", "PasswordHashPeterBaumann", "Peter", "Baumann", NULL, "p.baumann@jacobs-university.de"),
+	("öööüüüööö", "PasswordHashJürgenSchönwälder", "Jürgen", "Schönwälder", NULL, NULL);
 
 INSERT INTO `Tokens` (`expires_in`, `user_id`) VALUES
     ("2022-11-12 23:59:59", 1),
