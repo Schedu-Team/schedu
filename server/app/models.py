@@ -18,11 +18,20 @@ class UsersModel(EntityModel):
                          fields=[
                              Field("user_id", int, required=False, db_auto=True),
                              Field("password_hash", str),
-                             Field("password_salt", str),
                              Field("first_name", str),
                              Field("last_name", str),
                              Field("graduation_year", int, required=False),
                              Field("email", str, required=False),
+                         ])
+
+
+class TokensModel(EntityModel):
+    def __init__(self):
+        super().__init__(table_name="Tokens",
+                         fields=[
+                             Field("token_id", int, required=False, db_auto=True),
+                             Field("expires_in", datetime_parser),
+                             Field("user_id", int, foreign_key=(UsersModel, "user_id")),
                          ])
 
 
