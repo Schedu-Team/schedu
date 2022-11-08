@@ -59,3 +59,7 @@ def remove_none_from_dict(data: Dict[Any, Any]) -> Dict[Any, Any]:
     for k in to_remove:
         del data[k]
     return data
+
+
+def fail_with(exception_obj):
+    raise exception_obj
