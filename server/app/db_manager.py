@@ -134,3 +134,9 @@ class DBManager:
         last_id: int = cursor.lastrowid
         cursor.close()
         return last_id
+
+    def get_username_and_exptime_by_token(self, token):
+        raise NotImplementedError()
+
+    def delete_token(self, token):
+        raise NotImplementedError()
