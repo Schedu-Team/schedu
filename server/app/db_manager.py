@@ -31,14 +31,18 @@ def handle_db_error(database_request: Callable) -> Callable:
     return wrapped
 
 
-def with_connect(database_request: Callable) -> Callable:
+def with_connect(database_request: Callable, is_admin=False) -> Callable:
     def wrapped(self, *args, **kwargs):
         connection: Optional[mysql.connector.connection] = None
+        if is_admin:
+            connection_source = self.admin_connections
+        else:
+            connection_source = self.select_connections
         while True:
             try:
-                connection = self.connections.pop()
+                connection = connection_source.pop()
             except IndexError:
-                if not self.create_connection():
+                if not self.create_connection(is_admin):
                     self.logging_device.error(f"Failed to create connection while processing request")
                     raise ConnectionFailedException()
                 continue
@@ -47,7 +51,7 @@ def with_connect(database_request: Callable) -> Callable:
             self.logging_device.error("Got connection, but it is None!?")
             raise ConnectionFailedException()
         result = database_request(self, connection, *args, **kwargs)
-        self.connections.append(connection)
+        connection_source.append(connection)
         return result
 
     return wrapped
@@ -58,23 +62,34 @@ class DBManager:
         self.host: Optional[str] = None
         self.database: Optional[str] = None
         self.user: Optional[str] = None
+        self.admin: Optional[str] = None
         self.password: Optional[str] = None
-        self.connections: List[Optional[mysql.connector.connection]] = []
+        self.admin_password: Optional[str] = None
+        self.select_connections: List[Optional[mysql.connector.connection]] = []
+        self.admin_connections: List[Optional[mysql.connector.connection]] = []
         self.logging_device: Optional[logging.Logger] = None
 
     def init_with_app(self, app: flask.app.Flask):
         self.logging_device = app.logger
         self.host = app.config.get("DB_HOST")
         self.database = app.config.get("DB_DATABASE")
-        self.user = app.config.get("DB_USER")
-        self.password = app.config.get("DB_PASSWORD")
+        self.user = app.config.get("DB_USER_SELECT_ONLY")
+        self.password = app.config.get("DB_PASSWORD_SELECT_ONLY")
+        self.admin = app.config.get("DB_ADMIN")
+        self.admin_password = app.config.get("DB_ADMIN_PASSWORD")
 
-    def create_connection(self) -> bool:
+    def create_connection(self, is_admin=False) -> bool:
         try:
-            connection = mysql.connector.connect(host=self.host,
-                                                 database=self.database,
-                                                 user=self.user,
-                                                 password=self.password)
+            if is_admin:
+                connection = mysql.connector.connect(host=self.host,
+                                                     database=self.database,
+                                                     user=self.admin,
+                                                     password=self.admin_password)
+            else:
+                connection = mysql.connector.connect(host=self.host,
+                                                     database=self.database,
+                                                     user=self.user,
+                                                     password=self.password)
         except mysql.connector.Error as e:
             self.logging_device.error(f"Failed to create connection to MySQL! Error: {e}")
             return False
@@ -84,7 +99,10 @@ class DBManager:
             return False
 
         self.logging_device.info(f"Successfully created connection")
-        self.connections.append(connection)
+        if is_admin:
+            self.admin_connections.append(connection)
+        else:
+            self.select_connections.append(connection)
         return True
 
     @handle_db_error
