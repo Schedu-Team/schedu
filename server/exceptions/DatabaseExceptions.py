@@ -21,3 +21,8 @@ class ForeignKeyViolationException(DatabaseException):
 class UnknownConstraintViolationException(DatabaseException):
     def __init__(self, message: str = "Unknown constraint violation"):
         super(UnknownConstraintViolationException, self).__init__(500, message=message)
+
+
+class DBTokenNotFoundException(DatabaseException):
+    def __init__(self, message=""):
+        super(DBTokenNotFoundException, self).__init__(401, message)

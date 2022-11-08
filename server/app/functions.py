@@ -8,6 +8,7 @@ Decorator handles exceptions and returns the flask Response object
 import datetime
 
 from app.extensions import dbm
+from exceptions.DatabaseExceptions import DBTokenNotFoundException
 from exceptions.UserExceptions import ObjectNotFoundException
 from utils.encrypt import encrypt_password, check_password
 from config import Config
@@ -64,3 +65,16 @@ def status() -> Tuple[int, Dict]:
         "Amount of connections": len(dbm.connections)
     }
     return code, data
+
+
+def token_auth(token: str) -> str:
+    """
+    :param token: user token
+    :return: username, if token is valid, otherwise throws ObjectNotFound("Token")
+    """
+    username, exp_time = dbm.get_username_and_exptime_by_token(token)
+
+    if exp_time < datetime.datetime.utcnow():
+        dbm.delete_token(token)
+        raise ObjectNotFoundException("Token")  # TODO: seems not good, I guess
+    return username
