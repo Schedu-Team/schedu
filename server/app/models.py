@@ -30,7 +30,7 @@ class TokensModel(EntityModel):
     def __init__(self):
         super().__init__(table_name="Tokens",
                          fields=[
-                             Field("token_id", int, required=False, db_auto=True),
+                             Field("token_id", int, required=True, db_auto=False),
                              Field("expires_in", datetime_parser),
                              Field("user_id", int, foreign_key=(UsersModel, "user_id")),
                          ])

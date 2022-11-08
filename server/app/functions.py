@@ -52,6 +52,19 @@ def function_response(
     return wrapped
 
 
+def token_auth(token: str) -> str:
+    """
+    :param token: user token
+    :return: username, if token is valid, otherwise throws ObjectNotFound("Token")
+    """
+    username, exp_time = dbm.get_username_and_exptime_by_token(token)
+
+    if exp_time < datetime.datetime.utcnow():
+        dbm.delete_token(token)
+        raise ObjectNotFoundException("Token")  # TODO: seems not good, I guess
+    return username
+
+
 @function_response
 def status() -> Tuple[int, Dict]:
     """
@@ -67,14 +80,23 @@ def status() -> Tuple[int, Dict]:
     return code, data
 
 
-def token_auth(token: str) -> str:
+@function_response
+def login(username: str, password: str) -> Tuple[int, Dict]:
     """
-    :param token: user token
-    :return: username, if token is valid, otherwise throws ObjectNotFound("Token")
+    :param username: not empty, should be real username
+    :param password: not empty, should be user's password
+    :return: 201, {'Token': <token>} on success, errors otherwise
+    Throws exceptions, but they are handled in wrapper
     """
-    username, exp_time = dbm.get_username_and_exptime_by_token(token)
 
-    if exp_time < datetime.datetime.utcnow():
-        dbm.delete_token(token)
-        raise ObjectNotFoundException("Token")  # TODO: seems not good, I guess
-    return username
+    user_password_hash, user_id = dbm.get_password_hash_and_user_id(username)
+
+    if not check_password(password, user_password_hash):
+        raise ObjectNotFoundException("User")
+
+    tok_uuid, tok_exp = gen_token()
+    dbm.insert_into("Tokens", {"token_id": tok_uuid, "token_expire": str(tok_exp), "user_id": user_id})
+    code = 201
+    data = {"Token": tok_uuid}
+
+    return code, data
