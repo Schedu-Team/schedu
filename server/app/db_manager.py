@@ -158,13 +158,20 @@ class DBManager:
         cursor.close()
         return last_id
 
-    def get_username_and_exptime_by_token(self, token):
+    def get_username_and_exptime_by_token(self, token: str):
         token_records = self.select_field("Tokens", "token_id", token)
         if len(token_records) == 0:
             raise ObjectNotFoundException("Token")
-        token_model = Storage.Tokens.instance(token_records)
-        user_records = Storage.Users.instance(self.select_field("Users", "user_id", token_model["user_id"]))
+        token_model = Storage.Tokens.instance(token_records[0])
+        user_records = Storage.Users.instance(self.select_field("Users", "user_id", token_model["user_id"])[0])
         return user_records["username"], token_model["expires_in"]
+
+    def get_password_hash_and_user_id(self, username: str):
+        user_records = self.select_field("Users", "username", username)
+        if len(user_records) == 0:
+            raise ObjectNotFoundException("User")
+        user_model = Storage.Users.instance(user_records[0])
+        return user_model["password_hash"], user_model["user_id"]
 
     @handle_db_error
     @with_connect(is_admin=True)
