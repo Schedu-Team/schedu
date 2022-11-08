@@ -62,7 +62,7 @@ def status() -> Tuple[int, Dict]:
     data = {
         "State": "Active",
         "API version": f"v{Config.API_VERSION}",
-        "Amount of connections": len(dbm.select_connections)
+        "Amount of connections": len(dbm.select_connections) + len(dbm.admin_connections)
     }
     return code, data
 

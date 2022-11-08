@@ -17,6 +17,7 @@ class UsersModel(EntityModel):
         super().__init__(table_name="Users",
                          fields=[
                              Field("user_id", int, required=False, db_auto=True),
+                             Field("username", str),
                              Field("password_hash", str),
                              Field("first_name", str),
                              Field("last_name", str),

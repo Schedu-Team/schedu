@@ -8,8 +8,10 @@ from typing import Optional, List, Callable, Dict
 import flask
 import mysql.connector
 
+from app.storage import Storage
 from exceptions.DatabaseExceptions import ConnectionFailedException, ForeignKeyViolationException, \
-    UnknownConstraintViolationException, DatabaseException
+    UnknownConstraintViolationException, DatabaseException, DBTokenNotFoundException
+from exceptions.UserExceptions import ObjectNotFoundException
 from exceptions.insert_exceptions import DataInvalidException
 from exceptions import KnownException
 
@@ -31,30 +33,33 @@ def handle_db_error(database_request: Callable) -> Callable:
     return wrapped
 
 
-def with_connect(database_request: Callable, is_admin=False) -> Callable:
-    def wrapped(self, *args, **kwargs):
-        connection: Optional[mysql.connector.connection] = None
-        if is_admin:
-            connection_source = self.admin_connections
-        else:
-            connection_source = self.select_connections
-        while True:
-            try:
-                connection = connection_source.pop()
-            except IndexError:
-                if not self.create_connection(is_admin):
-                    self.logging_device.error(f"Failed to create connection while processing request")
-                    raise ConnectionFailedException()
-                continue
-            break
-        if connection is None:
-            self.logging_device.error("Got connection, but it is None!?")
-            raise ConnectionFailedException()
-        result = database_request(self, connection, *args, **kwargs)
-        connection_source.append(connection)
-        return result
+def with_connect(is_admin: bool = False) -> Callable:
+    def with_connect_inner(database_request: Callable) -> Callable:
+        def wrapped(self, *args, **kwargs):
+            connection: Optional[mysql.connector.connection] = None
+            if is_admin:
+                connection_source = self.admin_connections
+            else:
+                connection_source = self.select_connections
+            while True:
+                try:
+                    connection = connection_source.pop()
+                except IndexError:
+                    if not self.create_connection(is_admin):
+                        self.logging_device.error(f"Failed to create connection while processing request")
+                        raise ConnectionFailedException()
+                    continue
+                break
+            if connection is None:
+                self.logging_device.error("Got connection, but it is None!?")
+                raise ConnectionFailedException()
+            result = database_request(self, connection, *args, **kwargs)
+            connection_source.append(connection)
+            return result
 
-    return wrapped
+        return wrapped
+
+    return with_connect_inner
 
 
 class DBManager:
@@ -131,7 +136,7 @@ class DBManager:
         return records
 
     @handle_db_error
-    @with_connect
+    @with_connect(is_admin=True)
     def insert_into(self, connection: mysql.connector.connection, table_name: str, column_value_pairs: Dict) -> int:
         fields_str = "("
         placeholders = "("
@@ -154,7 +159,17 @@ class DBManager:
         return last_id
 
     def get_username_and_exptime_by_token(self, token):
-        raise NotImplementedError()
+        token_records = self.select_field("Tokens", "token_id", token)
+        if len(token_records) == 0:
+            raise ObjectNotFoundException("Token")
+        token_model = Storage.Tokens.instance(token_records)
+        user_records = Storage.Users.instance(self.select_field("Users", "user_id", token_model["user_id"]))
+        return user_records["username"], token_model["expires_in"]
 
-    def delete_token(self, token):
-        raise NotImplementedError()
+    @handle_db_error
+    @with_connect(is_admin=True)
+    def delete_token(self, connection: mysql.connector.connection, token: str):
+        cursor = connection.cursor
+        cursor.execute(f"""DELETE FROM `Tokens` WHERE `token_id` = %s;""", (token, ))
+        connection.commit()
+        cursor.close()
