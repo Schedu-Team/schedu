@@ -39,7 +39,7 @@ def add_entity_form_handler_function(model_type: EntityModel, *args, **kwargs):
         token_f: str = request.headers.get("Authorization", default="")
         if len(token_f) == 0:
             return 403, {"reason": "Token required"}
-        token: str = token_f[len("Bearer: "):]
+        token: str = token_f[len("Bearer "):]
         username: str = functions.token_auth(token)
         if not functions.is_admin(username):
             return 403, {"reason": "Insufficient privileges"}
