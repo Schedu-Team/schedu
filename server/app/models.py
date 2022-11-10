@@ -1,15 +1,8 @@
 import datetime
 from typing import Any
-from dateutil import parser as dateutil_parser
 
 from app.models_base import Field, EntityModel
-
-
-def datetime_parser(x: Any) -> datetime.datetime:
-    if isinstance(x, int):
-        return datetime.datetime.fromtimestamp(x)
-    else:
-        return dateutil_parser.parse(str(x))
+from utils.utils import datetime_parser
 
 
 class UsersModel(EntityModel):
@@ -17,12 +10,22 @@ class UsersModel(EntityModel):
         super().__init__(table_name="Users",
                          fields=[
                              Field("user_id", int, required=False, db_auto=True),
+                             Field("username", str),
                              Field("password_hash", str),
-                             Field("password_salt", str),
                              Field("first_name", str),
                              Field("last_name", str),
                              Field("graduation_year", int, required=False),
                              Field("email", str, required=False),
+                         ])
+
+
+class TokensModel(EntityModel):
+    def __init__(self):
+        super().__init__(table_name="Tokens",
+                         fields=[
+                             Field("token_id", int, required=True, db_auto=False),
+                             Field("expires_in", datetime_parser),
+                             Field("user_id", int, foreign_key=(UsersModel, "user_id")),
                          ])
 
 

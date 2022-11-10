@@ -6,6 +6,7 @@ import { UserRequest } from "../../../openapi";
 import { ErrorToast, SuccessToast } from "../../../components/MyToasts";
 import ToastHelper from "../../../components/ToastHelper";
 import { Api } from "../../../index";
+import tokenHolder from "../../../components/TokenHolder";
 
 interface NewUserProps {}
 
@@ -13,7 +14,6 @@ const helper = new ToastHelper();
 
 async function submitForm(userRequestForm: UserRequestForm) {
   const password_hash = "dummy-hash"; // TODO: password hashing on the server side
-  const password_salt = "dummy-salt";
   const graduation_year = Number(userRequestForm.graduation_month.split("-")[0]);
   const userRequest: UserRequest = {
     email: userRequestForm.email,
@@ -21,9 +21,9 @@ async function submitForm(userRequestForm: UserRequestForm) {
     graduation_year: graduation_year,
     last_name: userRequestForm.lname,
     password_hash: password_hash,
-    password_salt: password_salt,
+    username: userRequestForm.username,
   };
-  await helper.takeoverPromise(Api.usersAddPost(userRequest));
+  await helper.takeoverPromise(Api.usersAddPost(userRequest, tokenHolder.getAuthOptions()));
 }
 
 interface UserRequestForm {
@@ -32,6 +32,7 @@ interface UserRequestForm {
   password: string;
   email: string;
   graduation_month: string;
+  username: string;
 }
 
 function NewUser() {
@@ -51,6 +52,10 @@ function NewUser() {
       <FormGroup>
         <FormLabel>Last name</FormLabel>
         <FormControl type="text" {...register("lname", { required: true })} />
+      </FormGroup>
+      <FormGroup>
+        <FormLabel>Username</FormLabel>
+        <FormControl type="text" {...register("username", { required: true })} />
       </FormGroup>
       <FormGroup>
         <FormLabel>Email</FormLabel>

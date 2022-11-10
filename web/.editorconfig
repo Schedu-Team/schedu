@@ -12,6 +12,6 @@ tab_width = 4
 [*.scss]
 indent_size = 2
 
-[{*.ats,*.cts,*.mts,*.ts,*.tsx}]
+[{*.ats,*.cts,*.mts,*.ts,*.tsx,*.yml,*.yaml}]
 indent_size = 2
 tab_width = 2

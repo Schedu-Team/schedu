@@ -6,13 +6,14 @@ import ToastHelper from "../../../components/ToastHelper";
 import { ErrorToast, SuccessToast } from "../../../components/MyToasts";
 import { UserCompletedAssignment } from "../../../openapi";
 import { useForm } from "react-hook-form";
+import tokenHolder from "../../../components/TokenHolder";
 
 interface NewUserHasCompletedAssignmentProps {}
 
 const helper = new ToastHelper();
 
 async function submitForm(data: UserCompletedAssignment) {
-  await helper.takeoverPromise(Api.userHasCompletedAssignmentAddPost(data));
+  await helper.takeoverPromise(Api.userHasCompletedAssignmentAddPost(data, tokenHolder.getAuthOptions()));
 }
 
 function NewUserHasCompletedAssignment() {

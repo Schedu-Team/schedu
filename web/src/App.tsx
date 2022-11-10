@@ -89,13 +89,14 @@ function App() {
               </li>
             </ul>
             <span className="navbar-text actions">
-              <a
+              <Link
+                to={"/login"}
                 role="button"
                 className="btn action-button btn-primary my-2 my-sm-0"
                 id="login_button"
               >
                 Login
-              </a>
+              </Link>
             </span>
           </div>
         </div>

@@ -6,13 +6,14 @@ import { useForm } from "react-hook-form";
 import { Form, FormGroup, FormLabel, FormSelect } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { ErrorToast, SuccessToast } from "../../../components/MyToasts";
+import tokenHolder from "../../../components/TokenHolder";
 
 interface NewPublicGroupProps {}
 
 const helper = new ToastHelper();
 
 async function submitForm(data: PublicGroup) {
-  await helper.takeoverPromise(Api.publicGroupsAddPost(data));
+  await helper.takeoverPromise(Api.publicGroupsAddPost(data, tokenHolder.getAuthOptions()));
 }
 
 function NewPublicGroup() {

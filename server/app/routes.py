@@ -36,6 +36,13 @@ def add_entity_form_handler_function(model_type: EntityModel, *args, **kwargs):
     @app.route(*args, **kwargs, methods=["POST"], endpoint="process_add_%s_form_function" % (model_type.table_name,))
     @functions.function_response
     def process_form_data():
+        token_f: str = request.headers.get("Authorization", default="")
+        if len(token_f) == 0:
+            return 403, {"reason": "Token required"}
+        token: str = token_f.removeprefix("Bearer: ")
+        username: str = functions.token_auth(token)
+        if not functions.is_admin(username):
+            return 403, {"reason": "Insufficient privileges"}
         form: Form = Form(model_type)
         form_data: Dict = extract_form_data()
         try:
@@ -105,3 +112,10 @@ get_all_entities_function(Storage.Assignment_RELATES_TO_Group, "/api/v1/assignme
 get_all_entities_function(Storage.Role_INCLUDES_Permission, "/api/v1/role_includes_permission/all")
 get_all_entities_function(Storage.Role_RELATES_TO_Group, "/api/v1/role_relates_to_group/all")
 get_all_entities_function(Storage.User_HAS_Role, "/api/v1/user_has_role/all")
+
+
+@app.route("/api/v1/user/login", methods=["POST"])
+def login():
+    username: str = request.get_json()["username"]
+    password: str = request.get_json()["password"]
+    return functions.login(username, password)

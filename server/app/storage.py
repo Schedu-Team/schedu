@@ -3,6 +3,7 @@ from app import models
 
 class Storage:
     Users = models.UsersModel()
+    Tokens = models.TokensModel()
     Groups = models.GroupsModel()
     Assignments = models.AssignmentsModel()
     Roles = models.RolesModel()

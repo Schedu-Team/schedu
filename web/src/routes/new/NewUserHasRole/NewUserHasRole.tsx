@@ -6,13 +6,14 @@ import ToastHelper from "../../../components/ToastHelper";
 import { ErrorToast, SuccessToast } from "../../../components/MyToasts";
 import { useForm } from "react-hook-form";
 import { UserHasRole } from "../../../openapi";
+import tokenHolder from "../../../components/TokenHolder";
 
 interface NewUserHasRoleProps {}
 
 const helper = new ToastHelper();
 
 async function submitForm(data: UserHasRole) {
-  await helper.takeoverPromise(Api.userHasRoleAddPost(data));
+  await helper.takeoverPromise(Api.userHasRoleAddPost(data, tokenHolder.getAuthOptions()));
 }
 
 function NewUserHasRole() {

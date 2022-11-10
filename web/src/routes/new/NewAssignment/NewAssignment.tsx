@@ -6,13 +6,14 @@ import ToastHelper from "../../../components/ToastHelper";
 import { AssignmentRequest } from "../../../openapi";
 import { Api } from "../../../index";
 import { ErrorToast, SuccessToast } from "../../../components/MyToasts";
+import tokenHolder from "../../../components/TokenHolder";
 
 interface NewAssignmentProps {}
 
 const helper = new ToastHelper();
 
 async function submitForm(data: AssignmentRequest) {
-  await helper.takeoverPromise(Api.assignmentsAddPost(data));
+  await helper.takeoverPromise(Api.assignmentsAddPost(data, tokenHolder.getAuthOptions()));
 }
 
 function NewAssignment() {

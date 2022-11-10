@@ -8,10 +8,13 @@ from typing import Optional, List, Callable, Dict
 import flask
 import mysql.connector
 
+# from app.storage import Storage  OOOHHH NOOOOO, CIRCULAR DEPENDENCY
 from exceptions.DatabaseExceptions import ConnectionFailedException, ForeignKeyViolationException, \
-    UnknownConstraintViolationException, DatabaseException
+    UnknownConstraintViolationException, DatabaseException, DBTokenNotFoundException
+from exceptions.UserExceptions import ObjectNotFoundException
 from exceptions.insert_exceptions import DataInvalidException
 from exceptions import KnownException
+from utils.utils import datetime_parser
 
 
 def handle_db_error(database_request: Callable) -> Callable:
@@ -31,26 +34,33 @@ def handle_db_error(database_request: Callable) -> Callable:
     return wrapped
 
 
-def with_connect(database_request: Callable) -> Callable:
-    def wrapped(self, *args, **kwargs):
-        connection: Optional[mysql.connector.connection] = None
-        while True:
-            try:
-                connection = self.connections.pop()
-            except IndexError:
-                if not self.create_connection():
-                    self.logging_device.error(f"Failed to create connection while processing request")
-                    raise ConnectionFailedException()
-                continue
-            break
-        if connection is None:
-            self.logging_device.error("Got connection, but it is None!?")
-            raise ConnectionFailedException()
-        result = database_request(self, connection, *args, **kwargs)
-        self.connections.append(connection)
-        return result
+def with_connect(is_admin: bool = False) -> Callable:
+    def with_connect_inner(database_request: Callable) -> Callable:
+        def wrapped(self, *args, **kwargs):
+            connection: Optional[mysql.connector.connection] = None
+            if is_admin:
+                connection_source = self.admin_connections
+            else:
+                connection_source = self.select_connections
+            while True:
+                try:
+                    connection = connection_source.pop()
+                except IndexError:
+                    if not self.create_connection(is_admin):
+                        self.logging_device.error(f"Failed to create connection while processing request")
+                        raise ConnectionFailedException()
+                    continue
+                break
+            if connection is None:
+                self.logging_device.error("Got connection, but it is None!?")
+                raise ConnectionFailedException()
+            result = database_request(self, connection, *args, **kwargs)
+            connection_source.append(connection)
+            return result
 
-    return wrapped
+        return wrapped
+
+    return with_connect_inner
 
 
 class DBManager:
@@ -58,23 +68,34 @@ class DBManager:
         self.host: Optional[str] = None
         self.database: Optional[str] = None
         self.user: Optional[str] = None
+        self.admin: Optional[str] = None
         self.password: Optional[str] = None
-        self.connections: List[Optional[mysql.connector.connection]] = []
+        self.admin_password: Optional[str] = None
+        self.select_connections: List[Optional[mysql.connector.connection]] = []
+        self.admin_connections: List[Optional[mysql.connector.connection]] = []
         self.logging_device: Optional[logging.Logger] = None
 
     def init_with_app(self, app: flask.app.Flask):
         self.logging_device = app.logger
         self.host = app.config.get("DB_HOST")
         self.database = app.config.get("DB_DATABASE")
-        self.user = app.config.get("DB_USER")
-        self.password = app.config.get("DB_PASSWORD")
+        self.user = app.config.get("DB_USER_SELECT_ONLY")
+        self.password = app.config.get("DB_PASSWORD_SELECT_ONLY")
+        self.admin = app.config.get("DB_ADMIN")
+        self.admin_password = app.config.get("DB_ADMIN_PASSWORD")
 
-    def create_connection(self) -> bool:
+    def create_connection(self, is_admin=False) -> bool:
         try:
-            connection = mysql.connector.connect(host=self.host,
-                                                 database=self.database,
-                                                 user=self.user,
-                                                 password=self.password)
+            if is_admin:
+                connection = mysql.connector.connect(host=self.host,
+                                                     database=self.database,
+                                                     user=self.admin,
+                                                     password=self.admin_password)
+            else:
+                connection = mysql.connector.connect(host=self.host,
+                                                     database=self.database,
+                                                     user=self.user,
+                                                     password=self.password)
         except mysql.connector.Error as e:
             self.logging_device.error(f"Failed to create connection to MySQL! Error: {e}")
             return False
@@ -84,11 +105,14 @@ class DBManager:
             return False
 
         self.logging_device.info(f"Successfully created connection")
-        self.connections.append(connection)
+        if is_admin:
+            self.admin_connections.append(connection)
+        else:
+            self.select_connections.append(connection)
         return True
 
     @handle_db_error
-    @with_connect
+    @with_connect(is_admin=False)
     def select_all(self, connection: mysql.connector.connection, table_name: str,
                    fields: List[str] = None) -> List:
         cursor = connection.cursor()  # Cursor types are weird garbage
@@ -103,7 +127,7 @@ class DBManager:
         return records
 
     @handle_db_error
-    @with_connect
+    @with_connect(is_admin=False)
     def select_field(self, connection: mysql.connector.connection, table_name: str, column_name: str,
                      column_value: str) -> List:
         cursor = connection.cursor()  # Cursor types are weird garbage
@@ -113,7 +137,7 @@ class DBManager:
         return records
 
     @handle_db_error
-    @with_connect
+    @with_connect(is_admin=True)
     def insert_into(self, connection: mysql.connector.connection, table_name: str, column_value_pairs: Dict) -> int:
         fields_str = "("
         placeholders = "("
@@ -134,3 +158,11 @@ class DBManager:
         last_id: int = cursor.lastrowid
         cursor.close()
         return last_id
+
+    @handle_db_error
+    @with_connect(is_admin=True)
+    def delete_token(self, connection: mysql.connector.connection, token: str):
+        cursor = connection.cursor
+        cursor.execute(f"""DELETE FROM `Tokens` WHERE `token_id` = %s;""", (token, ))
+        connection.commit()
+        cursor.close()

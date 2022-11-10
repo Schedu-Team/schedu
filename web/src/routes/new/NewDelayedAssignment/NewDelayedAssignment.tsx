@@ -6,13 +6,14 @@ import { useForm } from "react-hook-form";
 import { Form, FormControl, FormGroup, FormLabel, FormSelect } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import { ErrorToast, SuccessToast } from "../../../components/MyToasts";
+import tokenHolder from "../../../components/TokenHolder";
 
 interface NewDelayedAssignmentProps {}
 
 const helper = new ToastHelper();
 
 async function submitForm(data: DelayedAssignment) {
-  await helper.takeoverPromise(Api.delayedAssignmentsAddPost(data));
+  await helper.takeoverPromise(Api.delayedAssignmentsAddPost(data, tokenHolder.getAuthOptions()));
 }
 
 function NewDelayedAssignment() {

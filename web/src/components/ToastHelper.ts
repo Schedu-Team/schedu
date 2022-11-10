@@ -1,4 +1,4 @@
-import { AxiosResponse } from "axios";
+import {AxiosResponse} from "axios";
 
 class ToastHelper {
   showError: boolean = false;
@@ -25,20 +25,19 @@ class ToastHelper {
     this.successContent = message;
   }
 
-  async takeoverPromise(promise: Promise<AxiosResponse>) {
+  async takeoverPromise<T>(promise: Promise<AxiosResponse<T>>) {
     this.reset();
     const res = await promise.catch((e) => this.fail(e.toString()));
     if (res === undefined) {
-      return;
+      return undefined;
     }
     console.log(res);
     if (res.status === 200) {
-      this.succeed(
-        "Successful insertion. Insertion info: " + JSON.stringify(res.data)
-      );
+      this.succeed("Successful insertion. Insertion info: " + JSON.stringify(res.data));
     } else {
       this.fail("Error occurred: " + res.statusText);
     }
+    return res.data;
   }
 }
 
