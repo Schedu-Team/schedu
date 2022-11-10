@@ -1,15 +1,8 @@
 import datetime
 from typing import Any
-from dateutil import parser as dateutil_parser
 
 from app.models_base import Field, EntityModel
-
-
-def datetime_parser(x: Any) -> datetime.datetime:
-    if isinstance(x, int):
-        return datetime.datetime.fromtimestamp(x)
-    else:
-        return dateutil_parser.parse(str(x))
+from utils.utils import datetime_parser
 
 
 class UsersModel(EntityModel):

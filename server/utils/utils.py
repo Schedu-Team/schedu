@@ -7,8 +7,8 @@ import uuid
 import json
 import traceback
 import sys
+from dateutil import parser as dateutil_parser
 
-import app
 from config import Config
 
 
@@ -60,6 +60,8 @@ def remove_none_from_dict(data: Dict[Any, Any]) -> Dict[Any, Any]:
         del data[k]
     return data
 
-
-def fail_with(exception_obj):
-    raise exception_obj
+def datetime_parser(x: Any) -> datetime.datetime:
+    if isinstance(x, int):
+        return datetime.datetime.fromtimestamp(x)
+    else:
+        return dateutil_parser.parse(str(x))

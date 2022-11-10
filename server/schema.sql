@@ -10,7 +10,7 @@ CREATE TABLE `Users` (
 );
 
 CREATE TABLE `Tokens` (
-    `token_id` VARCHAR(128) NOT NULL AUTO_INCREMENT,
+    `token_id` VARCHAR(255) NOT NULL,
     `expires_in` DATETIME NOT NULL,
     `user_id` INT NOT NULL,
     FOREIGN KEY (`user_id`) REFERENCES `Users`(`user_id`),
