@@ -2,7 +2,7 @@
 # Symlink to root directory in the web directory (please always commit both)
 openapi: '3.0.1'
 info:
-  version: '1.0'
+  version: '1.1'
   title: "Schedu"
   description: Student-friendly Assignments and Deadlines Management System
   license:
@@ -43,7 +43,7 @@ paths:
         400:
           description: 'Bad request'
       security:
-        - MarkToken: []
+        - MarkToken: [ ]
   /groups/all:
     x-summary: List all groups
     get:
@@ -95,20 +95,19 @@ paths:
                   insertion_data:
                     $ref: '#/components/schemas/User'
               example:
-                application/json:
-                   insertion_id: 1
-                   insertion_data:
-                    user_id: 0
-                    first_name: John
-                    last_name: Smith
-                    password_hash: aboba
-                    password_salt: salt
-                    email: john@smith.me
-                    graduation_year: 2024
+                insertion_id: 1
+                insertion_data:
+                  user_id: 0
+                  first_name: John
+                  last_name: Smith
+                  password_hash: aboba
+                  password_salt: salt
+                  email: john@smith.me
+                  graduation_year: 2024
         400:
           description: 'Bad request'
       security:
-        - MarkToken: []
+        - MarkToken: [ ]
   /users/all:
     x-summary: List all Users
     get:
@@ -169,16 +168,15 @@ paths:
                   insertion_data:
                     $ref: '#/components/schemas/Assignment'
               example:
-                application/json:
-                   insertion_id: 1
-                   insertion_data:
-                    assignment_id: 1
-                    deadline: "2022-10-27 23:59"
-                    text: DBWS Assignment
+                insertion_id: 1
+                insertion_data:
+                  assignment_id: 1
+                  deadline: "2022-10-27 23:59"
+                  text: DBWS Assignment
         400:
           description: 'Bad request'
       security:
-        - MarkToken: []
+        - MarkToken: [ ]
   /assignments/all:
     x-summary: List Assignments
     get:
@@ -229,16 +227,15 @@ paths:
                   insertion_data:
                     $ref: '#/components/schemas/Role'
               example:
-                application/json:
-                   insertion_id: 1
-                   insertion_data:
-                    role_id: 0
-                    name: Admin
-                    description: Has access to all resources
+                insertion_id: 1
+                insertion_data:
+                  role_id: 0
+                  name: Admin
+                  description: Has access to all resources
         400:
           description: 'Bad request'
       security:
-        - MarkToken: []
+        - MarkToken: [ ]
   /roles/all:
     x-summary: List Roles
     get:
@@ -289,16 +286,15 @@ paths:
                   insertion_data:
                     $ref: '#/components/schemas/Permission'
               example:
-                application/json:
-                   insertion_id: 1
-                   insertion_data:
-                    permission_id: 0
-                    name: DeadlinesModify
-                    description: Can change deadlines
+                insertion_id: 1
+                insertion_data:
+                  permission_id: 0
+                  name: DeadlinesModify
+                  description: Can change deadlines
         400:
           description: 'Bad request'
       security:
-        - MarkToken: []
+        - MarkToken: [ ]
   /permissions/all:
     x-summary: List Permissions
     get:
@@ -349,15 +345,14 @@ paths:
                   insertion_data:
                     $ref: '#/components/schemas/PublicGroup'
               example:
-                application/json:
-                   insertion_id: 1
-                   insertion_data:
-                      group_id: 0
-                      default_role_id: 1
+                insertion_id: 1
+                insertion_data:
+                  group_id: 0
+                  default_role_id: 1
         400:
           description: 'Bad request'
       security:
-        - MarkToken: []
+        - MarkToken: [ ]
   /public_groups/all:
     x-summary: List Public Groups
     get:
@@ -406,15 +401,14 @@ paths:
                   insertion_data:
                     $ref: '#/components/schemas/TemporaryRole'
               example:
-                application/json:
-                   insertion_id: 1
-                   insertion_data:
-                      role_id: 0
-                      expiry_date: "2022-10-27T23:59"
+                insertion_id: 1
+                insertion_data:
+                  role_id: 0
+                  expiry_date: "2022-10-27T23:59"
         400:
           description: 'Bad request'
       security:
-        - MarkToken: []
+        - MarkToken: [ ]
   /delayed_assignments/add:
     x-summary: Add delayed assignments
     post:
@@ -437,15 +431,14 @@ paths:
                   insertion_data:
                     $ref: '#/components/schemas/DelayedAssignment'
               example:
-                application/json:
-                   insertion_id: 1
-                   insertion_data:
-                      assignment_id: 0
-                      publication_date: "2022-10-27T23:59"
+                insertion_id: 1
+                insertion_data:
+                  assignment_id: 0
+                  publication_date: "2022-10-27T23:59"
         400:
           description: 'Bad request'
       security:
-        - MarkToken: []
+        - MarkToken: [ ]
   /user_member_of_group/add:
     x-summary: Add member
     post:
@@ -468,15 +461,14 @@ paths:
                   insertion_data:
                     $ref: '#/components/schemas/Member'
               example:
-                application/json:
-                   insertion_id: 1
-                   insertion_data:
-                      user_id: 0
-                      group_id: 1
+                insertion_id: 1
+                insertion_data:
+                  user_id: 0
+                  group_id: 1
         400:
           description: 'Bad request'
       security:
-        - MarkToken: []
+        - MarkToken: [ ]
   /user_has_role/add:
     x-summary: Add UserHasRole
     post:
@@ -499,15 +491,14 @@ paths:
                   insertion_data:
                     $ref: '#/components/schemas/UserHasRole'
               example:
-                application/json:
-                   insertion_id: 1
-                   insertion_data:
-                      user_id: 0
-                      role_id: 12
+                insertion_id: 1
+                insertion_data:
+                  user_id: 0
+                  role_id: 12
         400:
           description: 'Bad request'
       security:
-        - MarkToken: []
+        - MarkToken: [ ]
   /user_has_completed_assignment/add:
     x-summary: Add completed assignment
     post:
@@ -530,16 +521,15 @@ paths:
                   insertion_data:
                     $ref: '#/components/schemas/UserCompletedAssignment'
               example:
-                application/json:
-                   insertion_id: 1
-                   insertion_data:
-                     user_id: 0
-                     assignment_id: 3
-                     timestamp: "2021-10-27T20:00"
+                insertion_id: 1
+                insertion_data:
+                  user_id: 0
+                  assignment_id: 3
+                  timestamp: "2021-10-27T20:00"
         400:
           description: 'Bad request'
       security:
-        - MarkToken: []
+        - MarkToken: [ ]
   /assignment_created_by_user/add:
     x-summary: Add completed assignment
     post:
@@ -562,16 +552,34 @@ paths:
                   insertion_data:
                     $ref: '#/components/schemas/UserCreatedAssignment'
               example:
-                application/json:
-                   insertion_id: 1
-                   insertion_data:
-                     user_id: 0
-                     assignment_id: 3
-                     timestamp: "2021-10-27T20:00"
+                insertion_id: 1
+                insertion_data:
+                  user_id: 0
+                  assignment_id: 3
+                  timestamp: "2021-10-27T20:00"
         400:
           description: 'Bad request'
       security:
-        - MarkToken: []
+        - MarkToken: [ ]
+  /login:
+    post:
+      summary: Get token for using guarded methods
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        200:
+          description: Successfully acquired a token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Token'
+              example:
+                Token: "token123"
+        400:
+          description: Unable to authenticate
 components:
   schemas:
     InsertionResult:

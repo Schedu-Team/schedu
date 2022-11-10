@@ -19,6 +19,7 @@ function GroupDetail() {
         return val.group_id === group_id;
       });
       updateGroup(found_group);
+      Api.usersAllGet({})
     });
   }, []);
 

@@ -6,13 +6,14 @@ import { useForm } from "react-hook-form";
 import { GroupRequest } from "../../../openapi";
 import ToastHelper from "../../../components/ToastHelper";
 import { ErrorToast, SuccessToast } from "../../../components/MyToasts";
+import tokenHolder from "../../../components/TokenHolder";
 
 interface NewGroupProps {}
 
 const helper = new ToastHelper();
 
 async function submitForm(groupRequest: GroupRequest) {
-  await helper.takeoverPromise(Api.groupsAddPost(groupRequest));
+  await helper.takeoverPromise(Api.groupsAddPost(groupRequest, tokenHolder.getAuthOptions()));
 }
 
 function NewGroup() {

@@ -41,8 +41,10 @@ import UserSearchResultsPage from "./routes/search/UserSearchResultsPage/UserSea
 import UserDetail from "./routes/detail/UserDetail/UserDetail";
 import RoleSearchResultsPage from "./routes/search/RoleSearchResultsPage/RoleSearchResultsPage";
 import RoleDetail from "./routes/detail/RoleDetail/RoleDetail";
+import LoginPage from "./routes/login/LoginPage";
 
 export const Api = new DefaultApi(undefined, API_ENDPOINT);
+Api.loginPost()
 
 const router = createBrowserRouter(
   [
@@ -194,6 +196,10 @@ const router = createBrowserRouter(
         {
           path: "/roles/:id",
           element: <RoleDetail/>
+        },
+        {
+          path: "/login",
+          element: <LoginPage/>
         }
       ],
     },

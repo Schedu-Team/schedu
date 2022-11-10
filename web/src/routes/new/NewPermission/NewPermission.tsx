@@ -6,13 +6,14 @@ import { PermissionRequest } from "../../../openapi";
 import { Api } from "../../../index";
 import { useForm } from "react-hook-form";
 import { ErrorToast, SuccessToast } from "../../../components/MyToasts";
+import tokenHolder from "../../../components/TokenHolder";
 
 interface NewPermissionProps {}
 
 const helper = new ToastHelper();
 
 async function submitForm(data: PermissionRequest) {
-  await helper.takeoverPromise(Api.permissionsAddPost(data));
+  await helper.takeoverPromise(Api.permissionsAddPost(data, tokenHolder.getAuthOptions()));
 }
 
 function NewPermission() {
