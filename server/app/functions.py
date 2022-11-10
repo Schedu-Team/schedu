@@ -100,3 +100,7 @@ def login(username: str, password: str) -> Tuple[int, Dict]:
     data = {"Token": tok_uuid}
 
     return code, data
+
+
+def is_admin(username: str) -> bool:
+    return username == "root"  # FIXME: Temporary solution
