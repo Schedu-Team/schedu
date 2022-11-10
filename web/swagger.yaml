@@ -430,7 +430,7 @@ paths:
           description: 'Bad request'
       security:
         - MarkToken: [ ]
-  /login:
+  /user/login:
     post:
       summary: Get token for using guarded methods
       requestBody:

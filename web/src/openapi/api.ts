@@ -1023,40 +1023,6 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @summary Get token for using guarded methods
-         * @param {LoginRequest} [loginRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        loginPost: async (loginRequest?: LoginRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/login`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(loginRequest, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Create a New Permission
          * @param {PermissionRequest} [permissionRequest] 
          * @param {*} [options] Override http request option.
@@ -1372,6 +1338,40 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary Get token for using guarded methods
+         * @param {LoginRequest} [loginRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userLoginPost: async (loginRequest?: LoginRequest, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/user/login`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(loginRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Create a Member
          * @param {Member} [member] 
          * @param {*} [options] Override http request option.
@@ -1551,17 +1551,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
-         * @summary Get token for using guarded methods
-         * @param {LoginRequest} [loginRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async loginPost(loginRequest?: LoginRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Token>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.loginPost(loginRequest, options);
-            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
-        },
-        /**
-         * 
          * @summary Create a New Permission
          * @param {PermissionRequest} [permissionRequest] 
          * @param {*} [options] Override http request option.
@@ -1651,6 +1640,17 @@ export const DefaultApiFp = function(configuration?: Configuration) {
          */
         async userHasRoleAddPost(userHasRole?: UserHasRole, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserHasRoleAddPost200Response>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.userHasRoleAddPost(userHasRole, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Get token for using guarded methods
+         * @param {LoginRequest} [loginRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async userLoginPost(loginRequest?: LoginRequest, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Token>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.userLoginPost(loginRequest, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1754,16 +1754,6 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
-         * @summary Get token for using guarded methods
-         * @param {LoginRequest} [loginRequest] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        loginPost(loginRequest?: LoginRequest, options?: any): AxiosPromise<Token> {
-            return localVarFp.loginPost(loginRequest, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary Create a New Permission
          * @param {PermissionRequest} [permissionRequest] 
          * @param {*} [options] Override http request option.
@@ -1845,6 +1835,16 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
          */
         userHasRoleAddPost(userHasRole?: UserHasRole, options?: any): AxiosPromise<UserHasRoleAddPost200Response> {
             return localVarFp.userHasRoleAddPost(userHasRole, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get token for using guarded methods
+         * @param {LoginRequest} [loginRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        userLoginPost(loginRequest?: LoginRequest, options?: any): AxiosPromise<Token> {
+            return localVarFp.userLoginPost(loginRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1956,18 +1956,6 @@ export class DefaultApi extends BaseAPI {
 
     /**
      * 
-     * @summary Get token for using guarded methods
-     * @param {LoginRequest} [loginRequest] 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof DefaultApi
-     */
-    public loginPost(loginRequest?: LoginRequest, options?: AxiosRequestConfig) {
-        return DefaultApiFp(this.configuration).loginPost(loginRequest, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary Create a New Permission
      * @param {PermissionRequest} [permissionRequest] 
      * @param {*} [options] Override http request option.
@@ -2066,6 +2054,18 @@ export class DefaultApi extends BaseAPI {
      */
     public userHasRoleAddPost(userHasRole?: UserHasRole, options?: AxiosRequestConfig) {
         return DefaultApiFp(this.configuration).userHasRoleAddPost(userHasRole, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get token for using guarded methods
+     * @param {LoginRequest} [loginRequest] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof DefaultApi
+     */
+    public userLoginPost(loginRequest?: LoginRequest, options?: AxiosRequestConfig) {
+        return DefaultApiFp(this.configuration).userLoginPost(loginRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

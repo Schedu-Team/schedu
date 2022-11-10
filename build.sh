@@ -25,6 +25,7 @@ cp index.html new/user.html
 cp index.html new/role.html
 cp index.html new/permission.html
 cp index.html new/group.html
+cp index.html login.html
 )
 
 # Add git commit to the dist
