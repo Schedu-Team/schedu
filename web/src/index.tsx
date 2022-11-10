@@ -44,7 +44,6 @@ import RoleDetail from "./routes/detail/RoleDetail/RoleDetail";
 import LoginPage from "./routes/login/LoginPage";
 
 export const Api = new DefaultApi(undefined, API_ENDPOINT);
-Api.loginPost()
 
 const router = createBrowserRouter(
   [
