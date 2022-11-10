@@ -11,7 +11,7 @@ import tokenHolder from "../../components/TokenHolder";
 const helper = new ToastHelper();
 
 async function submitForm(data: LoginRequest) {
-  const res = await helper.takeoverPromise(Api.loginPost(data));
+  const res = await helper.takeoverPromise(Api.userLoginPost(data));
   tokenHolder.setToken(res?.Token);
 }
 
