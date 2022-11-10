@@ -260,7 +260,7 @@ export interface LoginRequest {
      * @type {string}
      * @memberof LoginRequest
      */
-    'login': string;
+    'username': string;
     /**
      * 
      * @type {string}

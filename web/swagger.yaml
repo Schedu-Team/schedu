@@ -761,14 +761,14 @@ components:
     LoginRequest:
       type: object
       properties:
-        login:
+        username:
           type: string
           example: "admin"
         password:
           type: string
           example: "password"
       required:
-        - login
+        - username
         - password
   securitySchemes:
     MarkToken:

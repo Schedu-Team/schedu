@@ -27,8 +27,8 @@ function LoginPage() {
       <Form onSubmit={handleSubmit((data) => submitForm(data))}>
         <h2>Login</h2>
         <FormGroup>
-          <FormLabel>Login</FormLabel>
-          <FormControl type={"login"} {...register("login", { required: true })}></FormControl>
+          <FormLabel>Username</FormLabel>
+          <FormControl type={"username"} {...register("username", { required: true })}></FormControl>
         </FormGroup>
         <FormGroup>
           <FormLabel>Password</FormLabel>
