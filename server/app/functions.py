@@ -13,7 +13,7 @@ from exceptions.UserExceptions import ObjectNotFoundException
 from utils.encrypt import encrypt_password, check_password
 from config import Config
 from exceptions import KnownException
-from utils.utils import gen_token, full_stack, dict_to_json_str
+from utils.utils import gen_token, full_stack, dict_to_json_str, datetime_parser
 from flask import make_response
 from flask import Response
 from flask import __version__ as flask_version
@@ -57,7 +57,7 @@ def token_auth(token: str) -> str:
     :param token: user token
     :return: username, if token is valid, otherwise throws ObjectNotFound("Token")
     """
-    username, exp_time = dbm.get_username_and_exptime_by_token(token)
+    username, exp_time = get_username_and_exptime_by_token(token)
 
     if exp_time < datetime.datetime.utcnow():
         dbm.delete_token(token)
@@ -89,13 +89,13 @@ def login(username: str, password: str) -> Tuple[int, Dict]:
     Throws exceptions, but they are handled in wrapper
     """
 
-    user_password_hash, user_id = dbm.get_password_hash_and_user_id(username)
+    user_password_hash, user_id = get_password_hash_and_user_id(username)
 
     if not check_password(password, user_password_hash):
         raise ObjectNotFoundException("User")
 
     tok_uuid, tok_exp = gen_token()
-    dbm.insert_into("Tokens", {"token_id": tok_uuid, "token_expire": str(tok_exp), "user_id": user_id})
+    dbm.insert_into("Tokens", {"token_id": tok_uuid, "expires_in": str(tok_exp), "user_id": user_id})
     code = 201
     data = {"Token": tok_uuid}
 
@@ -104,3 +104,21 @@ def login(username: str, password: str) -> Tuple[int, Dict]:
 
 def is_admin(username: str) -> bool:
     return username == "root"  # FIXME: Temporary solution
+
+
+def get_username_and_exptime_by_token(token: str):
+    token_records = dbm.select_field("Tokens", "token_id", token)
+    if len(token_records) == 0:
+        raise ObjectNotFoundException("Token")
+    token_user_id = token_records[0][2]  # FIXME: CRINGE
+    token_expire_in = datetime_parser(token_records[0][1])
+    user_records = dbm.select_field("Users", "user_id", token_user_id)[0]
+    return user_records[1], token_expire_in
+
+
+def get_password_hash_and_user_id(username: str):
+    user_records = dbm.select_field("Users", "username", username)
+    # print(dbm.logging_device.error(str(user_records)))
+    if len(user_records) == 0:
+        raise ObjectNotFoundException("User")
+    return user_records[0][2], user_records[0][0]

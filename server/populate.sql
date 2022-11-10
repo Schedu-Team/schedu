@@ -1,4 +1,4 @@
-INSERT INTO `Users` (`username`, `password_hash`, `password_salt`, `first_name`, `last_name`, `graduation_year`, `email`) VALUES
+INSERT INTO `Users` (`username`, `password_hash`, `first_name`, `last_name`, `graduation_year`, `email`) VALUES
 	("mipatov", "PasswordHashMarkIpatov", "Mark", "Ipatov", 2024, "markthehopeful@gmail.com"),
 	("waleko", "PasswordHashAlexKovrigin", "Alex", "Kovrigin", 2024, "alexmail@alexkovrigin.me"),
 	("petrtsv", "PasswordHashPetrTsvetkov", "Petr", "Tsvetkov", 2024, NULL),
@@ -10,9 +10,9 @@ INSERT INTO `Users` (`username`, `password_hash`, `password_salt`, `first_name`,
 	("p.baumann", "PasswordHashPeterBaumann", "Peter", "Baumann", NULL, "p.baumann@jacobs-university.de"),
 	("öööüüüööö", "PasswordHashJürgenSchönwälder", "Jürgen", "Schönwälder", NULL, NULL);
 
-INSERT INTO `Tokens` (`expires_in`, `user_id`) VALUES
-    ("2022-11-12 23:59:59", 1),
-    ("2022-11-07 21:52:31", 2);
+INSERT INTO `Tokens` (`token_id`, `expires_in`, `user_id`) VALUES
+    ("FakeTokenId1", "2022-11-12 23:59:59", 1),
+    ("FakeTokenId2", "2022-11-07 21:52:31", 2);
 
 INSERT INTO `Groups` (`name`, `description`) VALUES 
 	("F22_CO-562-A", "Second Year 2022 Operating Systems"), 

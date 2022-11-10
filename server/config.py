@@ -1,8 +1,10 @@
 import os
 
-from utils.utils import fail_with
-
 basedir = os.path.abspath(os.path.dirname(__file__))
+
+
+def fail_with(exception_obj):
+    raise exception_obj
 
 
 class Config(object):
