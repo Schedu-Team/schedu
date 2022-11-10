@@ -96,7 +96,7 @@ def login(username: str, password: str) -> Tuple[int, Dict]:
 
     tok_uuid, tok_exp = gen_token()
     dbm.insert_into("Tokens", {"token_id": tok_uuid, "expires_in": str(tok_exp), "user_id": user_id})
-    code = 201
+    code = 200  # Hi alex
     data = {"Token": tok_uuid}
 
     return code, data
