@@ -55,7 +55,9 @@ def with_connect(is_admin: bool = False) -> Callable:
                 self.logging_device.error("Got connection, but it is None!?")
                 raise ConnectionFailedException()
             result = database_request(self, connection, *args, **kwargs)
-            connection_source.append(connection)
+            connection.close()
+            # RIP connection pool
+            # connection_source.append(connection)
             return result
 
         return wrapped
@@ -162,7 +164,7 @@ class DBManager:
     @handle_db_error
     @with_connect(is_admin=True)
     def delete_token(self, connection: mysql.connector.connection, token: str):
-        cursor = connection.cursor
+        cursor = connection.cursor()
         cursor.execute(f"""DELETE FROM `Tokens` WHERE `token_id` = %s;""", (token, ))
         connection.commit()
         cursor.close()
