@@ -3,12 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import {
-  createBrowserRouter,
-  Link,
-  Outlet,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, Link, Outlet, RouterProvider } from "react-router-dom";
 import "jquery/dist/jquery.min.js";
 import "bootstrap/dist/js/bootstrap.min.js";
 
@@ -30,8 +25,6 @@ import Button from "react-bootstrap/Button";
 import NotFound from "./routes/NotFound/NotFound";
 import { DefaultApi } from "./openapi";
 import { API_ENDPOINT } from "./react-app-env";
-import ToastHelper from "./components/ToastHelper";
-import {ErrorToast, SuccessToast} from "./components/MyToasts";
 import SearchPage from "./routes/search/SearchPage/SearchPage";
 import GroupSearchResultsPage from "./routes/search/GroupSearchResultsPage/GroupSearchResultsPage";
 import GroupDetail from "./routes/detail/GroupDetail/GroupDetail";
@@ -42,6 +35,18 @@ import UserDetail from "./routes/detail/UserDetail/UserDetail";
 import RoleSearchResultsPage from "./routes/search/RoleSearchResultsPage/RoleSearchResultsPage";
 import RoleDetail from "./routes/detail/RoleDetail/RoleDetail";
 import LoginPage from "./routes/login/LoginPage";
+import * as Sentry from "@sentry/react";
+import { BrowserTracing } from "@sentry/tracing";
+
+Sentry.init({
+  dsn: "https://329c145baca748d9a6df24167fd72c09@o329638.ingest.sentry.io/4504168426373120",
+  integrations: [new BrowserTracing()],
+
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+});
 
 export const Api = new DefaultApi(undefined, API_ENDPOINT);
 
@@ -75,8 +80,8 @@ const router = createBrowserRouter(
                 <Link to={"/new/role"} className={"m-1"}>
                   <Button variant={"secondary"}>New Role</Button>
                 </Link>
-                </ButtonGroup>
-                <ButtonGroup>
+              </ButtonGroup>
+              <ButtonGroup>
                 <Link to={"/new/user"} className={"m-1"}>
                   <Button variant={"secondary"}>New User</Button>
                 </Link>
@@ -89,9 +94,9 @@ const router = createBrowserRouter(
                 <Link to={"/new/delayed_assignment"} className={"m-1"}>
                   <Button variant={"secondary"}>New Delayed Assignment</Button>
                 </Link>
-                </ButtonGroup>
-                <h5>Relations:</h5>
-                <ButtonGroup>
+              </ButtonGroup>
+              <h5>Relations:</h5>
+              <ButtonGroup>
                 <Link to={"/new/member"} className={"m-1"}>
                   <Button variant={"secondary"}>New Member</Button>
                 </Link>
@@ -136,70 +141,70 @@ const router = createBrowserRouter(
             },
             {
               path: "delayed_assignment",
-              element: <NewDelayedAssignment />
+              element: <NewDelayedAssignment />,
             },
             {
               path: "public_group",
-              element: <NewPublicGroup />
+              element: <NewPublicGroup />,
             },
             {
               path: "member",
-              element: <NewUserMemberOfGroup />
+              element: <NewUserMemberOfGroup />,
             },
             {
               path: "user_created_assignment",
-              element: <NewAssignmentCreatedByUser />
+              element: <NewAssignmentCreatedByUser />,
             },
             {
               path: "user_has_role",
-              element: <NewUserHasRole />
+              element: <NewUserHasRole />,
             },
             {
               path: "user_has_completed_assignment",
-              element: <NewUserHasCompletedAssignment />
-            }
+              element: <NewUserHasCompletedAssignment />,
+            },
           ],
         },
         {
           path: "/search",
-          element: <SearchPage/>
+          element: <SearchPage />,
         },
         {
           path: "/groups",
-          element: <GroupSearchResultsPage/>
+          element: <GroupSearchResultsPage />,
         },
         {
           path: "/groups/:id",
-          element: <GroupDetail/>
+          element: <GroupDetail />,
         },
         {
           path: "/assignments",
-          element: <AssignmentSearchResultsPage/>
+          element: <AssignmentSearchResultsPage />,
         },
         {
           path: "/assignments/:id",
-          element: <AssignmentDetail/>
+          element: <AssignmentDetail />,
         },
         {
           path: "/users",
-          element: <UserSearchResultsPage/>
+          element: <UserSearchResultsPage />,
         },
         {
           path: "/users/:id",
-          element: <UserDetail/>
+          element: <UserDetail />,
         },
         {
           path: "/roles",
-          element: <RoleSearchResultsPage/>
+          element: <RoleSearchResultsPage />,
         },
         {
           path: "/roles/:id",
-          element: <RoleDetail/>
+          element: <RoleDetail />,
         },
         {
           path: "/login",
-          element: <LoginPage/>
-        }
+          element: <LoginPage />,
+        },
       ],
     },
   ],
@@ -208,9 +213,7 @@ const router = createBrowserRouter(
   }
 );
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement);
 
 root.render(
   <React.StrictMode>
