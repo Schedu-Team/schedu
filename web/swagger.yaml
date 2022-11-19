@@ -9,10 +9,34 @@ info:
     name: Apache 2.0
     url: https://github.com/Schedu-Team/schedu/blob/master/LICENSE
 servers:
-  - url: https://api.schedu.wlko.me/api/v1
+  - url: https://staging.api.schedu.wlko.me/api/v1
   - url: http://localhost:8080/api/v1
   - url: http://clabsql.clamv.jacobs-university.de:30566/api/v1
 paths:
+  /service/status:
+    get:
+      summary: Check server's health
+      responses:
+        200:
+          description: Server healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  State:
+                    type: string
+                    example: Active
+                  "API version":
+                    type: string
+                    example: v1
+                  "Amount of connections":
+                    type: number
+                    example: 0
+                required:
+                  - State
+                  - Amount of connections
+                  - API version
   /groups/add:
     x-summary: Add groups
     post:

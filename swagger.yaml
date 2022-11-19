@@ -9,10 +9,34 @@ info:
     name: Apache 2.0
     url: https://github.com/Schedu-Team/schedu/blob/master/LICENSE
 servers:
-  - url: https://api.schedu.wlko.me/api/v1
+  - url: https://staging.api.schedu.wlko.me/api/v1
   - url: http://localhost:8080/api/v1
   - url: http://clabsql.clamv.jacobs-university.de:30566/api/v1
 paths:
+  /service/status:
+    get:
+      summary: Check server's health
+      responses:
+        200:
+          description: Server healthy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  State:
+                    type: string
+                    example: Active
+                  "API version":
+                    type: string
+                    example: v1
+                  "Amount of connections":
+                    type: number
+                    example: 0
+                required:
+                  - State
+                  - Amount of connections
+                  - API version
   /groups/add:
     x-summary: Add groups
     post:
@@ -34,12 +58,6 @@ paths:
                     type: number
                   insertion_data:
                     $ref: '#/components/schemas/Group'
-              example:
-                insertion_id: 1
-                insertion_data:
-                  group_id: 0
-                  name: F22_CO-562-A
-                  description: Second Year 2022 Operating Systems
         400:
           description: 'Bad request'
       security:
@@ -62,15 +80,6 @@ paths:
                       $ref: '#/components/schemas/Group'
                 required:
                   - response
-              example:
-                application/json:
-                  response:
-                    - group_id: 0
-                      name: F22_CO-562-A
-                      description: Second Year 2022 Operating Systems
-                    - group_id: 1
-                      name: F22_CO-560-A
-                      description: Second Year 2022 Databases and Web Services
         400:
           description: 'Bad request'
   /users/add:
@@ -94,16 +103,6 @@ paths:
                     type: number
                   insertion_data:
                     $ref: '#/components/schemas/User'
-              example:
-                insertion_id: 1
-                insertion_data:
-                  user_id: 0
-                  first_name: John
-                  last_name: Smith
-                  password_hash: aboba
-                  password_salt: salt
-                  email: john@smith.me
-                  graduation_year: 2024
         400:
           description: 'Bad request'
       security:
@@ -126,23 +125,6 @@ paths:
                       $ref: '#/components/schemas/User'
                 required:
                   - response
-              example:
-                application/json:
-                  response:
-                    - user_id: 0
-                      first_name: John
-                      last_name: Smith
-                      password_hash: aboba
-                      password_salt: salt
-                      email: john@smith.me
-                      graduation_year: 2024
-                    - user_id: 1
-                      first_name: Roger
-                      last_name: White
-                      password_hash: skibidi
-                      password_salt: pepper
-                      email: roger.white@gmail.com
-                      graduation_year: 2025
         400:
           description: 'Bad request'
   /assignments/add:
@@ -167,12 +149,6 @@ paths:
                     type: number
                   insertion_data:
                     $ref: '#/components/schemas/Assignment'
-              example:
-                insertion_id: 1
-                insertion_data:
-                  assignment_id: 1
-                  deadline: "2022-10-27 23:59"
-                  text: DBWS Assignment
         400:
           description: 'Bad request'
       security:
@@ -194,15 +170,6 @@ paths:
                       $ref: '#/components/schemas/Assignment'
                 required:
                   - response
-              example:
-                application/json:
-                  response:
-                    - assignment_id: 1
-                      deadline: "2022-10-27 23:59"
-                      text: DBWS Assignment
-                    - assignment_id: 2
-                      deadline: "2022-11-17 17:30"
-                      text: OS Assignment
         400:
           description: 'Bad request'
   /roles/add:
@@ -226,12 +193,6 @@ paths:
                     type: number
                   insertion_data:
                     $ref: '#/components/schemas/Role'
-              example:
-                insertion_id: 1
-                insertion_data:
-                  role_id: 0
-                  name: Admin
-                  description: Has access to all resources
         400:
           description: 'Bad request'
       security:
@@ -253,15 +214,6 @@ paths:
                       $ref: '#/components/schemas/Role'
                 required:
                   - response
-              example:
-                application/json:
-                  response:
-                    - role_id: 0
-                      name: Admin
-                      description: Has access to all resources
-                    - role_id: 1
-                      name: Reader
-                      description: Can read resources
         400:
           description: 'Bad request'
   /permissions/add:
@@ -285,12 +237,6 @@ paths:
                     type: number
                   insertion_data:
                     $ref: '#/components/schemas/Permission'
-              example:
-                insertion_id: 1
-                insertion_data:
-                  permission_id: 0
-                  name: DeadlinesModify
-                  description: Can change deadlines
         400:
           description: 'Bad request'
       security:
@@ -312,15 +258,6 @@ paths:
                       $ref: '#/components/schemas/Permission'
                 required:
                   - response
-              example:
-                application/json:
-                  response:
-                    - permission_id: 0
-                      name: DeadlinesModify
-                      description: Can change deadlines
-                    - permission_id: 1
-                      name: AssignmentsCreate
-                      description: Can create assignments
         400:
           description: 'Bad request'
   /public_groups/add:
@@ -344,11 +281,6 @@ paths:
                     type: number
                   insertion_data:
                     $ref: '#/components/schemas/PublicGroup'
-              example:
-                insertion_id: 1
-                insertion_data:
-                  group_id: 0
-                  default_role_id: 1
         400:
           description: 'Bad request'
       security:
@@ -370,13 +302,6 @@ paths:
                       $ref: '#/components/schemas/PublicGroup'
                 required:
                   - response
-              example:
-                application/json:
-                  response:
-                    - group_id: 0
-                      default_role_id: 1
-                    - group_id: 1
-                      default_role_id: 2
         400:
           description: 'Bad request'
   /temporary_roles/add:
@@ -400,11 +325,6 @@ paths:
                     type: number
                   insertion_data:
                     $ref: '#/components/schemas/TemporaryRole'
-              example:
-                insertion_id: 1
-                insertion_data:
-                  role_id: 0
-                  expiry_date: "2022-10-27T23:59"
         400:
           description: 'Bad request'
       security:
@@ -430,11 +350,6 @@ paths:
                     type: number
                   insertion_data:
                     $ref: '#/components/schemas/DelayedAssignment'
-              example:
-                insertion_id: 1
-                insertion_data:
-                  assignment_id: 0
-                  publication_date: "2022-10-27T23:59"
         400:
           description: 'Bad request'
       security:
@@ -460,11 +375,6 @@ paths:
                     type: number
                   insertion_data:
                     $ref: '#/components/schemas/Member'
-              example:
-                insertion_id: 1
-                insertion_data:
-                  user_id: 0
-                  group_id: 1
         400:
           description: 'Bad request'
       security:
@@ -490,11 +400,6 @@ paths:
                     type: number
                   insertion_data:
                     $ref: '#/components/schemas/UserHasRole'
-              example:
-                insertion_id: 1
-                insertion_data:
-                  user_id: 0
-                  role_id: 12
         400:
           description: 'Bad request'
       security:
@@ -520,12 +425,6 @@ paths:
                     type: number
                   insertion_data:
                     $ref: '#/components/schemas/UserCompletedAssignment'
-              example:
-                insertion_id: 1
-                insertion_data:
-                  user_id: 0
-                  assignment_id: 3
-                  timestamp: "2021-10-27T20:00"
         400:
           description: 'Bad request'
       security:
@@ -551,17 +450,11 @@ paths:
                     type: number
                   insertion_data:
                     $ref: '#/components/schemas/UserCreatedAssignment'
-              example:
-                insertion_id: 1
-                insertion_data:
-                  user_id: 0
-                  assignment_id: 3
-                  timestamp: "2021-10-27T20:00"
         400:
           description: 'Bad request'
       security:
         - MarkToken: [ ]
-  /login:
+  /user/login:
     post:
       summary: Get token for using guarded methods
       requestBody:
@@ -576,8 +469,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Token'
-              example:
-                Token: "token123"
         400:
           description: Unable to authenticate
 components:
@@ -642,26 +533,26 @@ components:
           type: string
         password_hash:
           type: string
-        password_salt:
-          type: string
         email:
           type: string
         graduation_year:
           type: number
+        username:
+          type: string
       required:
         - user_id
         - first_name
         - last_name
         - password_hash
-        - password_salt
+        - username
       example:
         user_id: 0
         first_name: John
         last_name: Smith
         password_hash: aboba
-        password_salt: salt
         email: john@smith.me
         graduation_year: 2024
+        username: johnsmith
     UserRequest:
       title: UserRequest
       type: object
@@ -672,24 +563,24 @@ components:
           type: string
         password_hash:
           type: string
-        password_salt:
-          type: string
         email:
           type: string
         graduation_year:
           type: number
+        username:
+          type: string
       required:
         - first_name
         - last_name
         - password_hash
-        - password_salt
+        - username
       example:
         first_name: John
         last_name: Smith
         password_hash: aboba
-        password_salt: salt
         email: john@smith.me
         graduation_year: 2024
+        username: johnsmith
     Assignment:
       type: object
       properties:
@@ -894,14 +785,14 @@ components:
     LoginRequest:
       type: object
       properties:
-        login:
+        username:
           type: string
           example: "admin"
         password:
           type: string
           example: "password"
       required:
-        - login
+        - username
         - password
   securitySchemes:
     MarkToken:
