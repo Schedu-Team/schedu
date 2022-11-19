@@ -34,6 +34,7 @@ function UserSearchResultsPage() {
         <small>Email: {user.email ?? "unspecified"}</small>
       </Link>
     ),
+    acString: (user) => user.username,
   });
 }
 

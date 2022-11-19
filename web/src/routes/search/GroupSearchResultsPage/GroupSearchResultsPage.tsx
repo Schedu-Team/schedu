@@ -31,6 +31,7 @@ function GroupSearchResultsPage() {
         <small className="text-muted">Next deadline: in 2 days</small> {/*TODO: calculate*/}
       </Link>
     ),
+    acString: (group) => group.name,
   });
 }
 

@@ -29,6 +29,7 @@ function AssignmentSearchResultsPage() {
         <p className="mb-1"> {assignment.text.slice(0, 30)}...</p>
       </Link>
     ),
+    acString: (assignment) => assignment.text.slice(0, 30),
   });
 }
 

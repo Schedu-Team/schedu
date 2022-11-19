@@ -27,6 +27,7 @@ function RoleSearchResultsPage() {
         <p className="mb-1"> {role.description}...</p>
       </Link>
     ),
+    acString: (role) => role.name,
   });
 }
 

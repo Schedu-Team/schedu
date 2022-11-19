@@ -2,18 +2,21 @@ import { useSearchParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { Form, FormGroup, FormLabel, ListGroup } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import $ from "jquery";
 
 interface SearchResultsProps<DataType> {
   getData: () => Promise<DataType[]>;
   filter: (object: DataType, query: string) => boolean;
   show: (object: DataType) => JSX.Element;
+  // generates autocomplete string
+  acString: (object: DataType) => string;
 }
 
 interface SearchReq {
   query: string;
 }
 
-function SearchResults<DataType>({ getData, filter, show }: SearchResultsProps<DataType>) {
+function SearchResults<DataType>({ getData, filter, show, acString }: SearchResultsProps<DataType>) {
   const [searchParams, setSearchParams] = useSearchParams();
   let queryInit = searchParams.get("query") ?? "";
 
@@ -21,6 +24,16 @@ function SearchResults<DataType>({ getData, filter, show }: SearchResultsProps<D
   useEffect(() => {
     getData().then((res) => {
       console.log("refetch");
+      // @ts-ignore
+      $("#searchQuery").autocomplete({
+        source: res.map(acString),
+        // @ts-ignore
+        select: (e, ui) => {
+          const q = ui.item.label;
+          updateQuery(q);
+          setSearchParams({ query: q });
+        },
+      });
       updateObjs(res);
     });
   }, []); // other dependencies cause massive updates
@@ -55,6 +68,7 @@ function SearchResults<DataType>({ getData, filter, show }: SearchResultsProps<D
           <input
             className="p-1 m-1"
             type="search"
+            id={"searchQuery"}
             defaultValue={query}
             onChange={(e) => {
               updateQuery(e.target.value);

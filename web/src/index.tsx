@@ -5,6 +5,7 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, Link, Outlet, RouterProvider } from "react-router-dom";
 import "jquery/dist/jquery.min.js";
+import "jquery-ui/dist/jquery-ui.min.js";
 import "bootstrap/dist/js/bootstrap.min.js";
 
 import Homepage from "./routes/Homepage/Homepage";
