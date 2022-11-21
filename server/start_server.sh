@@ -3,5 +3,5 @@
 export FLASK_APP=server.py
 PORT=${PORT=30566}
 SERVER_HOST=${SERVER_HOST="0.0.0.0"}
-nohup flask run --host="$SERVER_HOST" --port="$PORT" >.server.out &
+nohup flask run --host="$SERVER_HOST" --port="$PORT" --cert=cert.pem --key=key.pem >.server.out &
 echo $! >.server.pid
