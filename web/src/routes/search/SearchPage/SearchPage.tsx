@@ -25,7 +25,7 @@ function SearchForm<DataType>({ name, getData, acString }: SearchFormProps<DataT
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<SearchReq>();
   const navigate = useNavigate();
 
   const id = "searchQuery1_" + name;
@@ -36,26 +36,19 @@ function SearchForm<DataType>({ name, getData, acString }: SearchFormProps<DataT
       console.log("refetch");
       // @ts-ignore
       $("#" + id).autocomplete({
-        source: res.map(acString),
-        // @ts-ignore
-        select: (e, ui) => {
-          const q = ui.item.label;
-          updateQuery(q);
-        },
+        source: res.map(acString)
       });
       updateObjs(res);
     });
   }, []); // other dependencies cause massive updates
 
-  const [query, updateQuery] = useState("");
-
   let input;
 
-  function goToSearchResults() {
+  function goToSearchResults(data: SearchReq) {
     navigate({
       pathname: "/" + name.toLowerCase(),
       search: createSearchParams({
-        query: query,
+        query: data.query,
       }).toString(),
     });
   }
@@ -64,7 +57,7 @@ function SearchForm<DataType>({ name, getData, acString }: SearchFormProps<DataT
     <Form className={"mb-3"} onSubmit={handleSubmit(goToSearchResults)}>
       <FormGroup>
         <FormLabel>Search {name}</FormLabel>
-        <FormControl type="search" id={id} />
+        <FormControl type="search" id={id} {...register("query", { required: true })}/>
       </FormGroup>
       <FormGroup>
         <Button type="submit" className={"mt-3"} variant={"secondary"}>
