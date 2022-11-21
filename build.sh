@@ -5,7 +5,7 @@
 cd web
 npm i
 export PUBLIC_URL="/~akovrigin"
-export REACT_APP_ENDPOINT="https://clabsql.clamv.jacobs-university.de:30566/api/v1"
+export REACT_APP_ENDPOINT="https://staging.api.schedu.wlko.me/api/v1"
 npm run build
 )
 
