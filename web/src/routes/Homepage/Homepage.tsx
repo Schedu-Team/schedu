@@ -54,13 +54,16 @@ function MyMarker(this: any) {
 
 function MyLeaflet() {
   return (
-    <MapContainer center={[0, 0]} zoom={13} scrollWheelZoom={false} style={{ height: "30em" }}>
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <MyMarker />
-    </MapContainer>
+    <>
+      <MapContainer center={[0, 0]} zoom={13} scrollWheelZoom={false} style={{ height: "30em" }}>
+        <TileLayer
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        />
+        <MyMarker />
+      </MapContainer>
+      <small>If the map is not displayed correctly, try disabling your AdBlock</small>
+    </>
   );
 }
 
